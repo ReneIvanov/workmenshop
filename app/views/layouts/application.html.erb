@@ -10,6 +10,50 @@
   </head>
 
   <body>
-    <%= yield %>
+    
+    <div id="main">
+      <div id="header">
+        <div id="header_0">
+          <%= image_tag("page_logo.jpg", class: 'page_logo') %>
+        </div>
+
+        <div id="header_1">
+          <p class="title"> WorkmenShop </p>
+        </div>
+
+        <div id="header_2">
+          <p> Free space </p>
+        </div>
+
+        <div id="header_3">
+          <p class="page_logo"> Make it easy! </p>
+        </div>
+
+      </div>
+
+      <div id="top_menubar">
+        THIS IS TOP MENUBAR 
+      </div>
+            
+      <div id="page_content">
+        <div id="left_sidebar">
+          THIS IS LEFT SIDEBAR
+        </div>
+        
+        <div id="mainbar">
+          THIS IS MAINBAR
+          <%= yield %>           
+        </div>  
+                
+        <div id="right_sidebar">
+          THIS IS RIGHT_SIDEBAR
+        </div>
+      </div>
+            
+      <div id="footer">
+        THIS IS FOOTER
+      </div>
+    </div>
+    
   </body>
 </html>

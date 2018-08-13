@@ -13,3 +13,352 @@
  *= require_tree .
  *= require_self
  */
+
+ /*zarovnanie stránky na stred obrazovky*/
+#main, #header, #top_menubar, #page_content, #footer
+{ 
+  margin-left: auto; 
+  margin-right: auto;
+}
+
+/*nastavi všetky vnútorné a vonkajšie okraje na zaciatku na 0*/
+*
+{ 
+  margin: 0;
+  padding: 0;
+}
+
+/* body - nastavenie fontu, farby písma a pozadia*/
+body
+{ 
+  font: normal 80% Arial, Helvetica, sans-serif;
+  background: transparent url(background.jpg)repeat;
+  background-size: auto;
+  color: white;
+  font-size: 17px;
+}
+
+/*nastavenie odkazov*/
+a
+{ 
+  text-decoration: none;
+}
+
+/*nastavenie odkazov, cez ktoré prechádza myška*/
+a:hover
+{ 
+  text-decoration: underline;
+}
+
+p
+{
+    padding-top: 12px;
+}
+
+/* NASTAVENIA ČASTÍ HEADER ===================================================*/
+
+/*nastavenie body hlavičky*/
+.title
+{
+  color:azure;
+  font-size: 40px;
+  text-shadow: -2px -2px 2px black;
+}
+
+.page_logo
+{
+  color:azure;
+  font-size: 17px;
+  text-shadow: -1px -1px 1px black;
+}
+
+/*nastavenie jednotlivých divov v hlavičke*/
+#header_0
+{ 
+  width: auto;
+  overflow: hidden;
+  float: left;
+  height: 90px;
+  border-style:none;
+  padding-top: 0px;
+  padding-left: 0px;
+  background: transparent;
+  background-color: transparent;
+} 
+
+#header_1
+{ 
+  width: auto;
+  overflow: hidden;
+  float: left;
+  height: 90px;
+  border-style:none;
+  padding-top: 0px;
+  padding-left: 0px;
+  background: transparent;
+  background-color: transparent;
+} 
+  
+#header_2
+{ 
+  text-align: right;
+  width: auto;
+  float: left;
+  height: 90px;
+  overflow: hidden;
+  border-style:none;
+  background: transparent;
+}  
+
+#header_3
+{ 
+  width: auto;
+  float: right;
+  height: 90px;
+  overflow: hidden;
+  border-style:none;
+  background: transparent;
+}
+
+/* NASTAVENIA ČASTÍ TOP_MENUBAR ==================================================*/
+
+/*nastavenie zoznamu #polozky_menubar*/
+#polozky_top_menubar
+{ height: auto;
+  width: 100%;
+  overflow: hidden;
+  //background: rgb(51,51,102);
+  margin:0;
+  font-style: normal;
+  font-size: 100%;
+}
+
+/*nastavenie odrážok zoznamu #polozky_top_menubar*/
+#polozky_top_menubar li
+{ 
+  display: inline;      /* menu sa zobrazí do 1 riadku */
+  float: left;
+  text-align: center;
+  font: bold 120% Arial, Helvetica, sans-serif;
+  margin: 5px 15px 5px 15px;
+  padding: 6px 20px 6px 20px;
+  background: transparent;
+  text-shadow: 0px -1px 0px #000;       /*tiene textu*/
+  border-radius: 7px 7px 7px 7px;       /*oblé rohy*/ 
+  text-decoration: none;
+  font-size: 15px;
+}
+
+/*nastavenie odrážok zoznamu #polozky_top_menubar pri prechode myškou*/
+#polozky_top:menubar li:hover
+{
+  background: red;
+}
+
+/*nastavenie odkazov zoznamu #polozky_top_menubar*/
+#polozky_top_menubar a
+{
+  text-decoration: none;
+  color: #FFF;
+}
+
+/*nastavenie odkazov zoznamu #polozky_top_menubar pri prechode myškou*/
+#polozky_top_menubar a:hover
+{
+  text-decoration: none;
+  color: #FFF;
+}
+
+/* NASTAVENIA ČASTÍ LEFT_SIDEBAR =============================================*/
+
+
+
+/* NASTAVENIA ČASTÍ MAINBAR  =================================================*/
+
+/* nadpisy jednotlivých mainbarov */
+.nadpis_mainbar
+{
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: underline;
+    text-shadow: -3px -3px 3px whitesmoke;
+}
+
+/*formátovanie tabuľky s otváracími hodinami*/
+#tabulka_otvaracie_hodiny
+{
+    margin: 0px;
+    padding: 5px;
+    border-style: solid;
+    border-width: 2px;
+    font-size: 19px;
+}
+
+/*formátovanie každej bunky tabuľky s otváracími hodinami*/
+#tabulka_otvaracie_hodiny td
+{ 
+  width: 230px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 10px;
+  text-align: center;
+}
+
+/*div obsahujúci obrázok domu*/
+#obrazok_dom
+{
+    float: right;
+    padding-left: 15px;
+}
+
+/*div , ktorého obsah sa vycentruje na stred*/
+.obrazok_center
+{
+    text-align: center;
+}
+
+/*div , ktorého obsah sa vycentruje v pravo*/
+.obrazok_pravo
+{
+    text-align: center;
+    float: right;
+}
+
+/*div celej galerie*/
+#cela_galeria
+{
+    width:auto;
+    height:auto;
+    text-align: center;
+    float:top;
+}
+
+/*div malych obrazkov vo foto galerii*/
+.obrazok_galeria
+{
+    width:150px;
+    height:150px;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border: none;
+}
+
+/*div malych obrazkov vo foto galerii*/
+.obrazok_galeria_2
+{
+    width:150px;
+    height:113px;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border: none;
+}
+
+/*div malych obrazkov kosov*/
+.obrazok_kose
+{
+    width:185px;
+    height:134px;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border: none;
+}
+
+/*div malych obrazkov kosov*/
+.obrazok_kose_2
+{
+    width:133px;
+    height:182px;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border: none;
+}
+
+/*nastavenie triedy "odkaz"*/
+.odkaz
+{
+color: yellow;
+}
+
+/* NASTAVENIA JEDNOTLIVÝCH DIVov =============================================*/
+
+#main
+{ 
+  background: transparent;
+  border-style: none;
+}
+  
+#header
+{ 
+  height: 90px;
+  width: 800px;
+  overflow: hidden;
+}
+ 
+#top_menubar
+{ 
+  width: 790px;
+  height: 40px;
+  background: rgb(51,51,102);
+  border-radius: 7px 7px 0px 0px;       /*oblé rohy*/ 
+  padding-left: 10px;
+  overflow: hidden;
+} 
+ 
+#page_content
+{ 
+  width: 800px;
+  height: auto;
+  overflow: hidden;
+  background: transparent;
+  border-radius: 0px 0px 7px 7px;       /*oblé rohy*/ 
+}
+
+#left_sidebar
+{ 
+  float: left;
+  width: 0px;
+  height: auto;
+  overflow: hidden;
+  background: transparent;
+}
+
+#right_sidebar
+{ 
+  float: right;
+  width: 0px;
+  height: auto;
+  overflow: hidden;
+  background: transparent;
+}
+
+#mainbar
+{ 
+  width: 740px;
+  height: auto;
+  float: left;
+  overflow: hidden;
+  padding: 30px;
+  background: transparent url(../images/transparent.png) repeat;
+  
+  //background: transparent url(../images/transparent_white.png) repeat;
+}
+
+#footer
+{ 
+  width: 800px;
+  height: 17px;
+  overflow: hidden;
+  margin-top: 18px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+  border-radius: 4px 4px 4px 4px;       /*oblé rohy*/ 
+  background: transparent url(../images/transparent.png) repeat;
+  text-align: center;
+}
