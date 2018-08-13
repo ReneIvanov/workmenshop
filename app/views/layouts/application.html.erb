@@ -29,9 +29,9 @@
 
       <div id="top_menubar">
         <ul id="top_menubar_item">
-          <li> 11111111111 </li>
-          <li> 2222 </li>
-          <li> 3333333 </li>
+          <li> <%= link_to 'Introduction', root_path %> </li>
+          <li> <%= link_to 'List of people', people_path %> </li>
+           <li> <%= link_to 'New person', new_person_path %> </li>
           <li> 44444 </li>
           <li> 555555 </li>
           <li> 6666 </li>
@@ -40,7 +40,6 @@
             
       <div id="page_content">
         <div id="mainbar">
-          THIS IS MAINBAR
           <%= yield %>           
         </div>  
               

@@ -46,7 +46,11 @@
     <%= form.text_field :telephone %>
   </div>
 
+  <%= file_field(:post, :image_file) %>
+  <%= file_field_tag 'attachment' %>
+
   <div class="actions">
     <%= form.submit %>
   </div>
+
 <% end %>
