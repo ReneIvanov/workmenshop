@@ -122,19 +122,18 @@ p
 
 /* NASTAVENIA ČASTÍ TOP_MENUBAR ==================================================*/
 
-/*nastavenie zoznamu #polozky_menubar*/
-#polozky_top_menubar
+/*nastavenie zoznamu #top_menubar*/
+#top_menubar
 { height: auto;
   width: 100%;
   overflow: hidden;
   //background: rgb(51,51,102);
-  margin:0;
   font-style: normal;
   font-size: 100%;
 }
 
 /*nastavenie odrážok zoznamu #polozky_top_menubar*/
-#polozky_top_menubar li
+#top_menubar_item li
 { 
   display: inline;      /* menu sa zobrazí do 1 riadku */
   float: left;
@@ -149,21 +148,21 @@ p
   font-size: 15px;
 }
 
-/*nastavenie odrážok zoznamu #polozky_top_menubar pri prechode myškou*/
-#polozky_top:menubar li:hover
+/*nastavenie odrážok zoznamu #top_menubar_item pri prechode myškou*/
+#top_menubar_item:menubar li:hover
 {
   background: red;
 }
 
-/*nastavenie odkazov zoznamu #polozky_top_menubar*/
-#polozky_top_menubar a
+/*nastavenie odkazov zoznamu #top_menubar_item*/
+#top_menubar_item a
 {
   text-decoration: none;
   color: #FFF;
 }
 
-/*nastavenie odkazov zoznamu #polozky_top_menubar pri prechode myškou*/
-#polozky_top_menubar a:hover
+/*nastavenie odkazov zoznamu #top_menubar_item pri prechode myškou*/
+#top_menubar_item a:hover
 {
   text-decoration: none;
   color: #FFF;
@@ -317,7 +316,7 @@ color: yellow;
   border-radius: 0px 0px 7px 7px;       /*oblé rohy*/ 
 }
 
-#left_sidebar
+/*#left_sidebar
 { 
   float: left;
   width: 0px;
@@ -334,7 +333,7 @@ color: yellow;
   overflow: hidden;
   background: transparent;
 }
-
+*/
 #mainbar
 { 
   width: 740px;
@@ -342,7 +341,7 @@ color: yellow;
   float: left;
   overflow: hidden;
   padding: 30px;
-  background: transparent url(../images/transparent.png) repeat;
+  background: transparent url(transparent.png) repeat;
   
   //background: transparent url(../images/transparent_white.png) repeat;
 }
@@ -359,6 +358,6 @@ color: yellow;
   padding-left: 0px;
   padding-right: 0px;
   border-radius: 4px 4px 4px 4px;       /*oblé rohy*/ 
-  background: transparent url(../images/transparent.png) repeat;
+  background: transparent url(transparent.png) repeat;
   text-align: center;
 }
