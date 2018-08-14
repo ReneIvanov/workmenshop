@@ -35,6 +35,11 @@
   <%= @person.telephone %>
 </p>
 
+<p>
+  <strong>Profile picture:</strong>
+
+  <img src="<%= url_for(:action => 'picture', :id => @person.id) %>"/>
+</p>
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>

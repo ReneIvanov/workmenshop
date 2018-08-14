@@ -61,6 +61,11 @@ class PeopleController < ApplicationController
     end
   end
 
+  def picture
+    @person = Person.find(params[:id])
+    send_data @person.profile_picture, :type => 'image/jpg', :disposition => 'inline'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_person
@@ -69,6 +74,6 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      params.require(:person).permit(:name, :address, :workmen, :customer, :image_url, :email, :telephone)
+      params.require(:person).permit(:name, :address, :workmen, :customer, :image_url, :email, :telephone, :profile_picture)
     end
 end
