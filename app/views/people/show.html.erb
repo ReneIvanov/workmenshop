@@ -37,9 +37,13 @@
 
 <p>
   <strong>Profile picture:</strong>
-
-  <img src="<%= url_for(:action => 'picture', :id => @person.id) %>"/>
+  <%= image_tag @person.profile_picture %>
 </p>
 
+<p>
+  <% @person.photo.each do |photo| %>
+    <%= image_tag photo %> <br />
+  <% end %>
+</p>
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>

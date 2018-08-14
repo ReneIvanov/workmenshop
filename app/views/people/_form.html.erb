@@ -47,9 +47,17 @@
   </div>
 
   <div class="field">
-    <%= form.label :Profile_picture %>
+    <%= form.label :profile_picture %>
     <%= form.file_field :profile_picture %>
   </div>
+
+  <div class="field">
+    <%= form.label :photo %>
+    <%= form.file_field :photo, multiple: true %> <br>
+  </div>
+
+
+
 
   <div class="actions">
     <%= form.submit %>
