@@ -25,8 +25,8 @@ class PeopleController < ApplicationController
   # POST /people.json
   def create
     @person = Person.new(person_params)
-    @person.profile_picture.attach(params[:person][:profile_picture])
-    @person.photo.attach(params[:person][:photo])
+    #@person.profile_picture.attach(params[:person][:profile_picture])
+    #@person.photo.attach(params[:person][:photo])
 
     respond_to do |format|
       if @person.save
@@ -72,6 +72,6 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      params.require(:person).permit(:name, :address, :workmen, :customer, :image_url, :email, :telephone, :profile_picture)
+      params.require(:person).permit(:name, :address, :workmen, :customer, :image_url, :email, :telephone, :profile_picture, photos: [])
     end
 end
