@@ -47,6 +47,21 @@
   </div>
 
   <div class="field">
+    <%= form.label :user_name %>
+    <%= form.text_field :user_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <div class="field">
     <%= form.label :profile_picture %>
     <%= form.file_field :profile_picture %>
   </div>
