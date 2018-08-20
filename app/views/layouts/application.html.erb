@@ -22,7 +22,12 @@
         </div>
 
         <div id="header_3">
-          <p class="page_logo"> Make it easy! </p>
+          <% if session[:person_id] == nil %>
+            <p class="logg"> <%= link_to 'Loggin', login_path %> </p>
+          <% else %>
+            <p class="logg"> <%= link_to 'Loggout', logout_path,
+            method: :delete %> </p>
+          <% end %>
         </div>
 
       </div>
