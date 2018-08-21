@@ -2,4 +2,6 @@
 
 <%= render 'form', person: @person %>
 
-<%= link_to 'Back', people_path %>
+<% if (session[:admin] == true) %>
+ |<%= link_to 'Back', people_path %>
+<% end %>

@@ -37,13 +37,21 @@
 
 <p>
   <strong>Profile picture:</strong>
-  <%= image_tag @person.profile_picture %>
+  <% begin %>
+    <%= image_tag @person.profile_picture %>
+  <% rescue %>
+    No picture.
+  <% end %>
 </p>
 
 <p>
+  <Strong> Photos: </Strong>
   <% @person.photos.each do |photo| %>
-    <%= image_tag photo %> <br />
-  <% end %>
+       <%= image_tag photo %> <br />       
+     <% end %>
 </p>
-<%= link_to 'Edit', edit_person_path(@person) %> |
-<%= link_to 'Back', people_path %>
+
+<br /><br />
+
+<%= link_to 'Edit', edit_person_path(@person) %>
+

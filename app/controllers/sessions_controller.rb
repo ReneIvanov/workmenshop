@@ -1,4 +1,8 @@
 class SessionsController < ApplicationController
+
+  skip_before_action :authorize_admin, only: [:new, :create, :destroy]
+  skip_before_action :authorize_user
+
   def new
   end
 
@@ -6,7 +10,13 @@ class SessionsController < ApplicationController
   	person = Person.find_by(user_name: params[:user_name])
   	if person.try(:authenticate, params[:password])
   		session[:person_id] = person.id
-  		redirect_to loged_user_url
+  		if person.user_name == "admin"
+  			session[:admin] = true
+  			redirect_to loged_admin_url
+  		else 
+  			session[:admin] = false
+  			redirect_to loged_user_url
+  		end
   	else
   		redirect_to login_url, alert: "Invalid user/password combination"
   	end
@@ -14,6 +24,9 @@ class SessionsController < ApplicationController
 
   def destroy
   	session[:person_id] = nil
+  	session[:admin] = false
   	redirect_to root_url, notice: "You were loged out."
   end
+
+
 end

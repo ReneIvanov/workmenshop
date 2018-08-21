@@ -1,0 +1,24 @@
+<div id="left_sidebar">
+ 	<table border="0" cellpadding="6" cellspacing="0">
+     	<tr> 
+       		<td id="left_sidebar_item" width="140">
+       			<%= link_to 'List of people', people_path %> </td>
+      	</tr>
+
+        <tr>
+           <td id="left_sidebar_item" width="140"> <%= link_to 'My profile', controller: "people", action: "show", id: session[:id] %> </td>
+        </tr>
+                 
+        <tr>
+        	<td id="left_sidebar_item" width="140"> Admin 3 </td>
+        </tr>
+
+        <tr>
+        	<td id="left_sidebar_item" width="140"> Admin 4 </td>
+        </tr>
+
+        <tr>
+            <td id="left_sidebar_item" width="140"> Admin 5 </td>
+        </tr>
+    </table>
+</div>

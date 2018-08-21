@@ -1,8 +1,10 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
 
+  skip_before_action :authorize_admin, only: [:show, :new, :edit, :create, :update, :destroy, :look]
+  skip_before_action :authorize_user
   # GET /people
-  # GET /people.json
+  # GET /people.jsonmodel: person
   def index
     @people = Person.all
   end
@@ -30,7 +32,7 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        format.html { redirect_to action:show, notice: 'Person was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Person was successfully created. To continue pleale log in.' }
         format.json { render :show, status: :created, location: @person }
       else
         format.html { render :new }
@@ -67,7 +69,15 @@ class PeopleController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_person
-      @person = Person.find(params[:id])
+      if (session[:admin] == false) #if I'am not admin
+        @person = Person.find(session[:person_id])
+      else #if I'am admin
+        if params[:id] #if I'am admin and request have parameter :id      
+          @person = Person.find(params[:id])
+        else #if I'am admin and request don't have parameter :id
+           @person = Person.find(session[:person_id])
+        end
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
