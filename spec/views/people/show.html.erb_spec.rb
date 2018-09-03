@@ -1,3 +1,4 @@
+=begin
 require 'rails_helper'
 
 RSpec.describe "people/show", type: :view do
@@ -24,3 +25,4 @@ RSpec.describe "people/show", type: :view do
     expect(rendered).to match(/Telephone/)
   end
 end
+=end

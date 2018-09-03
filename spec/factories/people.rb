@@ -1,11 +1,13 @@
+
 FactoryBot.define do
   factory :person do
-    name "MyString"
+    name "Ezo"
     address "MyString"
-    workmen false
+    workmen true
     customer false
-    image_url "MyString"
-    email "MyString"
+    email "ezo@gmail.com"
     telephone "MyString"
+    user_name "Ezinko"
+    password "asdf"
   end
 end

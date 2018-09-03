@@ -1,3 +1,4 @@
+=begin
 require "rails_helper"
 
 RSpec.describe PeopleController, type: :routing do
@@ -36,3 +37,4 @@ RSpec.describe PeopleController, type: :routing do
     end
   end
 end
+=end
