@@ -43,6 +43,12 @@ RSpec.describe PeopleController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
+    #TOMI start
+    before do
+      request.session[:admin] = true
+      get :index
+    end
+    #TOMI END
     it "returns a success response" do
       Person.create! valid_attributes
       get :index#, params: {}, session: valid_session
@@ -56,6 +62,11 @@ RSpec.describe PeopleController, type: :controller do
       get :show, params: {id: person.to_param}, session: valid_session
       expect(response).to be_successful
     end
+    #TOMI start
+    it do
+      expect(response.status).to eq(200)
+    end
+    #TOMI END
   end
 
   describe "GET #new" do
@@ -63,6 +74,13 @@ RSpec.describe PeopleController, type: :controller do
       get :new, params: {}, session: valid_session
       expect(response).to be_successful
     end
+    #TOMI start
+     it do
+      create :person, name: 'karol'
+      expect(response.body).to match('<li>karol</li>')
+      expect(response.body).to match('<li>jozo</li>')
+    end
+    #TOMI END
   end
 
   describe "GET #edit" do
@@ -85,6 +103,12 @@ RSpec.describe PeopleController, type: :controller do
         post :create, params: {person: valid_attributes}, session: valid_session
         expect(response).to redirect_to(Person.last)
       end
+
+      #TOMI start
+      it 'should be successful' do
+        expect(response.status).to eq(200)
+      end
+      #TOMI END
     end
 
     context "with invalid params" do
