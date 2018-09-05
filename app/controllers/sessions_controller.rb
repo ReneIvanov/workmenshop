@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
   def create
   	person = Person.find_by(user_name: params[:user_name])
   	if person.try(:authenticate, params[:password])
-  		session[:person_id] = person.id
+  		session[:user_name] = person.user_name
   		if person.user_name == "admin"
   			session[:admin] = true
   			redirect_to loged_admin_url
@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-  	session[:person_id] = nil
+  	session[:user_name] = nil
   	session[:admin] = false
   	redirect_to root_url, notice: "You were loged out."
   end

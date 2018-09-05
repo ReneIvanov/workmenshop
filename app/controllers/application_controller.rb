@@ -6,13 +6,13 @@ class ApplicationController < ActionController::Base
 	protected
 
 		def authorize_user
-			unless Person.find_by(id: session[:person_id])
+			unless Person.find_by(user_name: session[:user_name])
 				redirect_to login_url, alert: "Please log in"
 			end
 		end
 
 		def authorize_admin
-			unless (Person.find_by(id: session[:person_id]) and session[:admin] == true)
+			unless (Person.find_by(user_name: session[:user_name]) and session[:admin] == true)
 				redirect_to login_url, alert: "Please log in"
 			end
 		end

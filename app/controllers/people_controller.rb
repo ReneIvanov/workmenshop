@@ -70,12 +70,12 @@ class PeopleController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_person
       if (session[:admin] == false) #if I'am not admin
-        @person = Person.find(session[:person_id])
+        @person = Person.find_by(user_name: session[:user_name])
       else #if I'am admin
         if params[:id] #if I'am admin and request have parameter :id      
           @person = Person.find(params[:id])
         else #if I'am admin and request don't have parameter :id
-           @person = Person.find(session[:person_id])
+           @person = Person.find_by(user_name: session[:user_name])
         end
       end
     end

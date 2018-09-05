@@ -22,7 +22,7 @@
         </div>
 
         <div id="header_3">
-          <% if session[:person_id] == nil %>
+          <% if session[:user_name] == nil %>
             <p class="logg"> <%= link_to 'Loggin', login_path %> &nbsp &nbsp or &nbsp &nbsp <%= link_to 'Sign in', new_person_path %></p>
           <% else %>
             <p class="logg"> <%= link_to 'Loggout', logout_path,
@@ -46,7 +46,7 @@
             
       <div id="page_content">
         
-        <% if session[:person_id] != nil %>  <!-- if person is loged --> 
+        <% if session[:user_name] != nil %>  <!-- if person is loged --> 
             <% if session[:admin] == true %> <!-- if person is admin -->
               <%= render "loged_admin/left_sidebar" %>
 
@@ -57,7 +57,7 @@
         <% end %>
 
         <div id="mainbar" 
-          <% if session[:person_id] != nil %> style="width: 590px"
+          <% if session[:uder_name] != nil %> style="width: 590px"
           <% end %>   
         >
           <%= yield %>           
