@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
   
+  #controller :application do
+  #  get 'authorize_user' => :authorize_user
+  #end
+
+  #controller :anonymous do
+  #  get 'aaa' => :aaa
+  #end
+
   controller :loged_user do
     get 'loged_user' => :wellcome
   end

@@ -1,6 +1,7 @@
+
 require 'rails_helper'
 
-RSpec.describe LogedAdminController, type: :controller do
+RSpec.describe LogedUserController, type: :controller do
 
   describe "GET #welcome" do
    
@@ -9,7 +10,7 @@ RSpec.describe LogedAdminController, type: :controller do
    	end
 
       it " - response should be successfull and equal 200." do
-        get :wellcome, session: {user_name: @user.user_name, admin: true}
+        get :wellcome, session: {user_name: @user.user_name}
       	expect(response).to be_successful
       	expect(response.status).to eq(200)
       end

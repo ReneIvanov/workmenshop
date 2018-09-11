@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
 
   def create
   	person = Person.find_by(user_name: params[:user_name])
-  	if person.try(:authenticate, params[:password])
+    if person.try(:authenticate, params[:password])
   		session[:user_name] = person.user_name
   		if person.user_name == "admin"
   			session[:admin] = true
