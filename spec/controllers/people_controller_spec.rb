@@ -42,49 +42,55 @@ RSpec.describe PeopleController, type: :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # PeopleController. Be sure to keep this updated too.
   #let(:valid_session) { {} }
-=begin
-  describe "GET #index" do
-    #TOMI start
-    before do
-      request.session[:admin] = true
-      request.session[:user_name] = "admin"
-      get :index
+
+
+  describe "- GET #index" do
+
+    before {@user = create :person}
+
+    context " - positive session creation" do
+
+      before do
+        session = {user_name: @user.user_name, admin: true}
+        get :index, session: session
+      end
+    
+      it "- should returns a success response." do
+        expect(response).to have_http_status(:success)
+      end
     end
-    #TOMI END
-    it "returns a success response" do
-      create :person
-      #Person.create! #valid_attributes
-      #puts valid_attributes
-      #get :index#, params: {}, session: valid_session
-       expect(response).to render_template(:index)
+
+    context " - negative session creation" do
+    
+      it " - should returns response status 302 because wrong user name." do  
+        session = {user_name: "wrong user name", admin: true}
+        get :index, session: session
+        expect(response.status).to eq(302)
+      end
+
+      it " - should returns response status 302 because it is not admin." do  
+        session = {user_name: @user.user_name, admin: false}
+        get :index, session: session
+        expect(response.status).to eq(302)
+      end
+
     end
   end
 
-  describe "GET #show" do
-    xit "returns a success response" do
-      person = Person.create! valid_attributes
-      get :show, params: {id: person.to_param}, session: valid_session
-      expect(response).to be_successful
-    end
-    #TOMI start
-    it do
-      expect(response.status).to eq(200)
-    end
-    #TOMI END
+  describe " - GET #show" do
+
+    it "- should returns a success response." do     
+      get :show
+      expect(response).to have_http_status(:success)
+    end   
   end
 
   describe "GET #new" do
-    xit "returns a success response" do
-      get :new, params: {}, session: valid_session
-      expect(response).to be_successful
+    
+    it "- should returns a success response." do     
+      get :new
+      expect(response).to have_http_status(:success)
     end
-    #TOMI start
-     it do
-      create :person, name: 'karol'
-      expect(response.body).to match('<li>karol</li>')
-      expect(response.body).to match('<li>jozo</li>')
-    end
-    #TOMI END
   end
 
   describe "GET #edit" do
@@ -94,7 +100,7 @@ RSpec.describe PeopleController, type: :controller do
       expect(response).to be_successful
     end
   end
-
+=begin
   describe "POST #create" do
     context "with valid params" do
       xit "creates a new Person" do
