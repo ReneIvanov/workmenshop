@@ -23,7 +23,7 @@
 
         <div id="header_3">
           <% if session[:user_name] == nil %>
-            <p class="logg"> <%= link_to 'Loggin', login_path %> &nbsp &nbsp or &nbsp &nbsp <%= link_to 'Sign in', new_person_path %></p>
+            <p class="logg"> <%= link_to 'Loggin', login_path %> &nbsp &nbsp or &nbsp &nbsp <%= link_to 'Sign in', new_user_path %></p>
           <% else %>
             <p class="logg"> <%= link_to 'Loggout', logout_path,
             method: :delete %> &nbsp &nbsp </p>
@@ -46,11 +46,11 @@
             
       <div id="page_content">
         
-        <% if session[:user_name] != nil %>  <!-- if person is loged --> 
-            <% if session[:admin] == true %> <!-- if person is admin -->
+        <% if session[:user_name] != nil %>  <!-- if user is loged --> 
+            <% if session[:admin] == true %> <!-- if user is admin -->
               <%= render "loged_admin/left_sidebar" %>
 
-            <% else %>  <!-- if person is user -->
+            <% else %>  <!-- if user is user -->
               <%= render "loged_user/left_sidebar" %>  
             <% end %>
           

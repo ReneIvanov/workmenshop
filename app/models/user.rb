@@ -1,4 +1,4 @@
-class Person < ApplicationRecord
+class User < ApplicationRecord
 
 	has_one_attached :profile_picture
 	has_many_attached :photos

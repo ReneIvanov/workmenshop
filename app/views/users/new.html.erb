@@ -1,0 +1,7 @@
+<h1>New User</h1>
+
+<%= render 'form', user: @user %>
+
+<% if (session[:admin] == true) %>
+ |<%= link_to 'Back', user_path %>
+<% end %>

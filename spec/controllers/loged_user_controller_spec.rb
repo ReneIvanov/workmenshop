@@ -6,7 +6,7 @@ RSpec.describe LogedUserController, type: :controller do
   describe "GET #welcome" do
    
    	before do
-   		@user = create :person #add user into database
+   		@user = create :user #add user into database
    	end
 
       it " - response should be successfull and equal 200." do

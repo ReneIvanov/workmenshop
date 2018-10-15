@@ -24,7 +24,7 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe PeopleController, type: :controller do
+RSpec.describe UsersController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Person. As you add validations to Person, be sure to
@@ -40,13 +40,13 @@ RSpec.describe PeopleController, type: :controller do
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # PeopleController. Be sure to keep this updated too.
+  # UsersController. Be sure to keep this updated too.
   #let(:valid_session) { {} }
 
 
   describe "- GET #index" do
 
-    before {@user = create :person}
+    before {@user = create :user}
 
     context " - positive session creation" do
 
@@ -95,8 +95,8 @@ RSpec.describe PeopleController, type: :controller do
 
   describe "GET #edit" do
     xit "returns a success response" do
-      person = Person.create! valid_attributes
-      get :edit, params: {id: person.to_param}, session: valid_session
+      user = User.create! valid_attributes
+      get :edit, params: {id: user.to_param}, session: valid_session
       expect(response).to be_successful
     end
   end
@@ -166,10 +166,10 @@ RSpec.describe PeopleController, type: :controller do
       }.to change(Person, :count).by(-1)
     end
 
-    xit "redirects to the people list" do
+    xit "redirects to the users list" do
       person = Person.create! valid_attributes
       delete :destroy, params: {id: person.to_param}, session: valid_session
-      expect(response).to redirect_to(people_url)
+      expect(response).to redirect_to(users_url)
     end
   end
 =end

@@ -7,10 +7,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-  	person = Person.find_by(user_name: params[:user_name])
-    if person.try(:authenticate, params[:password])
-  		session[:user_name] = person.user_name
-  		if person.user_name == "admin"
+  	user = User.find_by(user_name: params[:user_name])
+    if user.try(:authenticate, params[:password])
+  		session[:user_name] = user.user_name
+  		if user.user_name == "admin"
   			session[:admin] = true
   			redirect_to loged_admin_url
   		else 

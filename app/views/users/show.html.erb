@@ -2,38 +2,38 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @person.name %>
+  <%= @user.name %>
 </p>
 
 <p>
   <strong>Address:</strong>
-  <%= @person.address %>
+  <%= @user.address %>
 </p>
 
 <p>
   <strong>Workmen:</strong>
-  <%= @person.workmen %>
+  <%= @user.workmen %>
 </p>
 
 <p>
   <strong>Customer:</strong>
-  <%= @person.customer %>
+  <%= @user.customer %>
 </p>
 
 <p>
   <strong>Email:</strong>
-  <%= @person.email %>
+  <%= @user.email %>
 </p>
 
 <p>
   <strong>Telephone:</strong>
-  <%= @person.telephone %>
+  <%= @user.telephone %>
 </p>
 
 <p>
   <strong>Profile picture:</strong>
   <% begin %>
-    <%= image_tag @person.profile_picture %>
+    <%= image_tag @user.profile_picture %>
   <% rescue %>
     No picture.
   <% end %>
@@ -41,12 +41,12 @@
 
 <p>
   <Strong> Photos: </Strong>
-  <% @person.photos.each do |photo| %>
+  <% @user.photos.each do |photo| %>
        <%= image_tag photo %> <br />       
      <% end %>
 </p>
 
 <br /><br />
 
-<%= link_to 'Edit', edit_person_path(@person) %>
+<%= link_to 'Edit', edit_user_path(@user) %>
 

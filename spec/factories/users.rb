@@ -12,12 +12,12 @@ FactoryBot.define do
     password "asdf1"
   end
 =end
-  factory :person, class: Person do
-    sequence(:name, 1) { |n| "Person#{n}" }
+  factory :user, class: User do
+    sequence(:name, 1) { |n| "User#{n}" }
     sequence(:address, 1) { |n| "Address#{n}" }
     workmen true
     customer true
-    sequence(:email, 1) { |n| "person#{n}@gmail.com" }
+    sequence(:email, 1) { |n| "user#{n}@gmail.com" }
     telephone "1111 111 111"
     sequence(:user_name, 1) { |n| "User#{n}" }
     password "asdf"

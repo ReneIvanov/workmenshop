@@ -24,8 +24,8 @@ Rails.application.routes.draw do
   
   root 'shop#index'
 
-  resources :people
-  controller :people do
+  resources :users
+  controller :users do
     get 'show' => :show
   end
 

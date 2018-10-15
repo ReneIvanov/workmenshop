@@ -12,7 +12,7 @@ RSpec.describe SessionsController, type: :controller do
 
   describe " - POST #create" do
 
-    before {@user = create :person} #add user into database
+    before {@user = create :user} #add user into database
     
     context " - positive session creation" do
       
@@ -44,7 +44,7 @@ RSpec.describe SessionsController, type: :controller do
   describe "- DELETE #destroy" do
 
     before do
-      @user = create :person #add user into database
+      @user = create :user #add user into database
       post :create, params: {user_name: @user.user_name, password: @user.password}
     end
 
