@@ -1,5 +1,6 @@
 class User < ApplicationRecord
 
+	has_one :account, dependent: :destroy
 	has_one_attached :profile_picture
 	has_many_attached :photos
 	has_secure_password
