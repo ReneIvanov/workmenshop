@@ -6,20 +6,22 @@ class User < ApplicationRecord
          :confirmable, :lockable, :timeoutable, :trackable
 
 	has_one :account, dependent: :destroy
+	accepts_nested_attributes_for :account
+	
 	has_one_attached :profile_picture
 	has_many_attached :photos
-	has_secure_password
 
 
-	validates :name, :email, :user_name, presence: true
-	validates :user_name, uniqueness: true
-	validate :atleast_one_is_checked
+
+	#validates :email, :username, presence: true
+	#validates :username, uniqueness: true
+	#validate :atleast_one_is_checked
 
   
 
 
-	def atleast_one_is_checked
-    	errors.add(:base, "Select atleast one output format type") unless workmen || customer
-  	end
+	#def atleast_one_is_checked
+    #	errors.add(:base, "Select atleast one output format type") unless workmen || customer
+  	#end
 
 end

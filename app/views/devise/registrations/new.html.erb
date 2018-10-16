@@ -4,9 +4,36 @@
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :username %><br />
+    <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
   </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address, autocomplete: "address" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :telephone %><br />
+    <%= f.text_field :telephone, autocomplete: "telephone" %>
+  </div>
+
+  I start here!
+  <div class="field">
+    <%= fields_for :account, resource.account do |p| %>
+      <%= p.label :workmen? %><br />
+      <%= p.check_box :workmen? %><br />
+      <%= p.label :customer? %><br />
+      <%= p.check_box :customer? %>
+    <% end %>
+  </div>
+
+  I end here!
 
   <div class="field">
     <%= f.label :password %>

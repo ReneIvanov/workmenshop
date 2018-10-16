@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
   devise_for :users
+  #devise_for :users, controllers: { registrations: 'users/registrations' }
+
   #controller :application do
   #  get 'authorize_user' => :authorize_user
   #end
@@ -17,18 +19,19 @@ Rails.application.routes.draw do
     get 'loged_admin' => :wellcome
   end
 
-  controller :sessions do
-    get 'login' => :new
-    post 'login' => :create
-    delete 'logout' => :destroy
-  end
+  #controller :sessions do
+    #get 'login' => :new
+    #post 'login' => :create
+    #delete 'logout' => :destroy
+  #end
   
   root 'shop#index'
 
   resources :users
-  controller :users do
-    get 'show' => :show
-  end
+
+  #controller :users do
+  #  get 'show' => :show
+  #end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

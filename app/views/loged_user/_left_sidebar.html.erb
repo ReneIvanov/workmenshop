@@ -1,7 +1,7 @@
 <div id="left_sidebar">
  	<table border="0" cellpadding="6" cellspacing="0">
      	<tr> 
-       		<td id="left_sidebar_item" width="140"> <%= link_to 'My profile', controller: "users", action: "show" %> </td>
+       		<td id="left_sidebar_item" width="140"> <%= link_to 'My profile', user_path(current_user) %> </td>
       	</tr>
 
         <tr>

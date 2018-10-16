@@ -1,8 +1,5 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-   
-  skip_before_action :authorize_admin, only: [:show, :new, :edit, :create, :update, :destroy]
-  skip_before_action :authorize_user
   # GET /users
   # GET /users.jsonmodel: user
   def index

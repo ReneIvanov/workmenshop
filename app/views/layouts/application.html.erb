@@ -22,10 +22,10 @@
         </div>
 
         <div id="header_3">
-          <% if session[:user_name] == nil %>
-            <p class="logg"> <%= link_to 'Loggin', login_path %> &nbsp &nbsp or &nbsp &nbsp <%= link_to 'Sign in', new_user_path %></p>
+            <% if !user_signed_in? %>
+            <p class="logg"> <%= link_to 'Loggin', new_user_session_path %> &nbsp &nbsp or &nbsp &nbsp <%= link_to 'Sign in', new_user_registration_path %></p>
           <% else %>
-            <p class="logg"> <%= link_to 'Loggout', logout_path,
+            <p class="logg"> <%= link_to 'Loggout', destroy_user_session_path,
             method: :delete %> &nbsp &nbsp </p>
           <% end %>
 
@@ -46,18 +46,18 @@
             
       <div id="page_content">
         
-        <% if session[:user_name] != nil %>  <!-- if user is loged --> 
-            <% if session[:admin] == true %> <!-- if user is admin -->
+        <% if user_signed_in? %>  <!-- if user is loged --> 
+            <% if session[:admin] == true %> <!-- if user is admin toto-->
               <%= render "loged_admin/left_sidebar" %>
 
-            <% else %>  <!-- if user is user -->
+            <% else %>  <!-- if user is user toto-->
               <%= render "loged_user/left_sidebar" %>  
             <% end %>
           
         <% end %>
 
         <div id="mainbar" 
-          <% if session[:user_name] != nil %> style="width: 590px"
+          <% if user_signed_in? %> style="width: 590px"
           <% end %>   
         >
           <%= yield %>           
