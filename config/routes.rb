@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  devise_for :users
   #controller :application do
   #  get 'authorize_user' => :authorize_user
   #end
