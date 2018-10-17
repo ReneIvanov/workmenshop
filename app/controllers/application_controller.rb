@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   		def configure_permitted_parameters #descripted on https://github.com/plataformatec/devise
     		devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :address, :telephone, account_attributes: [:workmen?, :customer?]]) #allows parameters for sign_up action (keys in devise.rb are permited by default)
-  			devise_parameter_sanitizer.permit(:sign_in, keys: [:username, :address, :telephone, account_attributes: [:workmen?, :customer?]]) #allows parameters for sign_in action (keys in devise.rb are permited by default)
+  			devise_parameter_sanitizer.permit(:sign_in, keys: [:username]) #allows parameters for sign_in action (keys in devise.rb are permited by default)
 			devise_parameter_sanitizer.permit(:account_update, keys: [:username, :address, :telephone, account_attributes: [:workmen?, :customer?]]) #allows parameters for account_update action (keys in devise.rb are permited by default)
   		end
 

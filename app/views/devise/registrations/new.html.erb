@@ -23,7 +23,6 @@
     <%= f.text_field :telephone, autocomplete: "telephone" %>
   </div>
 
-  I start here!
   <div class="field">
     <%= fields_for :account, resource.account do |p| %>
       <%= p.label :workmen? %><br />
@@ -32,8 +31,6 @@
       <%= p.check_box :customer? %>
     <% end %>
   </div>
-
-  I end here!
 
   <div class="field">
     <%= f.label :password %>
