@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   
   resources :accounts
-  devise_for :users
-  #devise_for :users, controllers: { registrations: 'users/registrations' }
+  #devise_for :users
+  devise_for :users, controllers: { registrations: 'my_devise/registrations', confirmations: 'my_devise/confirmations' }
 
   #controller :application do
   #  get 'authorize_user' => :authorize_user

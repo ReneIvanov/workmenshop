@@ -13,17 +13,25 @@ class ApplicationController < ActionController::Base
 			devise_parameter_sanitizer.permit(:account_update, keys: [:username, :address, :telephone]) #allows parameters for account_update action (keys in devise.rb are permited by default)
   		end
 
-		def authorize_user
-			unless User.find_by(user_name: session[:user_name])
-				redirect_to login_url, alert: "Please log in"
-			end
+  		#def after_sign_in_path_for(resource)
+  		#	after_sign_in_path_for(resource) if is_navigational_format?
+		#end
+
+		def after_sign_out_path_for(resource_or_scope)
+  			root_path
 		end
 
-		def authorize_admin
-			unless (User.find_by(user_name: session[:user_name]) and session[:admin] == true)
-				redirect_to login_url, alert: "Please log in"
-			end
-		end
 
+		#def authorize_user
+		#	unless User.find_by(user_name: session[:user_name])
+		#		redirect_to login_url, alert: "Please log in"
+		#	end
+		#end
+
+		#def authorize_admin
+		#	unless (User.find_by(user_name: session[:user_name]) and session[:admin] == true)
+		#		redirect_to login_url, alert: "Please log in"
+		#	end
+		#end
 
 end
