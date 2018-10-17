@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :confirmable, :lockable, :timeoutable, :trackable
 
 	has_one :account, dependent: :delete
-	accepts_nested_attributes_for :account
+	has_and_belongs_to_many :works
 	
 	has_one_attached :profile_picture
 	has_many_attached :photos
