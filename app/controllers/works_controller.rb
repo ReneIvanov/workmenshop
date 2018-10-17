@@ -25,10 +25,11 @@ class WorksController < ApplicationController
   # POST /works.json
   def create
     @work = Work.new(work_params)
+    @work.users << current_user
 
     respond_to do |format|
       if @work.save
-        format.html { redirect_to @work, notice: 'Work was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Work was successfully created.' }
         format.json { render :show, status: :created, location: @work }
       else
         format.html { render :new }
