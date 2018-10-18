@@ -23,9 +23,9 @@
 
         <div id="header_3">
             <% if !user_signed_in? %>
-            <p class="logg"> <%= link_to 'Loggin', new_user_session_path %> &nbsp &nbsp or &nbsp &nbsp <%= link_to 'Sign in', new_user_registration_path %></p>
+            <p class="logg"> <%= link_to 'Sign-in', new_user_session_path %> &nbsp &nbsp or &nbsp &nbsp <%= link_to 'Sign-up', new_user_registration_path %></p>
           <% else %>
-            <p class="logg"> <%= link_to 'Loggout', destroy_user_session_path,
+            <p class="logg"> <%= link_to 'Sign-out', destroy_user_session_path,
             method: :delete %> &nbsp &nbsp </p>
           <% end %>
 
@@ -36,11 +36,11 @@
       <div id="top_menubar">
         <ul id="top_menubar_item">
           <li> <%= link_to 'Introduction', root_path %> </li>
-          <li> 1111 </li>
+          <li> 111 </li>
            <li> 222 </li>
-          <li> 44444 </li>
-          <li> 555555 </li>
-          <li> 6666 </li>
+          <li> 333 </li>
+          <li> 444 </li>
+          <li> 555 </li>
         </ul> 
       </div>
             
@@ -60,6 +60,17 @@
           <% if user_signed_in? %> style="width: 590px"
           <% end %>   
         >
+
+          <% if flash[:alert] %>
+           <%= flash[:alert] %>
+          <% end %>
+          
+          <% if flash[:notice] %>
+            <p> <%= flash[:notice] %> </p>
+          <% end %>
+
+          <br />
+
           <%= yield %>           
         </div>  
               

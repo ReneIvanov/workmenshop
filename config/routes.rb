@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   
   resources :works
+  controller :works do
+    get 'registration_new_work' => :registration_new
+    post 'registration_create_work' => :registration_create
+  end
+
   resources :accounts
   #devise_for :users
   devise_for :users, controllers: { registrations: 'my_devise/registrations', confirmations: 'my_devise/confirmations' }

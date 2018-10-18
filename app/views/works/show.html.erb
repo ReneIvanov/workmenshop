@@ -1,13 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @work.title %>
+  <strong> <%= @work.title%> </strong>
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @work.user %>
+  <strong>Workmens:</strong> <br>
+
+  <% @work.users.each do |u|%>
+  		<%= u.username %> <br>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_work_path(@work) %> |

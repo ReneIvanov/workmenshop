@@ -1,6 +1,4 @@
-<h1>Editing Work</h1>
-
-<%= form_with(model: @work, local: true) do |form| %>
+<%= form_with(model: @work, url: registration_create_work_path, local: true) do |form| %>
   <% if @work.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@work.errors.count, "error") %> prohibited this work from being saved:</h2>
@@ -13,17 +11,20 @@
     </div>
   <% end %>
 
+
+  <div class="field">
+    Please select from existing services:<br />
+    <%= select_tag "existed_works_id", options_from_collection_for_select(@works, "id", "title"), multiple: true %>
+  </div> <br />
+
 <% #if false %>
  <div class="field">
-   <%= form.label :title %>
+   If you haven't found your service, please create new one:<br />
    <%= form.text_field :title %>
  </div>
 <% #end %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Finish" %>
   </div>
 <% end %>
-
-<%= link_to 'Show', @work %> |
-<%= link_to 'Back', works_path %>
