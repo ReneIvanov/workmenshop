@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  #before_action :set_user, only: [:show, :edit, :update, :destroy]
   # GET /users
   # GET /users.jsonmodel: user
   def index
-    @user = User.all
+    @users = User.all
   end
 
   # GET /users/1
@@ -65,17 +65,17 @@ class UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      if (session[:admin] == false) #if I'am not admin
-        @user = User.find_by(user_name: session[:user_name])
-      else #if I'am admin
-        if params[:id] #if I'am admin and request have parameter :id      
-          @user = User.find(params[:id])
-        else #if I'am admin and request don't have parameter :id
-           @user = User.find_by(user_name: session[:user_name])
-        end
-      end
-    end
+    #ef set_user
+    # if (session[:admin] == false) #if I'am not admin
+    #   @user = User.find_by(user_name: session[:user_name])
+    # else #if I'am admin
+    #   if params[:id] #if I'am admin and request have parameter :id      
+    #     @user = User.find(params[:id])
+    #   else #if I'am admin and request don't have parameter :id
+    #      @user = User.find_by(user_name: session[:user_name])
+    #   end
+    # end
+    #nd
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params

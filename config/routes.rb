@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   controller :works do
     get 'registration_new_work' => :registration_new
     post 'registration_create_work' => :registration_create
+    get 'registration_edit_work' => :registration_edit
+    post 'registration_update_work' => :registration_update
   end
 
   resources :accounts

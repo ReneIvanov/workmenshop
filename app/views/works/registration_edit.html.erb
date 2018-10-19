@@ -1,5 +1,7 @@
-<!-- View for a creation of new work and to set a existing works durring user registration -->
-<%= form_with(model: @work, url: registration_create_work_path, local: true) do |form| %>
+<!-- View for a edditing user's works during registration or profile update-->
+<h1>Editing registration Works</h1>
+
+<%= form_with(model: @work, local: true, url: registration_update_work_path) do |form| %>
   <% if @work.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@work.errors.count, "error") %> prohibited this work from being saved:</h2>
@@ -12,7 +14,6 @@
     </div>
   <% end %>
 
-
   <div class="field">
     Please select from existing services:<br />
     <%= select_tag "existed_works_id", options_from_collection_for_select(@works, "id", "title"), multiple: true %>
@@ -24,6 +25,9 @@
   </div>
 
   <div class="actions">
-    <%= form.submit "Finish" %>
+    <%= form.submit %>
   </div>
 <% end %>
+
+<%= link_to 'Show', @work %> |
+<%= link_to 'Back', works_path %>

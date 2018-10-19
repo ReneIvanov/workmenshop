@@ -47,7 +47,7 @@ class AccountsController < ApplicationController
   def update
     respond_to do |format|
       if @account.update(account_params)
-        format.html { redirect_to new_work_path, notice: 'Please continue.' }
+        format.html { redirect_to registration_edit_work_path, notice: 'Please continue.' }
         format.json { render :show, status: :ok, location: @account }
       else
         format.html { render :edit }

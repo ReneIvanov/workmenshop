@@ -1,6 +1,7 @@
-<h1>Editing Work</h1>
+<!-- View for a edditing separate works -->
+<h1>Editing Works</h1>
 
-<%= form_with(model: @work, local: true) do |form| %>
+<%= form_with(model: @work, local: true, url: edit_work_path) do |form| %>
   <% if @work.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@work.errors.count, "error") %> prohibited this work from being saved:</h2>
@@ -13,12 +14,10 @@
     </div>
   <% end %>
 
-<% #if false %>
- <div class="field">
-   <%= form.label :title %>
-   <%= form.text_field :title %>
- </div>
-<% #end %>
+  <div class="field">
+    If you haven't found your service, please create new one:<br />
+    <%= form.text_field :title %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

@@ -1,6 +1,7 @@
+<!-- View for a separate create of new work (e.g. by admin) --> 
 <h1>New Work</h1>
 
-<%= form_with(model: @work, local: true) do |form| %>
+<%= form_with(model: @work, local: true, url: new_work_path) do |form| %>
   <% if @work.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@work.errors.count, "error") %> prohibited this work from being saved:</h2>
@@ -25,4 +26,3 @@
   </div>
 <% end %>
 
-<%= link_to 'Back', works_path %>

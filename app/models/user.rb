@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :confirmable, :lockable, :timeoutable, :trackable
 
 	has_one :account, dependent: :delete
-	has_and_belongs_to_many :works
+	has_and_belongs_to_many :works, dependent: :delete
 	
 	has_one_attached :profile_picture
 	has_many_attached :photos
@@ -26,11 +26,8 @@ class User < ApplicationRecord
   	end
 
   #update table users_works for current_user
-  def update_existed_works(existed_works_id)
-    self.works
-
-
-
+  def update_existed_works(existed_works_id) 
+    self.work_ids = existed_works_id
   end
 
 
