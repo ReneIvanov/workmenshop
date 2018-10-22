@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :basic_rights, only: [:index, :show, :new, :edit]
+  #before_action :basic_rights, only: [:index, :show, :new, :edit]
   #before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users

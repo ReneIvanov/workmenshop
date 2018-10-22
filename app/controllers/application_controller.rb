@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 	
 	#before_action :authorize_user
 	#before_action :authorize_admin
-	
+	before_action :basic_rights
 
 	before_action :configure_permitted_parameters, if: :devise_controller?  #because we want to add parameters to user = devise
 
@@ -51,5 +51,6 @@ class ApplicationController < ActionController::Base
 				@is_customer = policy(current_user).is_customer
 				@is_account = current_user.account.is_a? Account #has current user account?
 			end
+			
 		end
 end
