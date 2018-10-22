@@ -1,15 +1,25 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_account, only: [:edit, :update, :destroy]
+  #before_action :set_current_user
 
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = Account.all
+    if user_signed_in? && policy(current_user).is_admin
+      @accounts = Account.all
+    else
+      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
+    end
   end
 
   # GET /accounts/1
   # GET /accounts/1.json
   def show
+    if policy(Account.find(params[:id])).can_be_seen_by(current_user)
+      @account = set_account
+    else
+      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
+    end
   end
 
   # GET /accounts/new
@@ -80,4 +90,12 @@ class AccountsController < ApplicationController
     def account_params
       params.require(:account).permit(:workmen, :customer)
     end
+
+    #def set_current_user
+    #  if !current_user
+    #    def current_user
+    #      return User.new
+    #    end
+    #  end
+    #end
 end

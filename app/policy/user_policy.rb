@@ -1,4 +1,4 @@
-class UserPolicy
+class UserPolicy < ApplicationPolicy
 	
 	def initialize(user_obj)
 		@user_obj = user_obj
