@@ -24,22 +24,26 @@ class AccountsController < ApplicationController
   # POST /accounts
   # POST /accounts.json
   def create
-    @account = Account.new(account_params)
-    @account.user_id = current_user.id    
-
-    respond_to do |format|
-      if @account.save
-        if @account.workmen?
-          format.html { redirect_to registration_new_work_path, notice: 'Please continue with specifing your services.' }
+    if current_user.account
+      current_user.account.delete
+    end  
+      @account = Account.new(account_params)
+      @account.user_id = current_user.id    
+    
+      respond_to do |format|
+        if @account.save
+          if @account.workmen?
+            format.html { redirect_to registration_new_work_path, notice: 'Please continue with specifing your services.' }
+          else
+            format.html { redirect_to root_path, notice: 'Your account has been succefully created.' }
+          end
+          format.json { render :show, status: :created, location: @account }
         else
-          format.html { redirect_to root_path, notice: 'Your account has been succefully created.' }
+          format.html { render :new }
+          format.json { render json: @account.errors, status: :unprocessable_entity }
         end
-        format.json { render :show, status: :created, location: @account }
-      else
-        format.html { render :new }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
       end
-    end
+
   end
 
   # PATCH/PUT /accounts/1

@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
-
+	#before_action :authenticate_user!
+	
 	#before_action :authorize_user
 	#before_action :authorize_admin
+	
 
 	before_action :configure_permitted_parameters, if: :devise_controller?  #because we want to add parameters to user = devise
 
@@ -34,4 +36,20 @@ class ApplicationController < ActionController::Base
 		#	end
 		#end
 
+		def policy(object)
+			@object_string = object.class.name 			#string = name of object class
+			@object_policy_string = @object_string << "Policy"	#string = name of policy class 
+			@object_policy_const = Object.const_get(@object_policy_string)	#constance of policy class
+		
+			@object_policy = @object_policy_const.new(object)	#return policy object (e.g. if claas of object in argument is "User", this action returm object of UserPolicy)
+		end
+
+		def basic_rights	#set some basic informations for views about user rights in order to display some kind of data. 
+			if user_signed_in?	#if is current_user sign in
+				@is_admin = policy(current_user).is_admin
+				@is_workmen = policy(current_user).is_workmen
+				@is_customer = policy(current_user).is_customer
+				@is_account = current_user.account.is_a? Account #has current user account?
+			end
+		end
 end

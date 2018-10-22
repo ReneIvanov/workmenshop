@@ -46,14 +46,10 @@
             
       <div id="page_content">
         
-        <% if user_signed_in? %>  <!-- if user is loged --> 
-            <% if session[:admin] == true %> <!-- if user is admin toto-->
+        <% if @is_admin%>  <!-- if user is admin --> 
               <%= render "loged_admin/left_sidebar" %>
-
-            <% else %>  <!-- if user is user toto-->
-              <%= render "loged_user/left_sidebar" %>  
-            <% end %>
-          
+        <% elsif user_signed_in? %>  <!-- if user is not admin but is signed in-->
+          <%= render "loged_user/left_sidebar" %>  
         <% end %>
 
         <div id="mainbar" 

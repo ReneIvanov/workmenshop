@@ -2,11 +2,11 @@
  	<table border="0" cellpadding="6" cellspacing="0">
      	<tr> 
        		<td id="left_sidebar_item" width="140">
-       			<%= link_to 'List of users', user_path %> </td>
+       			<%= link_to 'List of users', users_path %> </td>
       	</tr>
 
         <tr>
-           <td id="left_sidebar_item" width="140"> <%= link_to 'My profile', controller: "users", action: "show", id: session[:id] %> </td>
+           <td id="left_sidebar_item" width="140"> <%= link_to 'My profile', edit_user_registration_path %> </td>
         </tr>
                  
         <tr>

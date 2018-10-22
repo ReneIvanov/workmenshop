@@ -1,9 +1,15 @@
 class UsersController < ApplicationController
+  before_action :basic_rights, only: [:index, :show, :new, :edit]
   #before_action :set_user, only: [:show, :edit, :update, :destroy]
+
   # GET /users
   # GET /users.jsonmodel: user
   def index
-    @users = User.all
+    if user_signed_in? && policy(current_user).is_admin
+      @users = User.all
+    else
+      redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
+    end
   end
 
   # GET /users/1

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :accounts
+  
   #devise_for :users
   devise_for :users, controllers: { registrations: 'my_devise/registrations', confirmations: 'my_devise/confirmations' }
 
@@ -33,11 +34,11 @@ Rails.application.routes.draw do
     #post 'login' => :create
     #delete 'logout' => :destroy
   #end
-  
-  root 'shop#index'
 
   resources :users
+  root 'shop#index'
 
+  
   #controller :users do
   #  get 'show' => :show
   #end
