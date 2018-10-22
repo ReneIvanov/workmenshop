@@ -36,6 +36,14 @@ class ApplicationController < ActionController::Base
 		#	end
 		#end
 
+		def set_current_user
+    		if current_user == nil
+    			def current_user
+    				return User.new
+    			end
+    		end
+    	end
+
 		def policy(object)
 			@object_string = object.class.name 			#string = name of object class
 			@object_policy_string = @object_string << "Policy"	#string = name of policy class 

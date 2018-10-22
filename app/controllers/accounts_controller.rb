@@ -4,12 +4,21 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = Account.all
+    if user_signed_in? && policy(current_user).is_admin
+      @accounts = Account.all
+    else
+      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
+    end
   end
 
   # GET /accounts/1
   # GET /accounts/1.json
   def show
+    if user_signed_in? && policy(Account.find(params[:id])).can_be_seen_by(current_user)
+      @account = set_account
+    else
+      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
+    end
   end
 
   # GET /accounts/new
