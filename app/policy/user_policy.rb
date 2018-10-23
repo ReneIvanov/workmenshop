@@ -32,4 +32,16 @@ class UserPolicy < ApplicationPolicy
 		end
 	end
 
+	def can_see(observed_obj)
+		policy(@user_obj).is_admin || @user_obj.id == observed_obj.id
+	end
+
+	def can_edit(edited_obj)
+		policy(@user_obj).is_admin || @user_obj.id == edited_obj.id
+	end
+
+	def can_destroy(destroyed_obj)
+		policy(@user_obj).is_admin || @user_obj.id == destroyed_obj.id
+	end
+
 end

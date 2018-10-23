@@ -89,14 +89,18 @@ class WorksController < ApplicationController
   # PATCH/PUT /works/1
   # PATCH/PUT /works/1.json
   def update
-    respond_to do |format|
-      if @work.update(work_params)
-        format.html { redirect_to @work, notice: 'Work was successfully updated.' }
-        format.json { render :show, status: :ok, location: @work }
-      else
-        format.html { render :edit }
-        format.json { render json: @work.errors, status: :unprocessable_entity }
+    if policy(@work).can_be_edited_by(current_user)
+      respond_to do |format|
+        if @work.update(work_params)
+          format.html { redirect_to @work, notice: 'Work was successfully updated.' }
+          format.json { render :show, status: :ok, location: @work }
+        else
+          format.html { render :edit }
+          format.json { render json: @work.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
   end
 
@@ -128,10 +132,14 @@ class WorksController < ApplicationController
   # DELETE /works/1
   # DELETE /works/1.json
   def destroy
-    @work.destroy
-    respond_to do |format|
-      format.html { redirect_to works_url, notice: 'Work was successfully destroyed.' }
-      format.json { head :no_content }
+    if policy(@work).can_be_destroyed_by(current_user)
+      @work.destroy
+      respond_to do |format|
+        format.html { redirect_to works_url, notice: 'Work was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
   end
 
@@ -140,12 +148,6 @@ class WorksController < ApplicationController
     def set_work
       @work = Work.find(params[:id])
     end
-
-
-    
-
-
-
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def work_params

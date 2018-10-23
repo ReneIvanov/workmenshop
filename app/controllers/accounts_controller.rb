@@ -1,5 +1,4 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   # GET /accounts
   # GET /accounts.json
@@ -23,24 +22,35 @@ class AccountsController < ApplicationController
 
   # GET /accounts/new
   def new
-    @account = Account.new
+    if user_signed_in?
+      @account = Account.new
+    else
+      redirect_to new_user_session_path, notice: 'Please sign in before a account creation.'
+    end
   end
 
   # GET /accounts/1/edit
   def edit
+    if user_signed_in? && policy(Account.find(params[:id])).can_be_seen_by(current_user)
+      @account = set_account
+    else
+      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
+    end
+
   end
 
   # POST /accounts
   # POST /accounts.json
   def create
-    if current_user.account
-      current_user.account.delete
-    end  
+    @current_account = current_user.account if current_user.account
+
+    if user_signed_in? 
       @account = Account.new(account_params)
       @account.user_id = current_user.id    
     
       respond_to do |format|
         if @account.save
+          @current_account.delete if @current_account
           if @account.workmen?
             format.html { redirect_to registration_new_work_path, notice: 'Please continue with specifing your services.' }
           else
@@ -52,30 +62,40 @@ class AccountsController < ApplicationController
           format.json { render json: @account.errors, status: :unprocessable_entity }
         end
       end
-
+    end
   end
 
   # PATCH/PUT /accounts/1
   # PATCH/PUT /accounts/1.json
   def update
-    respond_to do |format|
-      if @account.update(account_params)
-        format.html { redirect_to registration_edit_work_path, notice: 'Please continue.' }
-        format.json { render :show, status: :ok, location: @account }
-      else
-        format.html { render :edit }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
+    if user_signed_in? && policy(Account.find(params[:id])).can_be_seen_by(current_user)
+      @account = set_account    
+      respond_to do |format|
+        if @account.update(account_params)
+          format.html { redirect_to registration_edit_work_path, notice: 'Please continue.' }
+          format.json { render :show, status: :ok, location: @account }
+        else
+          format.html { render :edit }
+          format.json { render json: @account.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
   end
 
   # DELETE /accounts/1
   # DELETE /accounts/1.json
   def destroy
-    @account.destroy
-    respond_to do |format|
-      format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
-      format.json { head :no_content }
+    if user_signed_in? && policy(Account.find(params[:id])).can_be_seen_by(current_user)
+      @account = set_account
+      @account.destroy
+      respond_to do |format|
+        format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
   end
 

@@ -15,6 +15,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if user_signed_in? && policy(current_user).can_see(User.find(params[:id]))
+      set_user
+    else
+      redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
+    end
   end
 
   # GET /users/new
@@ -24,6 +29,11 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    if user_signed_in? && policy(current_user).can_edit(User.find(params[:id]))
+      set_user
+    else
+      redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
+    end
   end
 
   # POST /users
@@ -47,44 +57,45 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'uUser was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    if user_signed_in? && policy(current_user).can_edit(User.find(params[:id]))
+      set_user
+      respond_to do |format|
+        if @user.update(user_params)
+          format.html { redirect_to @user, notice: 'uUser was successfully updated.' }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :edit }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
   end
 
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
+    if policy(current_user).can_destroy(User.find(params[:id]))
+      set_user
+      @user.destroy
+      respond_to do |format|
+        format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    #ef set_user
-    # if (session[:admin] == false) #if I'am not admin
-    #   @user = User.find_by(user_name: session[:user_name])
-    # else #if I'am admin
-    #   if params[:id] #if I'am admin and request have parameter :id      
-    #     @user = User.find(params[:id])
-    #   else #if I'am admin and request don't have parameter :id
-    #      @user = User.find_by(user_name: session[:user_name])
-    #   end
-    # end
-    #nd
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :address, :workmen, :customer, :image_url, :email, :telephone, :user_name, :password, :profile_picture, photos: [])
+    end
+
+    def set_user
+      @user = User.find(params[:id])
     end
 end
