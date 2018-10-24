@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     if user_signed_in? && policy(current_user).can_see(User.find(params[:id]))
-      set_user
+      set_user 
     else
       redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
