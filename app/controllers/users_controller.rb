@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   def index
     if user_signed_in? && policy(current_user).is_admin
       @users = User.all
+      @accounts = Account.all
     else
       redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
