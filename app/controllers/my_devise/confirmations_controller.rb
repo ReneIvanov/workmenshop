@@ -1,7 +1,8 @@
 class MyDevise::ConfirmationsController < Devise::ConfirmationsController
-	protected
-
-	# The path used after resending confirmation instructions.
+	
+  protected
+	
+  # The path used after resending confirmation instructions.
   def after_resending_confirmation_instructions_path_for(resource_name)
     is_navigational_format? ? new_session_path(resource_name) : '/'
   end
@@ -14,5 +15,4 @@ class MyDevise::ConfirmationsController < Devise::ConfirmationsController
       new_session_path(resource_name)
     end
   end
-
 end

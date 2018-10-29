@@ -1,5 +1,4 @@
 class AccountsController < ApplicationController
-
   # GET /accounts
   # GET /accounts.json
   def index
@@ -36,7 +35,6 @@ class AccountsController < ApplicationController
     else
       redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
-
   end
 
   # POST /accounts
@@ -47,7 +45,6 @@ class AccountsController < ApplicationController
     if user_signed_in? 
       @account = Account.new(account_params)
       @account.user_id = current_user.id    
-    
       respond_to do |format|
         if @account.save
           @current_account.delete if @current_account
@@ -100,13 +97,14 @@ class AccountsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_account
-      @account = Account.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def account_params
-      params.require(:account).permit(:workmen, :customer)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_account
+    @account = Account.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def account_params
+    params.require(:account).permit(:workmen, :customer)
+  end
 end
