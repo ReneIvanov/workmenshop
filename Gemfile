@@ -64,3 +64,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Devise gem for user autentication
 gem 'devise'
+
+gem 'sidekiq'
+gem 'sinatra'

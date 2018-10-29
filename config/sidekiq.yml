@@ -1,0 +1,6 @@
+---
+:verbose: true
+:concurrency: <%= (ENV['RAILS_MAX_THREADS'] || 4).to_i %>
+:queues:
+ - ['mailers', 30]
+ - ['default', 30]
