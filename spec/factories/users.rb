@@ -1,17 +1,16 @@
 
-FactoryBot.define do
-=begin  
-  factory :person1, class: Person do
-    name "Person1"
-    address "Address1"
-    workmen true
-    customer false
-    email "person1@gmail.com"
-    telephone "1111 111 111"
-    user_name "User1"
-    password "asdf1"
-  end
-=end
+FactoryBot.define do 
+#  factory :person1, class: Person do
+#    name "Person1"
+#    address "Address1"
+#    workmen true
+#    customer false
+#    email "person1@gmail.com"
+#    telephone "1111 111 111"
+#    user_name "User1"
+#    password "asdf1"
+#  end
+
   factory :user, class: User do
     sequence(:name, 1) { |n| "User#{n}" }
     sequence(:address, 1) { |n| "Address#{n}" }
