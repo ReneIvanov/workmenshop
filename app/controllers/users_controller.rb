@@ -14,6 +14,10 @@ class UsersController < ApplicationController
   def show
     if user_signed_in? && policy(current_user).can_see(User.find(params[:id]))
       set_user 
+      respond_to do |format|
+        format.html {render :show}
+        format.json {render json:  show_like_json}
+      end  
     else
       redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
@@ -26,6 +30,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    
     if user_signed_in? && policy(current_user).can_edit(User.find(params[:id]))
       set_user
     else
@@ -94,5 +99,9 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def show_like_json
+      UserSerializer.new(@user).as_json
   end
 end
