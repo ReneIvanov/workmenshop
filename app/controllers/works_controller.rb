@@ -5,6 +5,7 @@ class WorksController < ApplicationController
   # GET /works.json
   def index
     @works = Work.all
+    render json: @works
   end
 
   # GET /works/1

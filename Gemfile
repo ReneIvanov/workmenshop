@@ -67,3 +67,6 @@ gem 'devise'
 
 gem 'sidekiq'
 gem 'sinatra'
+
+gem 'active_model_serializers'
+
