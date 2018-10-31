@@ -4,6 +4,10 @@ class UsersController < ApplicationController
   def index
     if user_signed_in? && policy(current_user).is_admin
       @users = User.all
+      respond_to do |format|
+        format.html {render :index}
+        format.json {render json:  show_like_json(@users)}
+      end
     else
       redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
@@ -17,7 +21,7 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html {render :show}
         format.json {render json:  show_like_json}
-      end  
+      end
     else
       redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
     end
@@ -101,7 +105,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def show_like_json
-      UserSerializer.new(@user).as_json
+  def show_like_json(users)
+      UserSerializer.new.as_json(users)
   end
 end
