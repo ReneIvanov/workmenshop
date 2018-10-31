@@ -1,4 +1,3 @@
-
 FactoryBot.define do 
 #  factory :person1, class: Person do
 #    name "Person1"
@@ -21,5 +20,4 @@ FactoryBot.define do
     sequence(:user_name, 1) { |n| "User#{n}" }
     password "asdf"
   end
-
 end

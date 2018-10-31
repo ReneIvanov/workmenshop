@@ -24,7 +24,6 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe WorksController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Work. As you add validations to Work, be sure to
   # adjust the attributes here as well.
@@ -126,9 +125,7 @@ RSpec.describe WorksController, type: :controller do
   describe "DELETE #destroy" do
     it "destroys the requested work" do
       work = Work.create! valid_attributes
-      expect {
-        delete :destroy, params: {id: work.to_param}, session: valid_session
-      }.to change(Work, :count).by(-1)
+      expect { delete :destroy, params: { id: work.to_param }, session: valid_session }.to change(Work, :count).by(-1)
     end
 
     it "redirects to the works list" do
@@ -137,5 +134,4 @@ RSpec.describe WorksController, type: :controller do
       expect(response).to redirect_to(works_url)
     end
   end
-
 end

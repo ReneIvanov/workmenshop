@@ -24,7 +24,6 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe AccountsController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Account. As you add validations to Account, be sure to
   # adjust the attributes here as well.
@@ -137,5 +136,4 @@ RSpec.describe AccountsController, type: :controller do
       expect(response).to redirect_to(accounts_url)
     end
   end
-
 end

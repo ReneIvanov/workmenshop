@@ -1,6 +1,6 @@
 class WorksController < ApplicationController
   before_action :set_work, only: [:show, :edit, :update, :destroy]
-  
+
   # GET /works
   # GET /works.json
   def index
@@ -59,13 +59,7 @@ class WorksController < ApplicationController
   # creation of new work and to set a existing works durring user registration
   def registration_create
     current_user.update_existed_works(params[:existed_works_id])
-    #if params[:existed_works_id] #if there are a existed works params
-    #  @existed_works_id = params[:existed_works_id].map(&:to_i) #save existed workd id like array of integers
-    #  @existed_works = Work.find(@existed_works_id) #find all works according array of id
-    #  @existed_works.each do |w|
-    #    current_user.add_work w #call model method
-    #  end
-    #end
+
     if !work_params[:title].empty?  #if there is a new work with params
       @work = Work.new(work_params)
       @work.add_user(current_user)  #calls model method
@@ -126,7 +120,7 @@ class WorksController < ApplicationController
       else
         format.html { redirect_to root_path, notice: 'Work was successfully created.' }
       end
-    end 
+    end
   end
 
   # DELETE /works/1
@@ -144,13 +138,14 @@ class WorksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_work
-      @work = Work.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def work_params
-      params.require(:work).permit(:title, :existed_works_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_work
+    @work = Work.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def work_params
+    params.require(:work).permit(:title, :existed_works_id)
+  end
 end

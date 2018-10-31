@@ -2,10 +2,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   #pending "add some examples to (or delete) #{__FILE__}"
-
   describe "- durring creation" do
     context "- valid creation" do
-      
       before do
         @count = User.count
         create :user
@@ -18,10 +16,9 @@ RSpec.describe User, type: :model do
       it "- should be valid." do
         expect(User.last.valid?).to eq(true)
       end
-    end 
+    end
 
     context "- default user details" do
-
       let(:user1) { create :user }
       let(:user2) { create :user }
 
@@ -35,8 +32,8 @@ RSpec.describe User, type: :model do
           expect(user.telephone).to eq("1111 111 111")
           expect(usern.user_name).to include("User")
           expect(user.password_digest).to eq("asdf")
-        end 
+        end
       end
-    end  
+    end
   end
 end
