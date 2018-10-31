@@ -6,7 +6,7 @@ class UsersController < ApplicationController
       @users = User.all
       respond_to do |format|
         format.html {render :index}
-        format.json {render json:  show_like_json(current_user)}
+        format.json {render json: show_like_json(@users)}
       end
     else
       redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
