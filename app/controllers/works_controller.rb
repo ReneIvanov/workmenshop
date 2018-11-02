@@ -7,7 +7,7 @@ class WorksController < ApplicationController
     @works = Work.all
     respond_to do |format|
       format.html { render :index }
-      format.json { render json: { response: show_like_json(@works), status: "OK" } }
+      format.json { render json: { response: { works: show_like_json(@works) }, status: "OK" } }
     end
   end
 
@@ -16,7 +16,7 @@ class WorksController < ApplicationController
   def show
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: { response: show_like_json(@work), status: "OK" } }
+      format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
     end
   end
 
@@ -26,7 +26,7 @@ class WorksController < ApplicationController
     @work = Work.new
     respond_to do |format|
       format.html { render :new }
-      format.json { render json: { response: show_like_json(@work), status: "OK" } }
+      format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
     end
   end
 
@@ -37,7 +37,7 @@ class WorksController < ApplicationController
     @works = Work.all
     respond_to do |format|
       format.html { render :registration_new }
-      format.json { render json: { response: show_like_json(@works), status: "OK" } }
+      format.json { render json: { response: { works: show_like_json(@works) }, status: "OK" } }
     end
   end
 
@@ -46,7 +46,7 @@ class WorksController < ApplicationController
   def edit
     respond_to do |format|
       format.html { render :edit }
-      format.json { render json: { response: show_like_json(@work), status: "OK" } }
+      format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
     end
   end
 
@@ -71,10 +71,10 @@ class WorksController < ApplicationController
     respond_to do |format|
       if @work.save
         format.html { redirect_to root_path, notice: 'Work was successfully created.' }
-        format.json { render json: { response: show_like_json(@work), status: "Created" } }
+        format.json { render json: { response: { work: show_like_json(@work) }, status: "Created" } }
       else
         format.html { render :new }
-        format.json { render json: { response: show_like_json(@work), status: "Unprocessable Entity" } }
+        format.json { render json: { response: { work: show_like_json(@work) }, status: "Unprocessable Entity" } }
       end
     end
   end
@@ -93,10 +93,10 @@ class WorksController < ApplicationController
       if defined? @work
         if @work.save
           format.html { redirect_to root_path, notice: 'Work was successfully created.' }
-          format.json { render json: { response: show_like_json(@work), status: "Created" } }
+          format.json { render json: { response: { work: show_like_json(@work) }, status: "Created" } }
         else
           format.html { render :new }
-          format.json { render json: { response: show_like_json(@work), status: "Unprocessable Entity" } }
+          format.json { render json: { response: { work: show_like_json(@work) }, status: "Unprocessable Entity" } }
         end
       else
         format.html { redirect_to root_path, notice: 'Works was successfully setted - new work has not been created.' }
@@ -112,10 +112,10 @@ class WorksController < ApplicationController
       respond_to do |format|
         if @work.update(work_params)
           format.html { redirect_to @work, notice: 'Work was successfully updated.' }
-          format.json { render json: { response: show_like_json(@work), status: "OK" } }
+          format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
         else
           format.html { render :edit }
-          format.json { render json: { response: show_like_json(@work), status: "Unprocessable Entity" } }
+          format.json { render json: { response: { work: show_like_json(@work) }, status: "Unprocessable Entity" } }
         end
       end
     else
@@ -137,12 +137,13 @@ class WorksController < ApplicationController
       if defined? @work
         if @work.save
           format.html { redirect_to root_path, notice: 'Work was successfully created.' }
-          format.json { render json: { response: show_like_json(@work), status: "OK" } }
+          format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
         else
           format.html { render :new }
-          format.json { render json: { response: show_like_json(@work), status: "Unprocessable Entity" } }
+          format.json { render json: { response: { work: show_like_json(@work) }, status: "Unprocessable Entity" } }
         end
       else
+        format.html { redirect_to root_path, notice: 'Works was successfully setted - new work has not been created.' }
         format.json { render json: { response: "There is no new work.", status: "OK" } }
       end
     end

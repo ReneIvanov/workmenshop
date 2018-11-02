@@ -6,7 +6,7 @@ class AccountsController < ApplicationController
       @accounts = Account.all
       respond_to do |format|
         format.html { render :index }
-        format.json { render json: { response: show_like_json(@accounts), status: "OK" } }
+        format.json { render json: { response: { accounts: show_like_json(@accounts) }, status: "OK" } }
       end
     else
       unauthorized
@@ -20,7 +20,7 @@ class AccountsController < ApplicationController
       @account = set_account
       respond_to do |format|
         format.html { render :show }
-        format.json { render json: { response: show_like_json(@account), status: "OK" } }
+        format.json { render json: { response: { account: show_like_json(@account) }, status: "OK" } }
       end
     else
       unauthorized
@@ -33,7 +33,7 @@ class AccountsController < ApplicationController
       @account = Account.new
       respond_to do |format|
         format.html { render :new }
-        format.json { render json: { response: show_like_json(@account), status: "OK" } }
+        format.json { render json: { response: { account: show_like_json(@account) }, status: "OK" } }
       end
     else
       unauthorized
@@ -46,7 +46,7 @@ class AccountsController < ApplicationController
       @account = set_account
       respond_to do |format|
         format.html { render :edit }
-        format.json { render json: { response: show_like_json(@account), status: "OK" } }
+        format.json { render json: { response: { account: show_like_json(@account) }, status: "OK" } }
       end
     else
       unauthorized
@@ -69,10 +69,10 @@ class AccountsController < ApplicationController
           else
             format.html { redirect_to root_path, notice: 'Your account has been succefully created.' }
           end
-          format.json { render json: { response: show_like_json(@account), status: "Created" } }
+          format.json { render json: { response: { account: show_like_json(@account) }, status: "Created" } }
         else
           format.html { render :new }
-          format.json { render json: { response: show_like_json(@account), status: "Unprocessable Entity" } }
+          format.json { render json: { response: { account: show_like_json(@account) }, status: "Unprocessable Entity" } }
         end
       end
     else
@@ -88,10 +88,10 @@ class AccountsController < ApplicationController
       respond_to do |format|
         if @account.update(account_params)
           format.html { redirect_to registration_edit_work_path, notice: 'Please continue.' }
-          format.json { render json: { response: show_like_json(@account), status: "OK" } }
+          format.json { render json: { response: { account: show_like_json(@account) }, status: "OK" } }
         else
           format.html { render :edit }
-          format.json { render json: { response: show_like_json(@account), status: "Unprocessable Entity" } }
+          format.json { render json: { response: {account: show_like_json(@account) }, status: "Unprocessable Entity" } }
         end
       end
     else

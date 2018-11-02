@@ -6,7 +6,7 @@ class UsersController < ApplicationController
       @users = User.all
       respond_to do |format|
         format.html { render :index }
-        format.json { render json: { response: show_like_json(@users), status: "OK" } }
+        format.json { render json: { response: { users: show_like_json(@users) }, status: "OK" } }
       end
     else
       unauthorized
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       set_user 
       respond_to do |format|
         format.html { render :show }
-        format.json { render json: { response: show_like_json(@user), status: "OK" } }
+        format.json { render json: { response: { user: show_like_json(@user) }, status: "OK" } }
       end
     else
       unauthorized
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     @user = User.new
     respond_to do |format|
       format.html { render :new }
-      format.json { render json: { response: show_like_json(@user), status: "OK" } }
+      format.json { render json: { response: { user: show_like_json(@user) }, status: "OK" } }
     end   
   end
 
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
       set_user
       respond_to do |format|
         format.html { render :edit }
-        format.json { render json: { response: show_like_json(@user), status: "OK" } }
+        format.json { render json: { response: { user: show_like_json(@user) }, status: "OK" } }
       end
     else
       unauthorized
@@ -56,10 +56,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         format.html { redirect_to root_path, notice: 'User was successfully created. To continue pleale log in.' }
-        format.json { render json: { response: show_like_json(@user), status: "Created" } }
+        format.json { render json: { response: { user: show_like_json(@user) }, status: "Created" } }
       else
         format.html { render :new, notice: 'User was not created. Please try again.' }
-        format.json { render json: { response: show_like_json(@user), status: "Unprocessable Entity" } }
+        format.json { render json: { response: {user: show_like_json(@user) }, status: "Unprocessable Entity" } }
       end
     end
   end
@@ -72,10 +72,10 @@ class UsersController < ApplicationController
       respond_to do |format|
         if @user.update(user_params)
           format.html { redirect_to @user, notice: 'User was successfully updated.' }
-          format.json { render json: { response: show_like_json(@user), status: "OK" } }
+          format.json { render json: { response: { user: show_like_json(@user) }, status: "OK" } }
         else
           format.html { render :edit }
-          format.json { render json: { response: show_like_json(@user), status: "Unprocessable Entity" } }
+          format.json { render json: { response: { user: show_like_json(@user) }, status: "Unprocessable Entity" } }
         end
       end
     else
