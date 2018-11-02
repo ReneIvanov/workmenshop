@@ -1,8 +1,16 @@
 class UserSerializer
-  #def initialize(user_obj)
-  #  @user_obj = user_obj
-  #end
-  
+  def initialize(user_obj)
+    @users_array = []
+    case user_obj.class.name
+    when "ActiveRecord::Relation"  #if there are more users
+      user_obj.each do |user|
+        @users_array << user
+      end
+    when "User"  #if there are only one users
+      @users_array << user_obj
+    end
+  end
+
   def user_as_json(user)
     user_hash = 
       {
@@ -11,29 +19,12 @@ class UserSerializer
       }
   end
 
-  def as_json(users_obj)
+  def as_json
     @json_hash = {users: []}
-
-    if users_obj.class.name == "ActiveRecord::Relation"
-      build_hash_from_relation(users_obj)
-    elsif users_obj.class.name == "User"
-      build_hash_from_model(users_obj)
-    else
-      return @json_hash
-    end
-  end
-
-  def build_hash_from_relation(users)
-    users.each do |user|
+    @users_array.each do |user|
       user_hash = user_as_json(user)
       @json_hash[:users] << user_hash
     end
     return @json_hash
-  end
-
-  def build_hash_from_model(user)
-    user_hash = user_as_json(user)
-      @json_hash[:users] << user_hash
-      return @json_hash
   end
 end

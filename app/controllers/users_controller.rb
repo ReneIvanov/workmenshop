@@ -106,6 +106,6 @@ class UsersController < ApplicationController
   end
 
   def show_like_json(users)
-      UserSerializer.new.as_json(users)
+      UserSerializer.new(users).as_json
   end
 end
