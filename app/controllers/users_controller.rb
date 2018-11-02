@@ -91,7 +91,7 @@ class UsersController < ApplicationController
       @user.destroy
       respond_to do |format|
         format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-         format.json { render json: { response: "User has been destroyed.", status: "No Content" } }
+        format.json { render json: { response: "User has been destroyed.", status: "No Content" } }
       end
     else
       unauthorized
@@ -111,12 +111,5 @@ class UsersController < ApplicationController
 
   def show_like_json(users)
       UserSerializer.new(users).as_json
-  end
-
-  def unauthorized
-    respond_to do |format|
-      format.html { redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.' }
-      format.json { render json: { response: "You have not rights for this action - please sign in with necessary rights.", status: "Unauthorized" } }
-    end
   end
 end

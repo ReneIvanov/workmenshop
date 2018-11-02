@@ -5,17 +5,29 @@ class WorksController < ApplicationController
   # GET /works.json
   def index
     @works = Work.all
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: { response: show_like_json(@works), status: "OK" } }
+    end
   end
 
   # GET /works/1
   # GET /works/1.json
   def show
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: { response: show_like_json(@work), status: "OK" } }
+    end
   end
 
   # GET /works/new
   # creation of separate new work
   def new
     @work = Work.new
+    respond_to do |format|
+      format.html { render :new }
+      format.json { render json: { response: show_like_json(@work), status: "OK" } }
+    end
   end
 
   # GET /registration_new_work
@@ -23,11 +35,19 @@ class WorksController < ApplicationController
   def registration_new
     @work = Work.new
     @works = Work.all
+    respond_to do |format|
+      format.html { render :registration_new }
+      format.json { render json: { response: show_like_json(@works), status: "OK" } }
+    end
   end
 
   # GET /works/1/edit
   # edition of separate work
   def edit
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render json: { response: show_like_json(@work), status: "OK" } }
+    end
   end
 
   # GET /works/1/edit
@@ -36,6 +56,10 @@ class WorksController < ApplicationController
     @work = Work.new
     @works = Work.all
     @existed_works_id = current_user.work_ids
+    respond_to do |format|
+      format.html { render :registration_edit }
+      format.json { render json: { response: {all_works: show_like_json(@works), existed_work_ids: @existed_works_id}, status: "OK" } }
+    end
   end
 
   # POST /works
@@ -47,10 +71,10 @@ class WorksController < ApplicationController
     respond_to do |format|
       if @work.save
         format.html { redirect_to root_path, notice: 'Work was successfully created.' }
-        format.json { render :show, status: :created, location: @work }
+        format.json { render json: { response: show_like_json(@work), status: "Created" } }
       else
         format.html { render :new }
-        format.json { render json: @work.errors, status: :unprocessable_entity }
+        format.json { render json: { response: show_like_json(@work), status: "Unprocessable Entity" } }
       end
     end
   end
@@ -69,13 +93,14 @@ class WorksController < ApplicationController
       if defined? @work
         if @work.save
           format.html { redirect_to root_path, notice: 'Work was successfully created.' }
-          format.json { render :show, status: :created, location: @work }
+          format.json { render json: { response: show_like_json(@work), status: "Created" } }
         else
           format.html { render :new }
-          format.json { render json: @work.errors, status: :unprocessable_entity }
+          format.json { render json: { response: show_like_json(@work), status: "Unprocessable Entity" } }
         end
       else
-        format.html { redirect_to root_path, notice: 'Work was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Works was successfully setted - new work has not been created.' }
+        format.json { render json: { response: "There is no new work.", status: "OK" } }
       end
     end 
   end
@@ -87,14 +112,14 @@ class WorksController < ApplicationController
       respond_to do |format|
         if @work.update(work_params)
           format.html { redirect_to @work, notice: 'Work was successfully updated.' }
-          format.json { render :show, status: :ok, location: @work }
+          format.json { render json: { response: show_like_json(@work), status: "OK" } }
         else
           format.html { render :edit }
-          format.json { render json: @work.errors, status: :unprocessable_entity }
+          format.json { render json: { response: show_like_json(@work), status: "Unprocessable Entity" } }
         end
       end
     else
-      redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
+      unauthorized
     end
   end
 
@@ -112,13 +137,13 @@ class WorksController < ApplicationController
       if defined? @work
         if @work.save
           format.html { redirect_to root_path, notice: 'Work was successfully created.' }
-          format.json { render :show, status: :created, location: @work }
+          format.json { render json: { response: show_like_json(@work), status: "OK" } }
         else
           format.html { render :new }
-          format.json { render json: @work.errors, status: :unprocessable_entity }
+          format.json { render json: { response: show_like_json(@work), status: "Unprocessable Entity" } }
         end
       else
-        format.html { redirect_to root_path, notice: 'Work was successfully created.' }
+        format.json { render json: { response: "There is no new work.", status: "OK" } }
       end
     end
   end
@@ -130,10 +155,10 @@ class WorksController < ApplicationController
       @work.destroy
       respond_to do |format|
         format.html { redirect_to works_url, notice: 'Work was successfully destroyed.' }
-        format.json { head :no_content }
+        format.json { render json: { response: "Work has been destroyed.", status: "No Content" } }
       end
     else
-      redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.'
+      unauthorized
     end
   end
 
@@ -147,5 +172,9 @@ class WorksController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def work_params
     params.require(:work).permit(:title, :existed_works_id)
+  end
+
+  def show_like_json(works)
+      WorkSerializer.new(works).as_json
   end
 end

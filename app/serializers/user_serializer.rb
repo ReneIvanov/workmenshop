@@ -6,7 +6,7 @@ class UserSerializer
       user_obj.each do |user|
         @users_array << user
       end
-    when "User"  #if there are only one users
+    when "User"  #if there are only one user
       @users_array << user_obj
     end
   end

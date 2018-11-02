@@ -4,8 +4,12 @@ class AccountsController < ApplicationController
   def index
     if user_signed_in? && policy(current_user).is_admin
       @accounts = Account.all
+      respond_to do |format|
+        format.html { render :index }
+        format.json { render json: { response: show_like_json(@accounts), status: "OK" } }
+      end
     else
-      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
+      unauthorized
     end
   end
 
@@ -14,8 +18,12 @@ class AccountsController < ApplicationController
   def show
     if user_signed_in? && policy(Account.find(params[:id])).can_be_seen_by(current_user)
       @account = set_account
+      respond_to do |format|
+        format.html { render :show }
+        format.json { render json: { response: show_like_json(@account), status: "OK" } }
+      end
     else
-      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
+      unauthorized
     end
   end
 
@@ -23,8 +31,12 @@ class AccountsController < ApplicationController
   def new
     if user_signed_in?
       @account = Account.new
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: { response: show_like_json(@account), status: "OK" } }
+      end
     else
-      redirect_to new_user_session_path, notice: 'Please sign in before a account creation.'
+      unauthorized
     end
   end
 
@@ -32,8 +44,12 @@ class AccountsController < ApplicationController
   def edit
     if user_signed_in? && policy(Account.find(params[:id])).can_be_seen_by(current_user)
       @account = set_account
+      respond_to do |format|
+        format.html { render :edit }
+        format.json { render json: { response: show_like_json(@account), status: "OK" } }
+      end
     else
-      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
+      unauthorized
     end
   end
 
@@ -53,12 +69,14 @@ class AccountsController < ApplicationController
           else
             format.html { redirect_to root_path, notice: 'Your account has been succefully created.' }
           end
-          format.json { render :show, status: :created, location: @account }
+          format.json { render json: { response: show_like_json(@account), status: "Created" } }
         else
           format.html { render :new }
-          format.json { render json: @account.errors, status: :unprocessable_entity }
+          format.json { render json: { response: show_like_json(@account), status: "Unprocessable Entity" } }
         end
       end
+    else
+      unauthorized
     end
   end
 
@@ -70,14 +88,14 @@ class AccountsController < ApplicationController
       respond_to do |format|
         if @account.update(account_params)
           format.html { redirect_to registration_edit_work_path, notice: 'Please continue.' }
-          format.json { render :show, status: :ok, location: @account }
+          format.json { render json: { response: show_like_json(@account), status: "OK" } }
         else
           format.html { render :edit }
-          format.json { render json: @account.errors, status: :unprocessable_entity }
+          format.json { render json: { response: show_like_json(@account), status: "Unprocessable Entity" } }
         end
       end
     else
-      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
+      unauthorized
     end
   end
 
@@ -89,10 +107,10 @@ class AccountsController < ApplicationController
       @account.destroy
       respond_to do |format|
         format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
-        format.json { head :no_content }
+        format.json { render json: { response: "Account has been destroyed.", status: "No Content" } }
       end
     else
-      redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.'
+      unauthorized
     end
   end
 
@@ -106,5 +124,9 @@ class AccountsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def account_params
     params.require(:account).permit(:workmen, :customer)
+  end
+
+  def show_like_json(accounts)
+      AccountSerializer.new(accounts).as_json
   end
 end

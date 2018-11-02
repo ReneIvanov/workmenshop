@@ -26,4 +26,11 @@ class ApplicationController < ActionController::Base
       @is_account = current_user.account.is_a? Account #has current user account?
     end
   end
+
+  def unauthorized  #response if user is not authorized fo current action
+    respond_to do |format|
+      format.html { redirect_to new_user_session_path , notice: 'You have not rights for this action - please sign in with necessary rights.' }
+      format.json { render json: { response: "You have not rights for this action - please sign in with necessary rights.", status: "Unauthorized" } }
+    end
+  end
 end
