@@ -2,10 +2,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.jsonmodel: user
   def index
-    if true #user_signed_in? && policy(current_user).is_admin
+    if user_signed_in? && policy(current_user).is_admin
       @users = User.all
-      #WorkJob.perform_later
-      WorkMailer.created.deliver_later
       respond_to do |format|
         format.html { render :index }
         format.json { render json: { response: { users: show_like_json(@users) }, status: "OK" } }
