@@ -70,11 +70,11 @@ Rails.application.configure do
     config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
     port: 587,
-    domain: "heroku.com",
+    domain: Workmenshop::Application.credentials[Rails.env.to_sym][:DOMAIN],
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: "app114366140@heroku.com",
-    password: "f03dbjfp6131"
+    user_name: Workmenshop::Application.credentials[Rails.env.to_sym][:USERNAME],
+    password: Workmenshop::Application.credentials[Rails.env.to_sym][:PASSWORD]
   }
 #===================================================
 
