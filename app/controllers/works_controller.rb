@@ -70,6 +70,7 @@ class WorksController < ApplicationController
 
     respond_to do |format|
       if @work.save
+        WorkJob.perform_later(current_user.email) #send email about new work has been created
         format.html { redirect_to root_path, notice: 'Work was successfully created.' }
         format.json { render json: { response: { work: show_like_json(@work) }, status: "Created" } }
       else
@@ -91,7 +92,8 @@ class WorksController < ApplicationController
     
     respond_to do |format|
       if defined? @work
-        if @work.save
+        if @work.save   
+          WorkJob.perform_later(current_user.email) #send email about new work has been created
           format.html { redirect_to root_path, notice: 'Work was successfully created.' }
           format.json { render json: { response: { work: show_like_json(@work) }, status: "Created" } }
         else
@@ -110,7 +112,8 @@ class WorksController < ApplicationController
   def update
     if policy(@work).can_be_edited_by(current_user)
       respond_to do |format|
-        if @work.update(work_params)
+        if @work.update(work_params)         
+          WorkJob.perform_later(current_user.email) #send email about new work has been created
           format.html { redirect_to @work, notice: 'Work was successfully updated.' }
           format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
         else
@@ -136,6 +139,7 @@ class WorksController < ApplicationController
     respond_to do |format|
       if defined? @work
         if @work.save
+          WorkJob.perform_later(current_user.email) #send email about new work has been created
           format.html { redirect_to root_path, notice: 'Work was successfully created.' }
           format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
         else
