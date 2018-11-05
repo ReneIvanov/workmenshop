@@ -21,7 +21,7 @@
   margin-right: auto;
 }
 
-/*nastavi všetky vnútorné a vonkajšie okraje na zaciatku na 0*/
+/*nastavi všetky vnútorné a vonkajšie okraje na zaciatku na nulu */
 { 
   margin: 0;
   padding: 0;
