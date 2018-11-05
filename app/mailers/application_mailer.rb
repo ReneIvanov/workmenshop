@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: ENV["GMAIL_USERNAME"]
+  default from: Workmenshop::Application.credentials.development[:GMAIL_USERNAME]
   layout 'mailer'
 end
