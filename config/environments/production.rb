@@ -65,18 +65,19 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-   #Mailer configuration==========================
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.perform_deliveries = true
-    config.action_mailer.smtp_settings = {
-      address: "smtp.sendgrid.net",
-      port: 587,
-      domain: Workmenshop::Application.credentials[Rails.env.to_sym][:DOMAIN],
-      authentication: "plain",
-      enable_starttls_auto: true,
-      user_name: Workmenshop::Application.credentials[Rails.env.to_sym][:USERNAME],
-      password: Workmenshop::Application.credentials[Rails.env.to_sym][:PASSWORD]
-    }
+  #Mailer configuration==========================
+  config.action_mailer.default_url_options = { :host => 'workmenshop.heroku.com' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+    address: "smtp.sendgrid.net",
+    port: 587,
+    domain: Workmenshop::Application.credentials[Rails.env.to_sym][:DOMAIN],
+    authentication: "plain",
+    enable_starttls_auto: true,
+    user_name: Workmenshop::Application.credentials[Rails.env.to_sym][:USERNAME],
+    password: Workmenshop::Application.credentials[Rails.env.to_sym][:PASSWORD]
+  }
 #===================================================
 
   # Ignore bad email addresses and do not raise email delivery errors.
