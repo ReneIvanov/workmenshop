@@ -66,4 +66,6 @@ gem 'devise'
 gem 'sidekiq'
 gem 'sinatra'
 
+gem 'sendgrid-ruby'
+
 ruby '2.5.1'
