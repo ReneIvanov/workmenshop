@@ -113,7 +113,6 @@ class UsersController < ApplicationController
     
     if params[:user] != nil && params[:user][:profile_picture] != nil
       @user.profile_picture.attach(params[:user][:profile_picture])
-      @user.save
       flash[:notice] = 'Profile picture has been changed.'
 
       respond_to do |format|
