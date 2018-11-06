@@ -17,6 +17,10 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   # The default url to be used after updating a resource. You need to overwrite
   # this method in your own RegistrationsController.
   def after_update_path_for(resource)
-    edit_account_path(current_user.account)
+    if current_user.account
+      edit_account_path(current_user.account)
+    else
+      new_account_path
+    end
   end
 end
