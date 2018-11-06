@@ -1,0 +1,31 @@
+<h2>Profile picture - <%= @user.username %></h2>
+
+<br>
+<br>
+
+<%= image_tag @user.profile_picture %>
+
+<br>
+<br>
+
+<div>
+  Change?
+  <%= form_with(model: @user, url: users_pictures_path, local: true, multipart: true) do |form| %>
+    <% if @user.errors.any? %>
+      <div id="error_explanation">
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.file_field :profile_picture%>
+    </div>
+  
+    <div class="actions">
+      <%= form.submit "Update profile picture"%>
+    </div>  
+  <% end %>
+</div>

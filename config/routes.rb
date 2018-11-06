@@ -37,6 +37,11 @@ Rails.application.routes.draw do
   #end
 
   resources :users
+  controller :users do
+    get 'users_pictures' => :pictures_show
+    patch 'users_pictures' => :pictures_update
+  end
+
   root 'shop#index'
 
   

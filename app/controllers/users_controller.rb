@@ -97,12 +97,43 @@ class UsersController < ApplicationController
       unauthorized
     end
   end
+  
+  # GET /users_pictures
+  def pictures_show
+    @user = current_user
+    respond_to do |format|
+      format.html { render :pictures}
+      format.json { render json: { response: { user: show_like_json(@user) }, status: "OK" } }
+    end
+  end
+  
+  # PATCH /users/picture
+  def pictures_update
+    @user = current_user
+    
+    if params[:user] != nil && params[:user][:profile_picture] != nil
+      @user.profile_picture.attach(params[:user][:profile_picture])
+      @user.save
+      flash[:notice] = 'Profile picture has been changed.'
+
+      respond_to do |format|
+        format.html { render :pictures }
+        format.json { render json: { response: { user: show_like_json(@user) }, status: "OK" } }
+      end
+    else
+      flash[:notice] = 'Profile picture NOT changed!'
+      respond_to do |format|
+        format.html { render :pictures }
+        format.json { render json: { response: { user: show_like_json(@user) }, status: "Unprocessable Entity" } }
+      end
+    end
+  end
 
   private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:name, :address, :workmen, :customer, :image_url, :email, :telephone, :user_name, :password, :profile_picture, photos: [])
+    params.require(:user).permit(:username, :address, :email, :telephone, :password, :profile_picture, photos: [])
   end
 
   def set_user

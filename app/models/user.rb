@@ -8,8 +8,8 @@ class User < ApplicationRecord
   has_one :account, dependent: :delete
   has_and_belongs_to_many :works, dependent: :delete
 
-  has_one_attached :profile_picture
-  has_many_attached :photos
+  has_one_attached :profile_picture #connection with ActiveStorage - now is possible to use user.profile_picture
+  #has_many_attached :photos
 
   #validates :email, :username, presence: true
   #validates :username, uniqueness: true
