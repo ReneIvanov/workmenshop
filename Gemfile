@@ -68,4 +68,6 @@ gem 'sinatra'
 
 gem 'sendgrid-ruby'
 
+gem 'aws-sdk-s3', require: false
+
 ruby '2.5.1'
