@@ -100,10 +100,14 @@ class UsersController < ApplicationController
   
   # GET /users_pictures
   def pictures_show
-    @user = current_user
-    respond_to do |format|
-      format.html { render :pictures}
-      format.json { render json: { response: { user: show_like_json(@user) }, status: "OK" } }
+    if user_signed_in?
+      @user = current_user
+      respond_to do |format|
+        format.html { render :pictures}
+        format.json { render json: { response: { user: show_like_json(@user) }, status: "OK" } }
+      end
+    else
+      unauthorized
     end
   end
   
