@@ -131,7 +131,8 @@ class UsersController < ApplicationController
       end
     end
   end
-
+  
+  #GET /users/:id/works
   def show_user_works
     set_user
     @user_works = @user.user_works

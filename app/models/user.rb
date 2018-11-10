@@ -16,14 +16,6 @@ class User < ApplicationRecord
   #validate :atleast_one_is_checked
 
   #add record in table users_works, if this record doesn't exist
-  def add_work(work)
-    if self.works.include?(work)
-      return false
-    else
-      self.works << work
-      return true
-    end
-  end
 
   #update table users_works for current_user
   def update_existed_works(existed_works_id) 
@@ -32,7 +24,7 @@ class User < ApplicationRecord
 
   #return all works of user
   def user_works
-    Rails.cache.fetch("#{self.id}_all_works") { puts 'evaluating...' ;self.works }   
+    Rails.cache.fetch("#{self.id}_all_works") { self.works }   
   end
 
 end

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     post 'registration_create_work' => :registration_create
     get 'registration_edit_work' => :registration_edit
     post 'registration_update_work' => :registration_update
+    get 'works/:id/users' => :show_work_users, as: 'work_users'
   end
 
   resources :accounts
@@ -40,7 +41,7 @@ Rails.application.routes.draw do
   controller :users do
     get 'users_pictures' => :pictures_show
     patch 'users_pictures' => :pictures_update
-    get 'users/:id/pictures' => :show_user_works, as: 'user_pictures'
+    get 'users/:id/works' => :show_user_works, as: 'user_works'
   end
 
   root 'shop#index'

@@ -22,7 +22,7 @@
         <td><%= user.account.admin if @is_account %></td>
         <td><%= user.account.workmen if @is_account %></td>
         <td><%= user.account.customer if @is_account %></td>
-        <td><%= link_to 'Show users works', user_pictures_path(user.id) %></td>
+        <td><%= link_to 'Show user works', user_works_path(user.id) %></td>
       </tr>
       <tr>  
         <td><%= link_to 'Show', user %></td>

@@ -166,6 +166,12 @@ class WorksController < ApplicationController
       unauthorized
     end
   end
+  
+  #GET /works/:id/works
+  def show_work_users
+    set_work
+    @work_users = @work.work_users
+  end
 
   private
 
