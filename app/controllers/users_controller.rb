@@ -134,7 +134,7 @@ class UsersController < ApplicationController
 
   def show_user_works
     set_user
-    @user_works = @user.works
+    @user_works = @user.user_works
   end
 
   private

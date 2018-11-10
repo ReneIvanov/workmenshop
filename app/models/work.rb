@@ -1,5 +1,5 @@
 class Work < ApplicationRecord
-  has_and_belongs_to_many :users, dependent: :delete
+  has_and_belongs_to_many :users, dependent: :delete, touch: true
 
   #add record in table users_works, if this record doesn't exist
   def add_user(user)
