@@ -132,6 +132,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def show_user_works
+    set_user
+    @user_works = @user.works
+  end
+
   private
 
   # Never trust parameters from the scary internet, only allow the white list through.

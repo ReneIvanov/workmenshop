@@ -1,0 +1,5 @@
+<h2> Works of user: <%= @user.username %> </h2>
+
+<% @user_works.each do |work| %>
+  <%= work.title %> </br>
+<% end %>
