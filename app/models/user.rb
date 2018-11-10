@@ -24,7 +24,7 @@ class User < ApplicationRecord
 
   #return all works of user
   def user_works
-    Rails.cache.fetch("#{self.id}_all_works") { self.works }   
+    Rails.cache.fetch("#{self.id}_all_works") { puts 'Creating a cache'; self.works }   
   end
 
 end
