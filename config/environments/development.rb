@@ -36,11 +36,11 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
-    domain: Workmenshop::Application.credentials[Rails.env.to_sym][:DOMAIN],
+    domain: Workmenshop::Application.credentials.dig(Rails.env.to_sym, :DOMAIN),
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: Workmenshop::Application.credentials[Rails.env.to_sym][:USERNAME],
-    password: Workmenshop::Application.credentials[Rails.env.to_sym][:PASSWORD]
+    user_name: Workmenshop::Application.credentials.dig(Rails.env.to_sym, :USERNAME),
+    password: Workmenshop::Application.credentials.dig(Rails.env.to_sym, :PASSWORD)
   }
 #===================================================
 
