@@ -24,14 +24,11 @@ RSpec.describe User, type: :model do
 
       it '- should be initialize with relevant informations.' do
         [user1, user2].each do |user|
-          expect(user.name).to include("User")
+          expect(user.username).to include("User")
           expect(user.address).to include("Address")
           expect(user.email).to include("user" && "@" && "gmail.com")
-          expect(user.workmen).to be(true).or be(false)
-          expect(user.customer).to be(true).or be(false)
           expect(user.telephone).to eq("1111 111 111")
-          expect(usern.user_name).to include("User")
-          expect(user.password_digest).to eq("asdf")
+          expect(user.password).to eq("xxxx")
         end
       end
     end

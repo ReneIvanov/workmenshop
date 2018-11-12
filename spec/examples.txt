@@ -43,9 +43,9 @@ example_id                                               | status  | run_time   
 ./spec/mailers/work_spec.rb[1:1:1]                       | unknown |                 |
 ./spec/mailers/work_spec.rb[1:1:2]                       | unknown |                 |
 ./spec/models/account_spec.rb[1:1]                       | pending | 0 seconds       |
-./spec/models/user_spec.rb[1:1:1:1]                      | failed  | 0.00139 seconds |
-./spec/models/user_spec.rb[1:1:1:2]                      | failed  | 0.00404 seconds |
-./spec/models/user_spec.rb[1:1:2:1]                      | failed  | 0.00079 seconds |
+./spec/models/user_spec.rb[1:1:1:1]                      | passed  | 0.11099 seconds |
+./spec/models/user_spec.rb[1:1:1:2]                      | passed  | 0.00982 seconds |
+./spec/models/user_spec.rb[1:1:2:1]                      | passed  | 0.02243 seconds |
 ./spec/models/work_spec.rb[1:1]                          | pending | 0.00001 seconds |
 ./spec/requests/accounts_spec.rb[1:1:1]                  | unknown |                 |
 ./spec/requests/works_spec.rb[1:1:1]                     | unknown |                 |
