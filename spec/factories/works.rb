@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :work do
-    title "MyString"
-    user nil
+    title {Faker::Company.unique.profession}
   end
 end

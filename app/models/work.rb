@@ -1,14 +1,7 @@
 class Work < ApplicationRecord
   has_and_belongs_to_many :users, dependent: :delete, touch: true
 
-  def add_work(work)
-    if self.works.include?(work)
-      return false
-    else
-      self.works << work
-      return true
-    end
-  end
+  validates :title, presence: true, uniqueness: true
 
   #add record in table users_works, if this record doesn't exist
   def add_user(user)
