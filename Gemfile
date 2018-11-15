@@ -70,4 +70,7 @@ gem 'sendgrid-ruby'
 
 gem 'aws-sdk-s3', require: false
 
+gem 'pry-rails'
+gem 'rails-controller-testing'
+
 ruby '2.5.1'

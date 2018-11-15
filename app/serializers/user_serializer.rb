@@ -13,10 +13,11 @@ class UserSerializer
 
   def user_as_json(user)
     user_hash = {} 
+    user_hash.merge!(id: user.id)
     user_hash.merge!(username: user.username)
     user_hash.merge!(email: user.email)
-    user_hash.merge!(address: user.address) if !user.address.empty?
-    user_hash.merge!(telephone: user.telephone) if !user.telephone.empty?
+    user_hash.merge!(address: user.address)
+    user_hash.merge!(telephone: user.telephone)
     user_hash.merge!(account: AccountSerializer.new(user.account).as_json)
     user_hash.merge!(works: WorkSerializer.new(user.works).as_json)
     return user_hash

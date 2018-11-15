@@ -13,6 +13,8 @@ FactoryBot.define do
     customer {[true, false].sample}
     workmen {true}
     admin {nil}
+
+    association :user, factory: :user, strategy: :build  #build a instance of User model and connect it with created account
   end
 
   factory :account_admin, class: Account do
@@ -20,5 +22,7 @@ FactoryBot.define do
     customer {nil}
     workmen {nil}
     admin {true}
+
+    association :user, factory: :user, strategy: :build  #build a instance of User model and connect it with created account
   end
 end
