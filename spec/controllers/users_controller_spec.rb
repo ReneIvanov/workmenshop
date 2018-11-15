@@ -6,6 +6,12 @@ RSpec.describe UsersController, type: :controller do
     return [:id, :username, :email, :address, :telephone, :account, :works]
   end
 
+  def set_user_post_params(created_user)
+    @user_params = UserSerializer.new(created_user).as_json.first #Hash
+    @user_params.merge!(password: created_user.password)
+    @user_post_params = { user: @user_params } #Hash with format needed by UserController
+  end
+
   describe "- GET #index" do
     before(:each) {create_list :user, 5} 
     after(:each) {User.destroy_all}
@@ -169,33 +175,114 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-#  describe "POST #create" do
-#    context "with valid params" do
-#      xit "creates a new Person" do
-#        expect {
-#          post :create, params: {person: valid_attributes}, session: valid_session
-#        }.to change(Person, :count).by(1)
-#      end
+  describe "- GET #edit" do
+    before(:each) {@edited_user = create :user} 
+    after(:each) {User.destroy_all}
+
+    context " - admin signed in" do
+      before(:each) do
+        @admin = create (:user) 
+        @admin_account = create(:account_admin, user_id: @admin.id)
+        sign_in(@admin)  
+      end
+
+      context " - HTML format" do
+        before(:each) { get :edit, params: { id: @edited_user.id } }
+
+        it_behaves_like "response status 200"
+  
+        it "- should returns a user." do
+          expect(assigns(:user)).to eql(User.find(@edited_user.id))
+        end
+  
+        it "- should render edit template." do  
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context " - JSON format" do
+        before(:each) {get :edit, params: { id: @edited_user.id }, :format => :json}
+
+        it_behaves_like "response status 200"
+
+        it "- should returns a user." do
+          user_keys = set_user_keys
+          
+          responsed_body = JSON.parse(response.body).deep_symbolize_keys
+          expect(responsed_body[:user].count).to eq(1)
+          expect(responsed_body.keys).to eq([:user])
+          expect(responsed_body[:user].first.keys).to eq(user_keys) 
+        end
+      end
+    end
+
+    context " - without signed in user" do
+      context " - HTML format" do
+        before(:each) { get :edit, params: { id: @edited_user.id } }
+
+        it_behaves_like "unauthorized redirection examples"  
+  
+        it "- shouldn't returns a user." do
+          expect(assigns(:user)).to eq(nil)
+        end
+      end
+
+      context " - JSON format" do
+        before(:each) {get :edit, params: { id: @edited_user.id }, format: :json}
+
+        it_behaves_like "unauthorized JSON status" 
+
+        it "- shouldn't returns a user." do
+          responsed_body = JSON.parse(response.body).deep_symbolize_keys
+          expect(responsed_body[:notice]).to eq("You have not rights for this action - please sign in with necessary rights.")
+          expect(responsed_body.keys).to eq([:notice])
+        end
+      end
+    end
+  end
+
+  describe " - POST #create" do 
+    before(:each) {@created_user = build :user}
+    after(:each) {User.destroy_all}
+
+    context " - HTML format" do
+      before(:each) { post :create, params: set_user_post_params(@created_user) }
+
+      it "- should returns a success response status." do
+        expect(response).to have_http_status(302)
+      end
+
+      it " - should returns a new created user." do
+        @returned_user = assigns(:user)              #overit ci funguje
+        @created_user.id = @returned_user.id
+        expect(@returned_user).to eq(@created_user)  #overiť ši porovnavanie nie je iba na zaklade ID
+      end
 #
-#      xit "redirects to the created person" do
-#        post :create, params: {person: valid_attributes}, session: valid_session
-#        expect(response).to redirect_to(Person.last)
-#      end
+    #  it " - created user should be saved into database" do
+    #    @saved_user = User.find(@created_user.id)
+    #    expect(@saved_user).to eq(@created_user)
+    #  end
 #
-#      #TOMI start
-#      it 'should be successful' do
-#        expect(response.status).to eq(200)
-#      end
-#      #TOMI END
-#    end
+    #  it " - should redirect to root." do  
+    #    expect(response).to redirect_to(:root)
+    #  end
+    end
+
+    #context " - JSON format" do
+    #  before(:each) {get :new, :format => :json}
 #
-#    context "with invalid params" do
-#      xit "returns a success response (i.e. to display the 'new' template)" do
-#        post :create, params: {person: invalid_attributes}, session: valid_session
-#        expect(response).to be_successful
-#      end
-#    end
-#  end
+    #  it_behaves_like "response status 200"
+#
+    #  it " - should returns a new user." do
+    #    user_keys = set_user_keys
+    #    
+    #    responsed_body = JSON.parse(response.body).deep_symbolize_keys
+    #    expect(responsed_body[:user].count).to eq(1)
+    #    expect(responsed_body.keys).to eq([:user])
+    #    expect(responsed_body[:user].first.keys).to eq(user_keys) 
+    #  end
+    #end
+  end
 #
 #  describe "PUT #update" do
 #    context "with valid params" do
