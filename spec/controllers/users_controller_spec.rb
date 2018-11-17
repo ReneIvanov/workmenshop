@@ -6,10 +6,20 @@ RSpec.describe UsersController, type: :controller do
     return [:id, :username, :email, :address, :telephone, :account, :works]
   end
 
-  def set_user_post_params(created_user)
-    @user_params = UserSerializer.new(created_user).as_json.first #Hash
+  def request_user_params(created_user)
+    @user_params = show_like_json(created_user).first #Hash
     @user_params.merge!(password: created_user.password)
     @user_post_params = { user: @user_params } #Hash with format needed by UserController
+  end
+
+  def show_like_json(users)
+    UserSerializer.new(users).as_json #return a Array od serialized users
+  end
+
+  def sign_in_admin
+    @admin = create (:user) 
+    @admin_account = create(:account_admin, user_id: @admin.id)
+    sign_in(@admin)
   end
 
   describe "- GET #index" do
@@ -17,11 +27,7 @@ RSpec.describe UsersController, type: :controller do
     after(:each) {User.destroy_all}
 
     context " - admin signed in" do
-      before(:each) do
-        @admin = create (:user)  #create admin user
-        @admin_account = create(:account_admin, user_id: @admin.id)  #create admin account and connect it to @admin    
-        sign_in(@admin)  
-      end
+      before(:each) {sign_in_admin}
 
       context " - HTML format" do
         before(:each) {get :index}
@@ -83,11 +89,7 @@ RSpec.describe UsersController, type: :controller do
     after(:each) {User.destroy_all}
 
     context " - admin signed in" do
-      before(:each) do
-        @admin = create (:user) 
-        @admin_account = create(:account_admin, user_id: @admin.id)
-        sign_in(@admin)  
-      end
+      before(:each) {sign_in_admin}
 
       context " - HTML format" do
         before(:each) { get :show, params: { id: @showed_user.id } }
@@ -95,7 +97,9 @@ RSpec.describe UsersController, type: :controller do
         it_behaves_like "response status 200"
   
         it "- should returns a user." do
-          expect(assigns(:user)).to eql(User.find(@showed_user.id))
+          @serialized_returned_user = show_like_json(assigns(:user))
+          @serialized_showed_user = show_like_json(User.find(@showed_user.id))
+          expect(@serialized_returned_user).to eql(@serialized_showed_user)
         end
   
         it "- should render show template." do  
@@ -180,11 +184,7 @@ RSpec.describe UsersController, type: :controller do
     after(:each) {User.destroy_all}
 
     context " - admin signed in" do
-      before(:each) do
-        @admin = create (:user) 
-        @admin_account = create(:account_admin, user_id: @admin.id)
-        sign_in(@admin)  
-      end
+      before(:each) {sign_in_admin}
 
       context " - HTML format" do
         before(:each) { get :edit, params: { id: @edited_user.id } }
@@ -192,7 +192,9 @@ RSpec.describe UsersController, type: :controller do
         it_behaves_like "response status 200"
   
         it "- should returns a user." do
-          expect(assigns(:user)).to eql(User.find(@edited_user.id))
+          @serialized_returned_user = show_like_json(assigns(:user))
+          @serialized_edited_user = show_like_json(User.find(@edited_user.id))
+          expect(@serialized_returned_user).to eql(@serialized_edited_user)
         end
   
         it "- should render edit template." do  
@@ -247,22 +249,24 @@ RSpec.describe UsersController, type: :controller do
 
     context " - user is saved into database" do
       context " - HTML format" do
-        before(:each) { post :create, params: set_user_post_params(@created_user) }
+        before(:each) { post :create, params: request_user_params(@created_user) }
   
         it "- should returns a redirectiom(:found) response status." do
           expect(response).to have_http_status(302)
         end
   
         it " - should returns a new created user." do
-          @returned_user = assigns(:user)
-          @created_user.id = @returned_user.id
-          expect(@returned_user).to eq(@created_user)
+          @serialized_returned_user = show_like_json(assigns(:user))
+          @serialized_created_user = show_like_json(@created_user)
+          @serialized_created_user.first[:id] = @serialized_returned_user.first[:id] #set id for created user like returned user have (to pass comparation)
+          expect(@serialized_returned_user).to eq(@serialized_created_user)
         end
   
         it " - created user should be saved into database" do
           @created_user.id = assigns(:user).id
-          @saved_user = User.find(assigns(:user).id)
-          expect(@saved_user).to eq(@created_user)
+          @serialized_created_user = show_like_json(@created_user)
+          @serialized_saved_user = show_like_json(User.find(assigns(:user).id))
+          expect(@serialized_saved_user).to eq(@serialized_created_user)
         end
   
         it " - should redirect to root." do  
@@ -271,7 +275,7 @@ RSpec.describe UsersController, type: :controller do
       end
   
       context " - JSON format" do
-        before(:each) { post :create, format: :json, params: set_user_post_params(@created_user) }
+        before(:each) { post :create, format: :json, params: request_user_params(@created_user) }
   
         it "- should returns a :created response status." do
           expect(response).to have_http_status(201)
@@ -280,7 +284,7 @@ RSpec.describe UsersController, type: :controller do
         it " - should returns a new created user." do
           responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
           responsed_user = responsed_body[:user] #Array
-          serialized_created_user = UserSerializer.new(@created_user).as_json #Array
+          serialized_created_user = show_like_json(@created_user) #Array
           serialized_created_user.first[:id] = responsed_user.first[:id]
   
           expect(responsed_body[:user].count).to eq(1)
@@ -295,7 +299,7 @@ RSpec.describe UsersController, type: :controller do
 
       context " - HTML format" do
         before(:each) do
-          post :create, params: set_user_post_params(@created_user)
+          post :create, params: request_user_params(@created_user)
         end
          
         it_behaves_like "response status 200"
@@ -312,7 +316,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) { post :create, format: :json, params: set_user_post_params(@created_user) }
+        before(:each) { post :create, format: :json, params: request_user_params(@created_user) }
   
         it "- should returns a :unprocessable_entity response status." do
           expect(response).to have_http_status(422)
@@ -321,7 +325,7 @@ RSpec.describe UsersController, type: :controller do
         it " - should returns a uncreated user." do
           responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
           responsed_user = responsed_body[:user] #Array
-          serialized_created_user = UserSerializer.new(@created_user).as_json #Array
+          serialized_created_user = show_like_json(@created_user) #Array
   
           expect(responsed_body[:user].count).to eq(1)
           expect(responsed_body.keys).to eq([:user]) 
@@ -333,7 +337,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe " - PUT #update" do 
     before(:each) do
-      @created_user = create :user #save some uset into database
+      @created_user = create :user #save some user into database
       @loaded_user = User.find(@created_user.id) #load user from database
       @modified_user = build :user
       @modified_user.id = @loaded_user.id #this user is modified user with same id like user in database
@@ -341,106 +345,152 @@ RSpec.describe UsersController, type: :controller do
     after(:each) {User.destroy_all}
 
     context " - admin signed in" do
-      before(:each) do
-        @admin = create (:user) 
-        @admin_account = create(:account_admin, user_id: @admin.id)
-        sign_in(@admin)  
-      end
+      before(:each) {sign_in_admin}
 
       context " - modified user is updated in database" do
         context " - HTML format" do
-          before(:each) { put :update, params: { id: @loaded_user.id, user: set_user_post_params(@modified_user)[:user] } } #update need to have :id in :params
+          before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
     
           it "- should returns a redirection(:found) response status." do
             expect(response).to have_http_status(302)
           end
     
           it " - should returns a updated user." do
-            @returned_user = assigns(:user)
-            expect(@returned_user).to eq(@modified_user)
+            @serialized_returned_user = show_like_json(assigns(:user))
+            @serialized_modified_user = show_like_json(@modified_user)
+            expect(@serialized_returned_user).to eq(@serialized_modified_user)
           end
     
           it " - user should be updated in database" do
             @updated_user = User.find(@modified_user.id)
-            expect(@updated_user).to eq(@modified_user)
+            @serialized_updated_user = show_like_json(@updated_user)
+            @serialized_modified_user = show_like_json(@modified_user)
+
+            expect(@serialized_updated_user).to eq(@serialized_modified_user)
           end
     
-          it " - should redirect to root." do  
+          it " - should redirect to UserController #show." do  
             expect(response).to redirect_to("/users/#{@loaded_user.id}")
           end
         end
     
-        #context " - JSON format" do
-        #  before(:each) { post :create, format: :json, params: set_user_post_params(@created_user) }
-    #
-        #  it "- should returns a :created response status." do
-        #    expect(response).to have_http_status(201)
-        #  end
-    #
-        #  it " - should returns a new created user." do
-        #    responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
-        #    responsed_user = responsed_body[:user] #Array
-        #    serialized_created_user = UserSerializer.new(@created_user).as_json #Array
-        #    serialized_created_user.first[:id] = responsed_user.first[:id]
-    #
-        #    expect(responsed_body[:user].count).to eq(1)
-        #    expect(responsed_body.keys).to eq([:user]) 
-        #    expect(responsed_user). to eq(serialized_created_user)
-        #  end
-        #end
+        context " - JSON format" do
+          before(:each) { put :update, format: :json, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
+    
+          it_behaves_like "response status 200"
+    
+          it " - should returns a updated user." do
+            responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
+            responsed_user = responsed_body[:user] #Array
+            serialized_modified_user = show_like_json(@modified_user) #Array
+            serialized_modified_user.first[:id] = responsed_user.first[:id]
+    
+            expect(responsed_body[:user].count).to eq(1)
+            expect(responsed_body.keys).to eq([:user]) 
+            expect(responsed_user). to eq(serialized_modified_user)
+          end
+
+          it " - user should be updated in database" do
+            @updated_user = User.find(@modified_user.id)
+            @serialized_updated_user = show_like_json(@updated_user)
+            @serialized_modified_user = show_like_json(@modified_user)
+
+            expect(@serialized_updated_user).to eq(@serialized_modified_user)
+          end
+        end
       end
 
-      #context " - user isn't saved into database" do
-      #  before(:each) {@created_user.email = ""} #this is reason why user will not be saved into database
-  #
-      #  context " - HTML format" do
-      #    before(:each) do
-      #      post :create, params: set_user_post_params(@created_user)
-      #    end
-      #     
-      #    it_behaves_like "response status 200"
-  #
-      #    it "- should render new template." do 
-      #      expect(response).to render_template(:new)
-      #    end
-      #    
-      #    it " - should return unsaved user" do
-      #      @created_user.id = 1  #because we need to compare with assigns(:user) and for this is necessary to have some id
-      #      assigns(:user).id = 1
-      #      expect(assigns(:user)).to eq(@created_user)
-      #    end
-      #  end
-  #
-      #  context " - JSON format" do
-      #    before(:each) { post :create, format: :json, params: set_user_post_params(@created_user) }
-    #
-      #    it "- should returns a :unprocessable_entity response status." do
-      #      expect(response).to have_http_status(422)
-      #    end
-    #
-      #    it " - should returns a uncreated user." do
-      #      responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
-      #      responsed_user = responsed_body[:user] #Array
-      #      serialized_created_user = UserSerializer.new(@created_user).as_json #Array
-    #
-      #      expect(responsed_body[:user].count).to eq(1)
-      #      expect(responsed_body.keys).to eq([:user]) 
-      #      expect(responsed_user). to eq(serialized_created_user)
-      #    end
-      #  end
-      #end 
+      context " - modified user isn't updated in database" do
+        before(:each) {@modified_user.email = ""} #this is reason why user will not be saved into database
+       
+        context " - HTML format" do
+          before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
+    
+          it_behaves_like "response status 200"
+
+          it "- should render edit template." do  
+          expect(response).to render_template(:edit)
+        end
+    
+          it " - should returns a modified user (but not saved into database)." do
+            @serialized_returned_user = show_like_json(assigns(:user)) #Array
+            @serialized_modified_user = show_like_json(@modified_user) #Array
+            expect(@serialized_returned_user).to eq(@serialized_modified_user)
+          end
+    
+          it " - user shouldn't be updated in database" do
+            @serialized_not_updated_user = show_like_json(User.find(@loaded_user.id))
+            @serialized_loaded_user = show_like_json(@loaded_user)
+            expect(@serialized_not_updated_user).to eq(@serialized_loaded_user)
+          end
+        end
+    
+        context " - JSON format" do
+          before(:each) { put :update, format: :json, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
+    
+          it "- should returns a :unprocessable_entity response status." do
+            expect(response).to have_http_status(422)
+          end
+    
+          it " - should returns a modified user (but not saved into database)." do
+            responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
+            responsed_user = responsed_body[:user] #Array
+            serialized_modified_user = show_like_json(@modified_user) #Array
+
+            expect(responsed_body[:user].count).to eq(1)
+            expect(responsed_body.keys).to eq([:user]) 
+            expect(responsed_user).to eq(serialized_modified_user)
+          end
+
+          it " - user shouldn't be updated in database" do
+            @not_updated_user = User.find(@loaded_user.id)
+            @serialized_not_updated_user = show_like_json(@not_updated_user)
+            @serialized_loaded_user = show_like_json(@loaded_user)
+
+            expect(@serialized_not_updated_user).to eq(@serialized_loaded_user)
+          end
+        end
+      end  
+    end
+
+    context " - without signed in user" do
+      context " - HTML format" do
+          before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
+
+        it_behaves_like "unauthorized redirection examples"  
+  
+        it "- shouldn't returns a user." do
+          expect(assigns(:user)).to eq(nil)
+        end
+
+        it " - user shouldn't be updated in database" do
+          @serialized_not_updated_user = show_like_json(User.find(@loaded_user.id))
+          @serialized_loaded_user = show_like_json(@loaded_user)
+          expect(@serialized_not_updated_user).to eq(@serialized_loaded_user)
+        end
+      end
+
+      context " - JSON format" do
+        before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] }, format: :json } #update need to have :id in :params
+        it_behaves_like "unauthorized JSON status" 
+
+        it "- shouldn't returns a user." do
+          responsed_body = JSON.parse(response.body).deep_symbolize_keys
+          expect(responsed_body[:notice]).to eq("You have not rights for this action - please sign in with necessary rights.")
+          expect(responsed_body.keys).to eq([:notice])
+        end
+
+        it " - user shouldn't be updated in database" do
+          @not_updated_user = User.find(@loaded_user.id)
+          @serialized_not_updated_user = show_like_json(@not_updated_user)
+          @serialized_loaded_user = show_like_json(@loaded_user)
+
+          expect(@serialized_not_updated_user).to eq(@serialized_loaded_user)
+        end
+      end
     end
   end
-#
-#    context "with invalid params" do
-#      xit "returns a success response (i.e. to display the 'edit' template)" do
-#        person = Person.create! valid_attributes
-#        put :update, params: {id: person.to_param, person: invalid_attributes}, session: valid_session
-#        expect(response).to be_successful
-#      end
-#    end
-#  end
-#
+
 #  describe "DELETE #destroy" do
 #    xit "destroys the requested person" do
 #      person = Person.create! valid_attributes

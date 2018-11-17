@@ -75,7 +75,7 @@ class UsersController < ApplicationController
           format.json { render json: { user: show_like_json(@user) } }
         else
           format.html { render :edit }
-          format.json { render json: { user: show_like_json(@user) } }
+          format.json { render status: 422, json: { user: show_like_json(@user) } }
         end
       end
     else
