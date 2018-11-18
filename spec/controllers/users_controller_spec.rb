@@ -311,7 +311,10 @@ RSpec.describe UsersController, type: :controller do
         it " - should return unsaved user" do
           @created_user.id = 1  #because we need to compare with assigns(:user) and for this is necessary to have some id
           assigns(:user).id = 1
-          expect(assigns(:user)).to eq(@created_user)
+          @serialized_created_user = show_like_json(@created_user)
+          @serialized_returned_user = show_like_json(assigns(:user))
+
+          expect(@serialized_returned_user).to eq(@serialized_created_user)
         end
       end
 
@@ -491,18 +494,101 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-#  describe "DELETE #destroy" do
-#    xit "destroys the requested person" do
-#      person = Person.create! valid_attributes
-#      expect {
-#        delete :destroy, params: {id: person.to_param}, session: valid_session
-#      }.to change(Person, :count).by(-1)
-#    end
-#
-#    xit "redirects to the users list" do
-#      person = Person.create! valid_attributes
-#      delete :destroy, params: {id: person.to_param}, session: valid_session
-#      expect(response).to redirect_to(users_url)
-#    end
-#  end
+  describe "DELETE #destroy" do
+    before(:each) do
+      @user = create(:user)
+    end
+    after(:each) {User.destroy_all}
+
+    context " - admin signed in" do
+      before(:each) {sign_in_admin}
+
+      context " - HTML format" do
+        before(:each) {delete :destroy, params: { id: @user.id }}
+
+        it_behaves_like "response status", 302
+
+        it " - should redirect to root" do
+          expect(response).to redirect_to(:root)
+        end
+
+        it " - should destroy a user from database" do
+          expect{User.find(@user.id)}.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+
+      context " - JSON format" do
+        before(:each) {delete :destroy, format: :json, params: { id: @user.id }}
+
+        it_behaves_like "response status", 204
+
+        it " - should destroy a user from database" do
+          expect{User.find(@user.id)}.to raise_error(ActiveRecord::RecordNotFound)
+        end
+
+        it " - should return a notice" do
+          responsed_body = JSON.parse(response.body).deep_symbolize_keys
+          expect(responsed_body[:notice]).to eq("User has been destroyed.")
+        end
+      end
+    end
+
+    context " - without signed in user" do
+      context " - HTML format" do
+        before(:each) {delete :destroy, params: { id: @user.id }}
+
+        it_behaves_like "unauthorized redirection examples"
+      end
+
+      context " - JSON format" do
+        before(:each) {delete :destroy, format: :json, params: { id: @user.id }}
+
+        it_behaves_like "unauthorized JSON status"
+      end
+    end
+  end
+
+  describe " - GET #pictures_show" do 
+    before(:each) {@user = create(:user)}
+    context " - admin signed in" do
+      before(:each) {sign_in_admin}
+
+      context " - HTML format" do
+        before(:each) { get :pictures_show, params: { id: @admin.id } }
+
+        it_behaves_like "response status", 200
+
+        it " - should render #pictures" do
+          expect(response).to render_template(:pictures)
+        end
+
+        it " - should return a user" do
+          @serialized_returned_user = show_like_json(assigns(:user))
+          @serialized_admin = show_like_json(@admin)
+
+          expect(@serialized_returned_user).to eq(@serialized_admin)
+        end
+
+        it " - should return a user without picture" do
+          expect(assigns(:user).profile_picture.attached?).to eq(false)
+        end
+      end
+
+      context " - JSON format" do
+        before(:each) { get :pictures_show, format: :json, params: { id: @admin.id } }
+        let(:serialized_returned_user) {JSON.parse(response.body).deep_symbolize_keys[:user]}
+        let(:serialized_admin) {show_like_json(@admin)}
+
+        it_behaves_like "response status", 200
+
+        it " - should return a user" do
+          expect(serialized_returned_user).to eq(serialized_admin)
+        end
+
+        it " - should return a user without picture" do
+          
+        end
+      end
+    end
+  end  
 end

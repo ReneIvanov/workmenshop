@@ -86,11 +86,11 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    if policy(current_user).can_destroy(User.find(params[:id]))
+    if user_signed_in? && policy(current_user).can_destroy(User.find(params[:id]))
       set_user
       @user.destroy
       respond_to do |format|
-        format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+        format.html { redirect_to root_path, notice: 'User was successfully destroyed.' }
         format.json { render status: 204, json: { notice: "User has been destroyed." } }
       end
     else
