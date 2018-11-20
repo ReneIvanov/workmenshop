@@ -117,11 +117,11 @@ class UsersController < ApplicationController
     
     if params[:user] != nil && params[:user][:profile_picture] != nil
       @user.profile_picture.attach(params[:user][:profile_picture])
-      flash[:notice] = 'Profile picture has been changed.'
+      flash[:notice] = "Profile picture has been changed."
 
       respond_to do |format|
         format.html { render :pictures }
-        format.json { render json: { user: show_like_json(@user) } }
+        format.json { render status: 422, json: { user: show_like_json(@user) } }
       end
     else
       flash[:notice] = 'Profile picture NOT changed!'

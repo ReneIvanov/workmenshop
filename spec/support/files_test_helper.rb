@@ -1,3 +1,5 @@
+require "action_dispatch"
+
 module FilesTestHelper
   extend self #tells that all methods will be "class" methods
   extend ActionDispatch::TestProcess

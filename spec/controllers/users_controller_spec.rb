@@ -16,10 +16,18 @@ RSpec.describe UsersController, type: :controller do
     UserSerializer.new(users).as_json #return a Array od serialized users
   end
 
+  def serialize(object)
+    SerializersTestHelper.serialize(object)
+  end
+
   def sign_in_admin
     @admin = create (:user) 
     @admin_account = create(:account_admin, user_id: @admin.id)
     sign_in(@admin)
+  end
+
+  def parser(content)
+    JSON.parse(content).deep_symbolize_keys
   end
 
   describe "- GET #index" do
@@ -614,26 +622,50 @@ RSpec.describe UsersController, type: :controller do
       @requested_user.profile_picture.purge
       @requested_user.destroy
     end
+    let(:profile_picture) { FilesTestHelper.png }
 
     context " - user signed in" do
       before(:each) {sign_in(@requested_user)}
 
       context " - HTML format" do
         before(:each) do
-          @file = fixture_file_upload(Rails.root.join('spec', 'support', 'assets', 'test-image.png'), 'image/png')
-          #put :pictures_update, params: { id: @requested_user.id, user: { profile_picture: file } } #update need to have :id in :params }
+          put :pictures_update, params: { user: { profile_picture: profile_picture } }
+        end
+        
+        it_behaves_like "response status", 200
+        it_behaves_like "render template", :pictures
+        it_behaves_like "notice", "Profile picture has been changed."
+
+        it " - should return a correct user" do
+          expect(serialize(assigns(:user))).to eq(serialize(@requested_user))
         end
 
-        it " - should return a user with profile_picture" do
-          @requested_user.reload
-          expect(@requested_user.profile_picture.attached?).to be false
-          put :pictures_update, params: { id: @requested_user.id, user: { profile_picture: @file } } #update need to have :id in :params }
-          @requested_user.reload
-          expect(@requested_user.profile_picture.attached?).to be true
+        it " - should return a user with correct profile picture" do
           expect(assigns(:user).profile_picture.attached?).to be true
-          #expect(assigns(:user).profile_picture.blob).to eq(@file)
-          #expect(serialized_returned_user).to eq(serialized_requested_user) #notice: pri serializácií sa zabil profile_picture
+          expect(assigns(:user).profile_picture.filename).to eq(FilesTestHelper.png_name)
+          expect(assigns(:user).profile_picture.record_type).to eq("User")
+          expect(assigns(:user).profile_picture.record_id).to eq(@requested_user.id)
         end
+      end
+
+      context " - JSON format" do
+        before(:each) do
+          put :pictures_update, format: :json, params: { user: { profile_picture: profile_picture } }
+        end
+        let(:responsed_user) { parser(response.body)[:user].first} #responsed_user hash
+        
+        it_behaves_like "response status", 422
+        
+        it " - should return a correct user" do
+          expect(responsed_user <= serialize(@requested_user)).to be true
+        end
+
+        #it " - should return a user with correct profile picture" do
+        #  expect(assigns(:user).profile_picture.attached?).to be true
+        #  expect(assigns(:user).profile_picture.filename).to eq(FilesTestHelper.png_name)
+        #  expect(assigns(:user).profile_picture.record_type).to eq("User")
+        #  expect(assigns(:user).profile_picture.record_id).to eq(@requested_user.id)
+        #end
       end
     end
   end
