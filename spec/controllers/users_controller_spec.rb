@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
 
   def set_user_keys
-    return [:id, :username, :email, :address, :telephone, :account, :works]
+    return [:id, :username, :email, :address, :telephone, :account, :works, :profile_picture]
   end
 
   def request_user_params(created_user)
@@ -549,12 +549,19 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe " - GET #pictures_show" do 
-    before(:each) {@user = create(:user)}
-    context " - admin signed in" do
-      before(:each) {sign_in_admin}
+    before(:each) {@requested_user = create(:user, :with_profile_picture)}
+    after(:each) do
+      @requested_user.profile_picture.purge
+      @requested_user.destroy
+    end
+
+    context " - user signed in" do
+      before(:each) {sign_in(@requested_user)}
 
       context " - HTML format" do
-        before(:each) { get :pictures_show, params: { id: @admin.id } }
+        before(:each) { get :pictures_show }
+        let(:serialized_returned_user) {show_like_json(assigns(:user))}
+        let(:serialized_requested_user) {show_like_json(@requested_user)}
 
         it_behaves_like "response status", 200
 
@@ -562,33 +569,72 @@ RSpec.describe UsersController, type: :controller do
           expect(response).to render_template(:pictures)
         end
 
-        it " - should return a user" do
-          @serialized_returned_user = show_like_json(assigns(:user))
-          @serialized_admin = show_like_json(@admin)
-
-          expect(@serialized_returned_user).to eq(@serialized_admin)
-        end
-
-        it " - should return a user without picture" do
-          expect(assigns(:user).profile_picture.attached?).to eq(false)
+        it " - should return a user with profile_picture" do
+          expect(assigns(:user).profile_picture.id).to eq(@requested_user.profile_picture.id)  #compare attachments id
+          expect(serialized_returned_user).to eq(serialized_requested_user) #notice: pri serializácií sa zabil profile_picture
         end
       end
 
       context " - JSON format" do
-        before(:each) { get :pictures_show, format: :json, params: { id: @admin.id } }
+        #before(:each) { get :pictures_show, format: :json, params: { id: @requested_user.id } }
+
+        before(:each) do
+          @test_user = create(:user)
+          sign_in(@test_user)
+          file = fixture_file_upload(Rails.root.join('spec', 'support', 'assets', 'test-image.png'), 'image/png')
+          get :pictures_show, format: :json, params: { profile_picture: file }
+        end
+
         let(:serialized_returned_user) {JSON.parse(response.body).deep_symbolize_keys[:user]}
-        let(:serialized_admin) {show_like_json(@admin)}
+        let(:serialized_requested_user) {show_like_json(@requested_user)}
 
-        it_behaves_like "response status", 200
+        #it_behaves_like "response status", 200
+#
+        #it " - should return a user" do
+        #  expect(serialized_returned_user).to eq(serialized_requested_user)
+        #end
 
-        it " - should return a user" do
-          expect(serialized_returned_user).to eq(serialized_admin)
+        #it " - should return a user with profile_picture" do
+        #  expect(serialized_returned_user.first[:profile_picture]).to eq(serialized_requested_user.first[:profile_picture])
+        #  expect(serialized_returned_user).to eq(serialized_requested_user)
+        #end
+
+        it " - test" do
+          serialized_test_user = show_like_json(@test_user)
+          expect(serialized_returned_user.first[:profile_picture]).to eq(serialized_test_user.first[:profile_picture])
         end
 
-        it " - should return a user without picture" do
-          
-        end
       end
     end
   end  
+
+  describe " - PUT #pictures_update" do 
+    before(:each) {@requested_user = create(:user)}
+    after(:each) do
+      @requested_user.profile_picture.purge
+      @requested_user.destroy
+    end
+
+    context " - user signed in" do
+      before(:each) {sign_in(@requested_user)}
+
+      context " - HTML format" do
+        before(:each) do
+          @file = fixture_file_upload(Rails.root.join('spec', 'support', 'assets', 'test-image.png'), 'image/png')
+          #put :pictures_update, params: { id: @requested_user.id, user: { profile_picture: file } } #update need to have :id in :params }
+        end
+
+        it " - should return a user with profile_picture" do
+          @requested_user.reload
+          expect(@requested_user.profile_picture.attached?).to be false
+          put :pictures_update, params: { id: @requested_user.id, user: { profile_picture: @file } } #update need to have :id in :params }
+          @requested_user.reload
+          expect(@requested_user.profile_picture.attached?).to be true
+          expect(assigns(:user).profile_picture.attached?).to be true
+          #expect(assigns(:user).profile_picture.blob).to eq(@file)
+          #expect(serialized_returned_user).to eq(serialized_requested_user) #notice: pri serializácií sa zabil profile_picture
+        end
+      end
+    end
+  end
 end

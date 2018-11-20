@@ -20,6 +20,7 @@ class UserSerializer
     user_hash.merge!(telephone: user.telephone)
     user_hash.merge!(account: AccountSerializer.new(user.account).as_json)
     user_hash.merge!(works: WorkSerializer.new(user.works).as_json)
+    user_hash.merge!(profile_picture: {})
     return user_hash
   end
 
