@@ -23,7 +23,13 @@ module SerializersTestHelper
     user_hash.merge!(telephone: user.telephone)
     user_hash.merge!(account: AccountSerializer.new(user.account).as_json)
     user_hash.merge!(works: WorkSerializer.new(user.works).as_json)
-    user_hash.merge!(profile_picture: {})
+    
+    if user.profile_picture.attached?
+      user_hash.merge!(profile_picture: user.profile_picture.blob[:filename])
+    else
+      user_hash.merge!(profile_picture: {}) 
+    end
+
     return user_hash
   end
 

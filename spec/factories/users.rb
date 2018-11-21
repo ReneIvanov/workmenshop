@@ -10,5 +10,15 @@ FactoryBot.define do
       #profile_picture { fixture_file_upload(Rails.root.join('spec', 'support', 'assets', 'test-image.png'), 'image/png') }
       profile_picture { FilesTestHelper.png }
     end
+
+    trait :with_works do
+      transient do
+        works_count { 2 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:work, evaluator.works_count, users: [user])
+      end
+    end
   end
 end

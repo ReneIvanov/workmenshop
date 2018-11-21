@@ -1,19 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-
   def set_user_keys
     return [:id, :username, :email, :address, :telephone, :account, :works, :profile_picture]
   end
 
   def request_user_params(created_user)
-    @user_params = show_like_json(created_user).first #Hash
+    @user_params = serialize(created_user)
     @user_params.merge!(password: created_user.password)
     @user_post_params = { user: @user_params } #Hash with format needed by UserController
-  end
-
-  def show_like_json(users)
-    UserSerializer.new(users).as_json #return a Array od serialized users
   end
 
   def serialize(object)
@@ -29,10 +24,9 @@ RSpec.describe UsersController, type: :controller do
   def parser(content)
     JSON.parse(content).deep_symbolize_keys
   end
-
+  
   describe "- GET #index" do
-    before(:each) {create_list :user, 5} 
-    after(:each) {User.destroy_all}
+    before(:each) {create_list :user, 5}
 
     context " - admin signed in" do
       before(:each) {sign_in_admin}
@@ -62,7 +56,7 @@ RSpec.describe UsersController, type: :controller do
           responsed_body = JSON.parse(response.body).deep_symbolize_keys #separate from response the body and convert in into Hash
           expect(responsed_body[:users].count).to eq(6)
           expect(responsed_body.keys).to eq([:users])
-          expect(responsed_body[:users].first.keys).to eq(user_keys) #responsed_body == Hash, responsed_body[:users] == Array of users, responsed_body[:users].first == first user(Hash), responsed_body[:users].first.keys == first user(Hash) keys 
+          expect(responsed_body[:users].first.keys).to eq(user_keys)
         end
       end
     end
@@ -84,7 +78,7 @@ RSpec.describe UsersController, type: :controller do
         it_behaves_like "unauthorized JSON status" #shared examples located in spec/support/shared_examples/unauthorized_JSON_status.rb
 
         it "- shouldn't returns a list of users." do
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys #separate from response the body and convert in into Hash
+          responsed_body = JSON.parse(response.body).deep_symbolize_keys 
           expect(responsed_body[:notice]).to eq("You have not rights for this action - please sign in with necessary rights.")
           expect(responsed_body.keys).to eq([:notice])
         end
@@ -93,8 +87,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "- GET #show" do
-    before(:each) {@showed_user = create :user} 
-    after(:each) {User.destroy_all}
+    before(:each) {@showed_user = create :user}
 
     context " - admin signed in" do
       before(:each) {sign_in_admin}
@@ -105,8 +98,8 @@ RSpec.describe UsersController, type: :controller do
         it_behaves_like "response status 200"
   
         it "- should returns a user." do
-          @serialized_returned_user = show_like_json(assigns(:user))
-          @serialized_showed_user = show_like_json(User.find(@showed_user.id))
+          @serialized_returned_user = serialize(assigns(:user))
+          @serialized_showed_user = serialize(User.find(@showed_user.id))
           expect(@serialized_returned_user).to eql(@serialized_showed_user)
         end
   
@@ -188,8 +181,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "- GET #edit" do
-    before(:each) {@edited_user = create :user} 
-    after(:each) {User.destroy_all}
+    before(:each) {@edited_user = create :user}
 
     context " - admin signed in" do
       before(:each) {sign_in_admin}
@@ -200,8 +192,8 @@ RSpec.describe UsersController, type: :controller do
         it_behaves_like "response status 200"
   
         it "- should returns a user." do
-          @serialized_returned_user = show_like_json(assigns(:user))
-          @serialized_edited_user = show_like_json(User.find(@edited_user.id))
+          @serialized_returned_user = serialize(assigns(:user))
+          @serialized_edited_user = serialize(User.find(@edited_user.id))
           expect(@serialized_returned_user).to eql(@serialized_edited_user)
         end
   
@@ -253,7 +245,6 @@ RSpec.describe UsersController, type: :controller do
 
   describe " - POST #create" do 
     before(:each) {@created_user = build :user}
-    after(:each) {User.destroy_all}
 
     context " - user is saved into database" do
       context " - HTML format" do
@@ -264,16 +255,16 @@ RSpec.describe UsersController, type: :controller do
         end
   
         it " - should returns a new created user." do
-          @serialized_returned_user = show_like_json(assigns(:user))
-          @serialized_created_user = show_like_json(@created_user)
-          @serialized_created_user.first[:id] = @serialized_returned_user.first[:id] #set id for created user like returned user have (to pass comparation)
+          @serialized_returned_user = serialize(assigns(:user))
+          @serialized_created_user = serialize(@created_user)
+          @serialized_created_user[:id] = @serialized_returned_user[:id] #set id for created user like returned user have (to pass comparation)
           expect(@serialized_returned_user).to eq(@serialized_created_user)
         end
   
         it " - created user should be saved into database" do
           @created_user.id = assigns(:user).id
-          @serialized_created_user = show_like_json(@created_user)
-          @serialized_saved_user = show_like_json(User.find(assigns(:user).id))
+          @serialized_created_user = serialize(@created_user)
+          @serialized_saved_user = serialize(User.find(assigns(:user).id))
           expect(@serialized_saved_user).to eq(@serialized_created_user)
         end
   
@@ -291,9 +282,9 @@ RSpec.describe UsersController, type: :controller do
   
         it " - should returns a new created user." do
           responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
-          responsed_user = responsed_body[:user] #Array
-          serialized_created_user = show_like_json(@created_user) #Array
-          serialized_created_user.first[:id] = responsed_user.first[:id]
+          responsed_user = responsed_body[:user].first
+          serialized_created_user = serialize(@created_user)
+          serialized_created_user[:id] = responsed_user[:id]
   
           expect(responsed_body[:user].count).to eq(1)
           expect(responsed_body.keys).to eq([:user]) 
@@ -319,8 +310,8 @@ RSpec.describe UsersController, type: :controller do
         it " - should return unsaved user" do
           @created_user.id = 1  #because we need to compare with assigns(:user) and for this is necessary to have some id
           assigns(:user).id = 1
-          @serialized_created_user = show_like_json(@created_user)
-          @serialized_returned_user = show_like_json(assigns(:user))
+          @serialized_created_user = serialize(@created_user)
+          @serialized_returned_user = serialize(assigns(:user))
 
           expect(@serialized_returned_user).to eq(@serialized_created_user)
         end
@@ -335,8 +326,8 @@ RSpec.describe UsersController, type: :controller do
   
         it " - should returns a uncreated user." do
           responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
-          responsed_user = responsed_body[:user] #Array
-          serialized_created_user = show_like_json(@created_user) #Array
+          responsed_user = responsed_body[:user].first
+          serialized_created_user = serialize(@created_user)
   
           expect(responsed_body[:user].count).to eq(1)
           expect(responsed_body.keys).to eq([:user]) 
@@ -353,7 +344,6 @@ RSpec.describe UsersController, type: :controller do
       @modified_user = build :user
       @modified_user.id = @loaded_user.id #this user is modified user with same id like user in database
     end
-    after(:each) {User.destroy_all}
 
     context " - admin signed in" do
       before(:each) {sign_in_admin}
@@ -367,15 +357,15 @@ RSpec.describe UsersController, type: :controller do
           end
     
           it " - should returns a updated user." do
-            @serialized_returned_user = show_like_json(assigns(:user))
-            @serialized_modified_user = show_like_json(@modified_user)
+            @serialized_returned_user = serialize(assigns(:user))
+            @serialized_modified_user = serialize(@modified_user)
             expect(@serialized_returned_user).to eq(@serialized_modified_user)
           end
     
           it " - user should be updated in database" do
             @updated_user = User.find(@modified_user.id)
-            @serialized_updated_user = show_like_json(@updated_user)
-            @serialized_modified_user = show_like_json(@modified_user)
+            @serialized_updated_user = serialize(@updated_user)
+            @serialized_modified_user = serialize(@modified_user)
 
             expect(@serialized_updated_user).to eq(@serialized_modified_user)
           end
@@ -392,9 +382,9 @@ RSpec.describe UsersController, type: :controller do
     
           it " - should returns a updated user." do
             responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
-            responsed_user = responsed_body[:user] #Array
-            serialized_modified_user = show_like_json(@modified_user) #Array
-            serialized_modified_user.first[:id] = responsed_user.first[:id]
+            responsed_user = responsed_body[:user].first
+            serialized_modified_user = serialize(@modified_user)
+            serialized_modified_user[:id] = responsed_user[:id]
     
             expect(responsed_body[:user].count).to eq(1)
             expect(responsed_body.keys).to eq([:user]) 
@@ -403,8 +393,8 @@ RSpec.describe UsersController, type: :controller do
 
           it " - user should be updated in database" do
             @updated_user = User.find(@modified_user.id)
-            @serialized_updated_user = show_like_json(@updated_user)
-            @serialized_modified_user = show_like_json(@modified_user)
+            @serialized_updated_user = serialize(@updated_user)
+            @serialized_modified_user = serialize(@modified_user)
 
             expect(@serialized_updated_user).to eq(@serialized_modified_user)
           end
@@ -424,14 +414,14 @@ RSpec.describe UsersController, type: :controller do
         end
     
           it " - should returns a modified user (but not saved into database)." do
-            @serialized_returned_user = show_like_json(assigns(:user)) #Array
-            @serialized_modified_user = show_like_json(@modified_user) #Array
+            @serialized_returned_user = serialize(assigns(:user))
+            @serialized_modified_user = serialize(@modified_user)
             expect(@serialized_returned_user).to eq(@serialized_modified_user)
           end
     
           it " - user shouldn't be updated in database" do
-            @serialized_not_updated_user = show_like_json(User.find(@loaded_user.id))
-            @serialized_loaded_user = show_like_json(@loaded_user)
+            @serialized_not_updated_user = serialize(User.find(@loaded_user.id))
+            @serialized_loaded_user = serialize(@loaded_user)
             expect(@serialized_not_updated_user).to eq(@serialized_loaded_user)
           end
         end
@@ -445,8 +435,8 @@ RSpec.describe UsersController, type: :controller do
     
           it " - should returns a modified user (but not saved into database)." do
             responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
-            responsed_user = responsed_body[:user] #Array
-            serialized_modified_user = show_like_json(@modified_user) #Array
+            responsed_user = responsed_body[:user].first
+            serialized_modified_user = serialize(@modified_user)
 
             expect(responsed_body[:user].count).to eq(1)
             expect(responsed_body.keys).to eq([:user]) 
@@ -455,8 +445,8 @@ RSpec.describe UsersController, type: :controller do
 
           it " - user shouldn't be updated in database" do
             @not_updated_user = User.find(@loaded_user.id)
-            @serialized_not_updated_user = show_like_json(@not_updated_user)
-            @serialized_loaded_user = show_like_json(@loaded_user)
+            @serialized_not_updated_user = serialize(@not_updated_user)
+            @serialized_loaded_user = serialize(@loaded_user)
 
             expect(@serialized_not_updated_user).to eq(@serialized_loaded_user)
           end
@@ -475,8 +465,8 @@ RSpec.describe UsersController, type: :controller do
         end
 
         it " - user shouldn't be updated in database" do
-          @serialized_not_updated_user = show_like_json(User.find(@loaded_user.id))
-          @serialized_loaded_user = show_like_json(@loaded_user)
+          @serialized_not_updated_user = serialize(User.find(@loaded_user.id))
+          @serialized_loaded_user = serialize(@loaded_user)
           expect(@serialized_not_updated_user).to eq(@serialized_loaded_user)
         end
       end
@@ -493,8 +483,8 @@ RSpec.describe UsersController, type: :controller do
 
         it " - user shouldn't be updated in database" do
           @not_updated_user = User.find(@loaded_user.id)
-          @serialized_not_updated_user = show_like_json(@not_updated_user)
-          @serialized_loaded_user = show_like_json(@loaded_user)
+          @serialized_not_updated_user = serialize(@not_updated_user)
+          @serialized_loaded_user = serialize(@loaded_user)
 
           expect(@serialized_not_updated_user).to eq(@serialized_loaded_user)
         end
@@ -506,7 +496,6 @@ RSpec.describe UsersController, type: :controller do
     before(:each) do
       @user = create(:user)
     end
-    after(:each) {User.destroy_all}
 
     context " - admin signed in" do
       before(:each) {sign_in_admin}
@@ -557,115 +546,186 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe " - GET #pictures_show" do 
-    before(:each) {@requested_user = create(:user, :with_profile_picture)}
-    after(:each) do
-      @requested_user.profile_picture.purge
-      @requested_user.destroy
+    before(:each) do
+      @requested_user = create(:user, :with_profile_picture)
+      sign_in(@requested_user)
     end
 
-    context " - user signed in" do
-      before(:each) {sign_in(@requested_user)}
+    context " - HTML format" do
+      before(:each) { get :pictures_show, params: {id: @requested_user.id} }
+      let(:serialized_returned_user) {serialize(assigns(:user))}
+      let(:serialized_requested_user) {serialize(@requested_user)}
 
-      context " - HTML format" do
-        before(:each) { get :pictures_show }
-        let(:serialized_returned_user) {show_like_json(assigns(:user))}
-        let(:serialized_requested_user) {show_like_json(@requested_user)}
+      it_behaves_like "response status", 200
 
-        it_behaves_like "response status", 200
-
-        it " - should render #pictures" do
-          expect(response).to render_template(:pictures)
-        end
-
-        it " - should return a user with profile_picture" do
-          expect(assigns(:user).profile_picture.id).to eq(@requested_user.profile_picture.id)  #compare attachments id
-          expect(serialized_returned_user).to eq(serialized_requested_user) #notice: pri serializácií sa zabil profile_picture
-        end
+      it " - should render #pictures" do
+        expect(response).to render_template(:pictures)
       end
 
-      context " - JSON format" do
-        #before(:each) { get :pictures_show, format: :json, params: { id: @requested_user.id } }
+      it " - should return a user with profile_picture" do
+        expect(assigns(:user).profile_picture.id).to eq(@requested_user.profile_picture.id)  #compare attachments id
+        expect(serialized_returned_user).to eq(serialized_requested_user)
+      end
+     end
 
-        before(:each) do
-          @test_user = create(:user)
-          sign_in(@test_user)
-          file = fixture_file_upload(Rails.root.join('spec', 'support', 'assets', 'test-image.png'), 'image/png')
-          get :pictures_show, format: :json, params: { profile_picture: file }
-        end
+    context " - JSON format" do
+      before(:each) { get :pictures_show, format: :json, params: {id: @requested_user.id} }
 
-        let(:serialized_returned_user) {JSON.parse(response.body).deep_symbolize_keys[:user]}
-        let(:serialized_requested_user) {show_like_json(@requested_user)}
+      let(:serialized_returned_user) {parser(response.body)[:user].first}
+      let(:serialized_requested_user) {serialize(@requested_user)}
 
-        #it_behaves_like "response status", 200
-#
-        #it " - should return a user" do
-        #  expect(serialized_returned_user).to eq(serialized_requested_user)
-        #end
+      it_behaves_like "response status", 200
 
-        #it " - should return a user with profile_picture" do
-        #  expect(serialized_returned_user.first[:profile_picture]).to eq(serialized_requested_user.first[:profile_picture])
-        #  expect(serialized_returned_user).to eq(serialized_requested_user)
-        #end
+      it " - should return a correct user" do
+        expect(serialized_returned_user).to eq(serialized_requested_user)
+      end
 
-        it " - test" do
-          serialized_test_user = show_like_json(@test_user)
-          expect(serialized_returned_user.first[:profile_picture]).to eq(serialized_test_user.first[:profile_picture])
-        end
-
+      it " - should return a user with profile_picture" do
+        expect(serialized_returned_user[:profile_picture]).to eq(serialized_requested_user[:profile_picture])
       end
     end
   end  
 
   describe " - PUT #pictures_update" do 
     before(:each) {@requested_user = create(:user)}
-    after(:each) do
-      @requested_user.profile_picture.purge
-      @requested_user.destroy
-    end
     let(:profile_picture) { FilesTestHelper.png }
 
     context " - user signed in" do
       before(:each) {sign_in(@requested_user)}
+      
+      context " - profile picture updated" do
+        context " - HTML format" do
+          before(:each) do
+            put :pictures_update, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }
+          end
+          
+          it_behaves_like "response status", 200
+          it_behaves_like "render template", :pictures
+          it_behaves_like "notice", "Profile picture has been changed."
+  
+          it " - should return a correct user" do
+            expect(serialize(assigns(:user))).to eq(serialize(@requested_user))
+          end
+  
+          it " - should return a user with correct profile picture" do
+            expect(assigns(:user).profile_picture.attached?).to be true
+            expect(assigns(:user).profile_picture.filename).to eq(FilesTestHelper.png_name)
+            expect(assigns(:user).profile_picture.record_type).to eq("User")
+            expect(assigns(:user).profile_picture.record_id).to eq(@requested_user.id)
+          end
+        end
 
+        context " - JSON format" do
+          before(:each) do
+            put :pictures_update, format: :json, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }          
+          end
+          let(:serialized_responsed_user) {parser(response.body)[:user].first}
+          let(:serialized_requested_user) {serialize(@requested_user)}
+          
+          it_behaves_like "response status", 200
+          it_behaves_like "notice", "Profile picture has been changed."
+  
+          it " - should return a correct user" do
+            expect(serialized_responsed_user <= serialized_requested_user).to be true #requested_user has been automatically reloaded after request
+          end
+  
+          it " - should return a user with correct profile picture" do
+            expect(serialized_responsed_user[:profile_picture]).to eq(FilesTestHelper.png_name)
+          end
+        end
+      end
+
+      context " - profile picture not updated" do
+        context " - HTML format" do
+          before(:each) do
+            put :pictures_update, params: { id: @requested_user.id}
+          end
+          
+          it_behaves_like "response status", 200
+          it_behaves_like "render template", :pictures
+          it_behaves_like "notice", "Profile picture NOT changed!"
+  
+          it " - should return a correct user" do
+            expect(serialize(assigns(:user))).to eq(serialize(@requested_user))
+          end
+  
+          it " - should return a user without profile picture" do
+            expect(assigns(:user).profile_picture.attached?).to be false
+          end
+        end
+
+        context " - JSON format" do
+          before(:each) do
+            put :pictures_update, format: :json, params: { id: @requested_user.id }
+          end
+          let(:responsed_user) { parser(response.body)[:user].first}
+          
+          it_behaves_like "response status", 422
+          
+          it " - should return a correct user" do
+            expect(responsed_user <= serialize(@requested_user)).to be true
+          end
+  
+          it " - should return a user without profile picture" do
+            expect(responsed_user[:profile_picture]).to eq({})
+          end
+        end
+      end
+    end
+
+    context " - user not signed in" do
       context " - HTML format" do
         before(:each) do
-          put :pictures_update, params: { user: { profile_picture: profile_picture } }
+          put :pictures_update, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }
         end
         
-        it_behaves_like "response status", 200
-        it_behaves_like "render template", :pictures
-        it_behaves_like "notice", "Profile picture has been changed."
+        it_behaves_like "unauthorized redirection examples"
 
-        it " - should return a correct user" do
-          expect(serialize(assigns(:user))).to eq(serialize(@requested_user))
-        end
-
-        it " - should return a user with correct profile picture" do
-          expect(assigns(:user).profile_picture.attached?).to be true
-          expect(assigns(:user).profile_picture.filename).to eq(FilesTestHelper.png_name)
-          expect(assigns(:user).profile_picture.record_type).to eq("User")
-          expect(assigns(:user).profile_picture.record_id).to eq(@requested_user.id)
+        it " - shouldn't return a user" do
+          expect(assigns(:user)).to eq(nil)
         end
       end
 
       context " - JSON format" do
         before(:each) do
-          put :pictures_update, format: :json, params: { user: { profile_picture: profile_picture } }
+          put :pictures_update, format: :json, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }
         end
-        let(:responsed_user) { parser(response.body)[:user].first} #responsed_user hash
+        let(:responsed_user) { parser(response.body)[:user]}
         
-        it_behaves_like "response status", 422
+        it_behaves_like "unauthorized JSON status"
         
-        it " - should return a correct user" do
-          expect(responsed_user <= serialize(@requested_user)).to be true
+        it " - shouldn't return a user" do
+          expect(responsed_user).to be nil
         end
+      end
+    end
+  end
 
-        #it " - should return a user with correct profile picture" do
-        #  expect(assigns(:user).profile_picture.attached?).to be true
-        #  expect(assigns(:user).profile_picture.filename).to eq(FilesTestHelper.png_name)
-        #  expect(assigns(:user).profile_picture.record_type).to eq("User")
-        #  expect(assigns(:user).profile_picture.record_id).to eq(@requested_user.id)
-        #end
+  describe "- GET #show_user_works" do 
+    let(:requested_user){ create(:user, :with_works, works_count: 5) }
+
+    context " - HTML format" do
+      before(:each) { get :show_user_works, params: {id: requested_user} }
+      
+      it_behaves_like "response status", 200
+
+      it "- should returns user works." do
+        expect(assigns(:user_works).count).to eq(5)
+      end
+
+      it "- should render show_user_works template." do  
+        expect(response).to render_template(:show_user_works)
+      end
+    end
+
+    context " - JSON format" do
+      before(:each) {get :show_user_works, format: :json, params: {id: requested_user} }
+      let(:serialized_works) {parser(response.body)[:works]}
+
+      it_behaves_like "response status 200"
+
+      it "- should returns a user works." do
+        expect(serialized_works.count).to eq(5)
       end
     end
   end

@@ -67,4 +67,13 @@ RSpec.configure do |config|
   FactoryBot::SyntaxRunner.class_eval do
     include ActionDispatch::TestProcess
   end
+
+  #configuration of a DatabaseCleaner
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do |example|
+    DatabaseCleaner.clean
+  end
 end

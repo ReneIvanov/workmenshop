@@ -28,8 +28,9 @@ class ApplicationController < ActionController::Base
   end
 
   def unauthorized  #response if user is not authorized fo current action
+    flash[:notice] = 'You have not rights for this action - please sign in with necessary rights.'
     respond_to do |format|
-      format.html { redirect_to new_user_session_path, notice: 'You have not rights for this action - please sign in with necessary rights.' }
+      format.html { redirect_to new_user_session_path }
       format.json { render status: 401, json: { notice: "You have not rights for this action - please sign in with necessary rights." } }
     end
   end

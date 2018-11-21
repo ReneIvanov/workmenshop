@@ -39,8 +39,8 @@ Rails.application.routes.draw do
 
   resources :users
   controller :users do
-    get 'users_pictures' => :pictures_show
-    patch 'users_pictures' => :pictures_update
+    get 'users/:id/pictures' => :pictures_show, as: 'show_users_pictures'
+    patch 'users/:id/pictures' => :pictures_update, as: 'update_users_pictures'
     get 'users/:id/works' => :show_user_works, as: 'user_works'
   end
 

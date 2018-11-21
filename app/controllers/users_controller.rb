@@ -100,35 +100,34 @@ class UsersController < ApplicationController
   
   # GET /users_pictures
   def pictures_show
-    if user_signed_in?
-      @user = current_user
-      respond_to do |format|
-        format.html { render :pictures}
-        format.json { render json: { user: show_like_json(@user) } }
-      end
-    else
-      unauthorized
+    set_user
+    respond_to do |format|
+      format.html { render :pictures}
+      format.json { render json: { user: show_like_json(@user) } }
     end
   end
   
   # PATCH /users/picture
   def pictures_update
-    @user = current_user
-    
-    if params[:user] != nil && params[:user][:profile_picture] != nil
-      @user.profile_picture.attach(params[:user][:profile_picture])
-      flash[:notice] = "Profile picture has been changed."
-
-      respond_to do |format|
-        format.html { render :pictures }
-        format.json { render status: 422, json: { user: show_like_json(@user) } }
+    if user_signed_in? && policy(current_user).can_update_profile_picture(User.find(params[:id])) 
+      set_user
+      if params[:user] != nil && params[:user][:profile_picture] != nil
+        @user.profile_picture.attach(params[:user][:profile_picture])
+        flash[:notice] = "Profile picture has been changed."
+  
+        respond_to do |format|
+          format.html { render :pictures }
+          format.json { render json: { user: show_like_json(@user) } }
+        end
+      else
+        flash[:notice] = 'Profile picture NOT changed!'
+        respond_to do |format|
+          format.html { render :pictures }
+          format.json { render status: 422, json: { user: show_like_json(@user) } }
+        end
       end
     else
-      flash[:notice] = 'Profile picture NOT changed!'
-      respond_to do |format|
-        format.html { render :pictures }
-        format.json { render json: { ser: show_like_json(@user) } }
-      end
+      unauthorized
     end
   end
   
@@ -136,6 +135,11 @@ class UsersController < ApplicationController
   def show_user_works
     set_user
     @user_works = @user.user_works
+
+    respond_to do |format|
+      format.html { render :show_user_works }
+      format.json { render json: { works: WorkSerializer.new(@user_works).as_json } }
+    end
   end
 
   private
