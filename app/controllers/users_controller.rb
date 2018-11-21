@@ -55,11 +55,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        format.html { redirect_to root_path, notice: 'User was successfully created. To continue pleale log in.' }
-        format.json { render status: 201, json: { user: show_like_json(@user) } }
+        format.html { redirect_to root_path, notice: "User was successfully created." }
+        format.json { render status: 201, json: { user: show_like_json(@user), notice: "User was successfully created." } }
       else
-        format.html { render :new, notice: 'User was not created. Please try again.' }
-        format.json { render status: 422, json: { user: show_like_json(@user) } }
+        format.html { render :new; flash[:notice] = "User was not created." }
+        format.json { render status: 422, json: { user: show_like_json(@user), notice: "User was not created." } }
       end
     end
   end
@@ -71,11 +71,11 @@ class UsersController < ApplicationController
       set_user
       respond_to do |format|
         if @user.update(user_params)
-          format.html { redirect_to @user, notice: 'User was successfully updated.' }
-          format.json { render json: { user: show_like_json(@user) } }
+          format.html { redirect_to @user, notice: "User was successfully updated." }
+          format.json { render json: { user: show_like_json(@user), notice: "User was successfully updated." } }
         else
-          format.html { render :edit }
-          format.json { render status: 422, json: { user: show_like_json(@user) } }
+          format.html { render :edit; flash[:notice] = "User was not updated." }
+          format.json { render status: 422, json: { user: show_like_json(@user), notice: "User was not updated." } }
         end
       end
     else
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
       set_user
       @user.destroy
       respond_to do |format|
-        format.html { redirect_to root_path, notice: 'User was successfully destroyed.' }
+        format.html { redirect_to root_path, notice: "User has been destroyed." }
         format.json { render status: 204, json: { notice: "User has been destroyed." } }
       end
     else
@@ -98,7 +98,7 @@ class UsersController < ApplicationController
     end
   end
   
-  # GET /users_pictures
+  # GET /users/:id/pictures
   def pictures_show
     set_user
     respond_to do |format|
@@ -107,23 +107,21 @@ class UsersController < ApplicationController
     end
   end
   
-  # PATCH /users/picture
+  # PATCH /users/:id/pictures
   def pictures_update
     if user_signed_in? && policy(current_user).can_update_profile_picture(User.find(params[:id])) 
       set_user
       if params[:user] != nil && params[:user][:profile_picture] != nil
         @user.profile_picture.attach(params[:user][:profile_picture])
-        flash[:notice] = "Profile picture has been changed."
   
         respond_to do |format|
-          format.html { render :pictures }
-          format.json { render json: { user: show_like_json(@user) } }
+          format.html { render :pictures; flash[:notice] = "Profile picture has been changed." }
+          format.json { render json: { user: show_like_json(@user), notice: "Profile picture has been changed." } }
         end
       else
-        flash[:notice] = 'Profile picture NOT changed!'
         respond_to do |format|
-          format.html { render :pictures }
-          format.json { render status: 422, json: { user: show_like_json(@user) } }
+          format.html { render :pictures; flash[:notice] = "Profile picture NOT changed!" }
+          format.json { render status: 422, json: { user: show_like_json(@user), notice: "Profile picture NOT changed!" } }
         end
       end
     else

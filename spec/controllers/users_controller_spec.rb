@@ -34,29 +34,26 @@ RSpec.describe UsersController, type: :controller do
       context " - HTML format" do
         before(:each) {get :index}
 
-        it_behaves_like "response status 200"  #shared examples located in spec/support/shared_examples/response_status_200.rb
+        it_behaves_like "response status", 200
+        it_behaves_like "render template", :index
   
         it "- should returns a list of users." do
           expect(assigns(:users)).to eq(User.all)
-        end
-  
-        it "- should render index template." do  
-          expect(response).to render_template(:index)
         end
       end
 
       context " - JSON format" do
         before(:each) {get :index, format: :json}
 
-        it_behaves_like "response status 200"  #shared examples located in spec/support/shared_examples/response_status_200.rb
+        it_behaves_like "response status", 200
         
         it "- should returns a list of users." do
           user_keys = set_user_keys
           
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys #separate from response the body and convert in into Hash
-          expect(responsed_body[:users].count).to eq(6)
-          expect(responsed_body.keys).to eq([:users])
-          expect(responsed_body[:users].first.keys).to eq(user_keys)
+          response_body = parser(response.body)
+          expect(response_body[:users].count).to eq(6)
+          expect(response_body.keys).to eq([:users])
+          expect(response_body[:users].first.keys).to eq(user_keys)
         end
       end
     end
@@ -65,8 +62,8 @@ RSpec.describe UsersController, type: :controller do
       context " - HTML format" do
         before(:each) {get :index}
 
-        it_behaves_like "unauthorized redirection examples"  #shared examples located in spec/support/shared_examples/unauthorized_redirection_example.rb
-  
+        it_behaves_like "unauthorized examples HTML"
+        
         it "- shouldn't returns a list of users." do
           expect(assigns(:users)).to eq(nil)
         end
@@ -75,12 +72,10 @@ RSpec.describe UsersController, type: :controller do
       context " - JSON format" do
         before(:each) {get :index, format: :json}
 
-        it_behaves_like "unauthorized JSON status" #shared examples located in spec/support/shared_examples/unauthorized_JSON_status.rb
+        it_behaves_like "unauthorized examples JSON"
 
         it "- shouldn't returns a list of users." do
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys 
-          expect(responsed_body[:notice]).to eq("You have not rights for this action - please sign in with necessary rights.")
-          expect(responsed_body.keys).to eq([:notice])
+          response_body = parser(response.body)
         end
       end
     end
@@ -95,31 +90,28 @@ RSpec.describe UsersController, type: :controller do
       context " - HTML format" do
         before(:each) { get :show, params: { id: @showed_user.id } }
 
-        it_behaves_like "response status 200"
+        it_behaves_like "response status", 200
+        it_behaves_like "render template", :show
   
         it "- should returns a user." do
           @serialized_returned_user = serialize(assigns(:user))
           @serialized_showed_user = serialize(User.find(@showed_user.id))
           expect(@serialized_returned_user).to eql(@serialized_showed_user)
         end
-  
-        it "- should render show template." do  
-          expect(response).to render_template(:show)
-        end
       end
 
       context " - JSON format" do
         before(:each) {get :show, params: { id: @showed_user.id }, format: :json}
 
-        it_behaves_like "response status 200"
+        it_behaves_like "response status", 200
 
         it "- should returns a user." do
           user_keys = set_user_keys
           
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys
-          expect(responsed_body[:user].count).to eq(1)
-          expect(responsed_body.keys).to eq([:user])
-          expect(responsed_body[:user].first.keys).to eq(user_keys) 
+          response_body = parser(response.body)
+          expect(response_body[:user].count).to eq(1)
+          expect(response_body.keys).to eq([:user])
+          expect(response_body[:user].first.keys).to eq(user_keys) 
         end
       end
     end
@@ -128,7 +120,7 @@ RSpec.describe UsersController, type: :controller do
       context " - HTML format" do
         before(:each) { get :show, params: { id: @showed_user.id } }
 
-        it_behaves_like "unauthorized redirection examples"  
+        it_behaves_like "unauthorized examples HTML"  
   
         it "- shouldn't returns a user." do
           expect(assigns(:user)).to eq(nil)
@@ -138,12 +130,10 @@ RSpec.describe UsersController, type: :controller do
       context " - JSON format" do
         before(:each) {get :show, params: { id: @showed_user.id }, format: :json}
 
-        it_behaves_like "unauthorized JSON status" 
+        it_behaves_like "unauthorized examples JSON" 
 
         it "- shouldn't returns a user." do
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys
-          expect(responsed_body[:notice]).to eq("You have not rights for this action - please sign in with necessary rights.")
-          expect(responsed_body.keys).to eq([:notice])
+          response_body = parser(response.body)
         end
       end
     end
@@ -153,29 +143,26 @@ RSpec.describe UsersController, type: :controller do
     context " - HTML format" do
       before(:each) { get :new }
       
-      it_behaves_like "response status 200"
+      it_behaves_like "response status", 200
+      it_behaves_like "render template", :new
 
       it "- should returns a new user." do
         expect(assigns(:user).id).to eq(nil)
-      end
-
-      it "- should render new template." do  
-        expect(response).to render_template(:new)
       end
     end
 
     context " - JSON format" do
       before(:each) {get :new, format: :json}
 
-      it_behaves_like "response status 200"
+      it_behaves_like "response status", 200
 
       it "- should returns a new user." do
         user_keys = set_user_keys
         
-        responsed_body = JSON.parse(response.body).deep_symbolize_keys
-        expect(responsed_body[:user].count).to eq(1)
-        expect(responsed_body.keys).to eq([:user])
-        expect(responsed_body[:user].first.keys).to eq(user_keys) 
+        response_body = parser(response.body)
+        expect(response_body[:user].count).to eq(1)
+        expect(response_body.keys).to eq([:user])
+        expect(response_body[:user].first.keys).to eq(user_keys) 
       end
     end
   end
@@ -189,31 +176,28 @@ RSpec.describe UsersController, type: :controller do
       context " - HTML format" do
         before(:each) { get :edit, params: { id: @edited_user.id } }
 
-        it_behaves_like "response status 200"
+        it_behaves_like "response status", 200
+        it_behaves_like "render template", :edit
   
         it "- should returns a user." do
           @serialized_returned_user = serialize(assigns(:user))
           @serialized_edited_user = serialize(User.find(@edited_user.id))
           expect(@serialized_returned_user).to eql(@serialized_edited_user)
         end
-  
-        it "- should render edit template." do  
-          expect(response).to render_template(:edit)
-        end
       end
 
       context " - JSON format" do
         before(:each) {get :edit, params: { id: @edited_user.id }, format: :json}
 
-        it_behaves_like "response status 200"
+        it_behaves_like "response status", 200
 
         it "- should returns a user." do
           user_keys = set_user_keys
           
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys
-          expect(responsed_body[:user].count).to eq(1)
-          expect(responsed_body.keys).to eq([:user])
-          expect(responsed_body[:user].first.keys).to eq(user_keys) 
+          response_body = parser(response.body)
+          expect(response_body[:user].count).to eq(1)
+          expect(response_body.keys).to eq([:user])
+          expect(response_body[:user].first.keys).to eq(user_keys) 
         end
       end
     end
@@ -222,7 +206,7 @@ RSpec.describe UsersController, type: :controller do
       context " - HTML format" do
         before(:each) { get :edit, params: { id: @edited_user.id } }
 
-        it_behaves_like "unauthorized redirection examples"  
+        it_behaves_like "unauthorized examples HTML"  
   
         it "- shouldn't returns a user." do
           expect(assigns(:user)).to eq(nil)
@@ -232,12 +216,10 @@ RSpec.describe UsersController, type: :controller do
       context " - JSON format" do
         before(:each) {get :edit, params: { id: @edited_user.id }, format: :json}
 
-        it_behaves_like "unauthorized JSON status" 
+        it_behaves_like "unauthorized examples JSON" 
 
         it "- shouldn't returns a user." do
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys
-          expect(responsed_body[:notice]).to eq("You have not rights for this action - please sign in with necessary rights.")
-          expect(responsed_body.keys).to eq([:notice])
+          response_body = parser(response.body)
         end
       end
     end
@@ -250,9 +232,9 @@ RSpec.describe UsersController, type: :controller do
       context " - HTML format" do
         before(:each) { post :create, params: request_user_params(@created_user) }
   
-        it "- should returns a redirectiom(:found) response status." do
-          expect(response).to have_http_status(302)
-        end
+        it_behaves_like "response status", 302
+        it_behaves_like "notice", "User was successfully created."
+        it_behaves_like "redirect to", :root
   
         it " - should returns a new created user." do
           @serialized_returned_user = serialize(assigns(:user))
@@ -267,28 +249,27 @@ RSpec.describe UsersController, type: :controller do
           @serialized_saved_user = serialize(User.find(assigns(:user).id))
           expect(@serialized_saved_user).to eq(@serialized_created_user)
         end
-  
-        it " - should redirect to root." do  
-          expect(response).to redirect_to(:root)
-        end
       end
   
       context " - JSON format" do
         before(:each) { post :create, format: :json, params: request_user_params(@created_user) }
-  
-        it "- should returns a :created response status." do
-          expect(response).to have_http_status(201)
+        
+        it_behaves_like "response status", 201
+        
+        it " - should return a notice" do
+          response_body = parser(response.body)
+          expect(response_body[:notice]).to eq("User was successfully created.")
         end
-  
+        
         it " - should returns a new created user." do
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
-          responsed_user = responsed_body[:user].first
+          response_body = parser(response.body)
+          returned_user = response_body[:user].first
           serialized_created_user = serialize(@created_user)
-          serialized_created_user[:id] = responsed_user[:id]
+          serialized_created_user[:id] = returned_user[:id]
   
-          expect(responsed_body[:user].count).to eq(1)
-          expect(responsed_body.keys).to eq([:user]) 
-          expect(responsed_user). to eq(serialized_created_user)
+          expect(response_body[:user].count).to eq(1)
+          expect(response_body.keys).to eq([:user, :notice]) 
+          expect(returned_user). to eq(serialized_created_user)
         end
       end
     end
@@ -301,11 +282,9 @@ RSpec.describe UsersController, type: :controller do
           post :create, params: request_user_params(@created_user)
         end
          
-        it_behaves_like "response status 200"
-
-        it "- should render new template." do 
-          expect(response).to render_template(:new)
-        end
+        it_behaves_like "response status", 200
+        it_behaves_like "notice", "User was not created."
+        it_behaves_like "render template", :new
         
         it " - should return unsaved user" do
           @created_user.id = 1  #because we need to compare with assigns(:user) and for this is necessary to have some id
@@ -320,18 +299,20 @@ RSpec.describe UsersController, type: :controller do
       context " - JSON format" do
         before(:each) { post :create, format: :json, params: request_user_params(@created_user) }
   
-        it "- should returns a :unprocessable_entity response status." do
-          expect(response).to have_http_status(422)
+        it_behaves_like "response status", 422
+
+        it " - should return a notice" do
+          expect(parser(response.body)[:notice]).to eq("User was not created.")
         end
   
         it " - should returns a uncreated user." do
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
-          responsed_user = responsed_body[:user].first
+          response_body = parser(response.body)
+          returned_user = response_body[:user].first
           serialized_created_user = serialize(@created_user)
   
-          expect(responsed_body[:user].count).to eq(1)
-          expect(responsed_body.keys).to eq([:user]) 
-          expect(responsed_user). to eq(serialized_created_user)
+          expect(response_body[:user].count).to eq(1)
+          expect(response_body.keys).to eq([:user, :notice]) 
+          expect(returned_user). to eq(serialized_created_user)
         end
       end
     end 
@@ -352,8 +333,11 @@ RSpec.describe UsersController, type: :controller do
         context " - HTML format" do
           before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
     
-          it "- should returns a redirection(:found) response status." do
-            expect(response).to have_http_status(302)
+          it_behaves_like "response status", 302
+          it_behaves_like "notice", "User was successfully updated."
+
+          it " - should redirect to :show" do
+            expect(response).to redirect_to("/users/#{@loaded_user.id}")
           end
     
           it " - should returns a updated user." do
@@ -369,26 +353,26 @@ RSpec.describe UsersController, type: :controller do
 
             expect(@serialized_updated_user).to eq(@serialized_modified_user)
           end
-    
-          it " - should redirect to UserController #show." do  
-            expect(response).to redirect_to("/users/#{@loaded_user.id}")
-          end
         end
     
         context " - JSON format" do
           before(:each) { put :update, format: :json, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
     
-          it_behaves_like "response status 200"
+          it_behaves_like "response status", 200
+
+          it " - should return a notice" do
+            expect(parser(response.body)[:notice]).to eq("User was successfully updated.")
+          end
     
           it " - should returns a updated user." do
-            responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
-            responsed_user = responsed_body[:user].first
+            response_body = parser(response.body)
+            returned_user = response_body[:user].first
             serialized_modified_user = serialize(@modified_user)
-            serialized_modified_user[:id] = responsed_user[:id]
+            serialized_modified_user[:id] = returned_user[:id]
     
-            expect(responsed_body[:user].count).to eq(1)
-            expect(responsed_body.keys).to eq([:user]) 
-            expect(responsed_user). to eq(serialized_modified_user)
+            expect(response_body[:user].count).to eq(1)
+            expect(response_body.keys).to eq([:user, :notice]) 
+            expect(returned_user). to eq(serialized_modified_user)
           end
 
           it " - user should be updated in database" do
@@ -407,11 +391,9 @@ RSpec.describe UsersController, type: :controller do
         context " - HTML format" do
           before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
     
-          it_behaves_like "response status 200"
-
-          it "- should render edit template." do  
-          expect(response).to render_template(:edit)
-        end
+          it_behaves_like "response status", 200
+          it_behaves_like "render template", :edit
+          it_behaves_like "notice", "User was not updated."
     
           it " - should returns a modified user (but not saved into database)." do
             @serialized_returned_user = serialize(assigns(:user))
@@ -429,18 +411,20 @@ RSpec.describe UsersController, type: :controller do
         context " - JSON format" do
           before(:each) { put :update, format: :json, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
     
-          it "- should returns a :unprocessable_entity response status." do
-            expect(response).to have_http_status(422)
+          it_behaves_like "response status", 422
+
+          it " - should return a notice" do
+            expect(parser(response.body)[:notice]).to eq("User was not updated.")
           end
     
           it " - should returns a modified user (but not saved into database)." do
-            responsed_body = JSON.parse(response.body).deep_symbolize_keys #Hash
-            responsed_user = responsed_body[:user].first
+            response_body = parser(response.body)
+            returned_user = response_body[:user].first
             serialized_modified_user = serialize(@modified_user)
 
-            expect(responsed_body[:user].count).to eq(1)
-            expect(responsed_body.keys).to eq([:user]) 
-            expect(responsed_user).to eq(serialized_modified_user)
+            expect(response_body[:user].count).to eq(1)
+            expect(response_body.keys).to eq([:user, :notice]) 
+            expect(returned_user).to eq(serialized_modified_user)
           end
 
           it " - user shouldn't be updated in database" do
@@ -458,7 +442,7 @@ RSpec.describe UsersController, type: :controller do
       context " - HTML format" do
           before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
 
-        it_behaves_like "unauthorized redirection examples"  
+        it_behaves_like "unauthorized examples HTML"  
   
         it "- shouldn't returns a user." do
           expect(assigns(:user)).to eq(nil)
@@ -473,12 +457,12 @@ RSpec.describe UsersController, type: :controller do
 
       context " - JSON format" do
         before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] }, format: :json } #update need to have :id in :params
-        it_behaves_like "unauthorized JSON status" 
+        it_behaves_like "unauthorized examples JSON" 
 
         it "- shouldn't returns a user." do
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys
-          expect(responsed_body[:notice]).to eq("You have not rights for this action - please sign in with necessary rights.")
-          expect(responsed_body.keys).to eq([:notice])
+          response_body = parser(response.body)
+          expect(response_body[:notice]).to eq("You have not rights for this action - please sign in with necessary rights.")
+          expect(response_body.keys).to eq([:notice])
         end
 
         it " - user shouldn't be updated in database" do
@@ -504,10 +488,8 @@ RSpec.describe UsersController, type: :controller do
         before(:each) {delete :destroy, params: { id: @user.id }}
 
         it_behaves_like "response status", 302
-
-        it " - should redirect to root" do
-          expect(response).to redirect_to(:root)
-        end
+        it_behaves_like "redirect to", :root
+        it_behaves_like "notice", "User has been destroyed."
 
         it " - should destroy a user from database" do
           expect{User.find(@user.id)}.to raise_error(ActiveRecord::RecordNotFound)
@@ -524,8 +506,8 @@ RSpec.describe UsersController, type: :controller do
         end
 
         it " - should return a notice" do
-          responsed_body = JSON.parse(response.body).deep_symbolize_keys
-          expect(responsed_body[:notice]).to eq("User has been destroyed.")
+          response_body = parser(response.body)
+          expect(response_body[:notice]).to eq("User has been destroyed.")
         end
       end
     end
@@ -534,13 +516,21 @@ RSpec.describe UsersController, type: :controller do
       context " - HTML format" do
         before(:each) {delete :destroy, params: { id: @user.id }}
 
-        it_behaves_like "unauthorized redirection examples"
+        it_behaves_like "unauthorized examples HTML"
+
+        it " - user shouldn't be destroyed." do
+          expect(User.find(@user.id).blank?).to be false
+        end
       end
 
       context " - JSON format" do
         before(:each) {delete :destroy, format: :json, params: { id: @user.id }}
 
-        it_behaves_like "unauthorized JSON status"
+        it_behaves_like "unauthorized examples JSON"
+
+        it " - user shouldn't be destroyed." do
+          expect(User.find(@user.id).blank?).to be false
+        end
       end
     end
   end
@@ -557,10 +547,7 @@ RSpec.describe UsersController, type: :controller do
       let(:serialized_requested_user) {serialize(@requested_user)}
 
       it_behaves_like "response status", 200
-
-      it " - should render #pictures" do
-        expect(response).to render_template(:pictures)
-      end
+      it_behaves_like "render template", :pictures
 
       it " - should return a user with profile_picture" do
         expect(assigns(:user).profile_picture.id).to eq(@requested_user.profile_picture.id)  #compare attachments id
@@ -619,18 +606,22 @@ RSpec.describe UsersController, type: :controller do
           before(:each) do
             put :pictures_update, format: :json, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }          
           end
-          let(:serialized_responsed_user) {parser(response.body)[:user].first}
+          let(:serialized_returned_user) {parser(response.body)[:user].first}
           let(:serialized_requested_user) {serialize(@requested_user)}
           
           it_behaves_like "response status", 200
-          it_behaves_like "notice", "Profile picture has been changed."
+
+          it " - should return a notice" do
+            response_body = parser(response.body)
+            expect(response_body[:notice]).to eq("Profile picture has been changed.")
+          end
   
           it " - should return a correct user" do
-            expect(serialized_responsed_user <= serialized_requested_user).to be true #requested_user has been automatically reloaded after request
+            expect(serialized_returned_user <= serialized_requested_user).to be true #requested_user has been automatically reloaded after request
           end
   
           it " - should return a user with correct profile picture" do
-            expect(serialized_responsed_user[:profile_picture]).to eq(FilesTestHelper.png_name)
+            expect(serialized_returned_user[:profile_picture]).to eq(FilesTestHelper.png_name)
           end
         end
       end
@@ -658,16 +649,21 @@ RSpec.describe UsersController, type: :controller do
           before(:each) do
             put :pictures_update, format: :json, params: { id: @requested_user.id }
           end
-          let(:responsed_user) { parser(response.body)[:user].first}
+          let(:returned_user) { parser(response.body)[:user].first}
           
           it_behaves_like "response status", 422
           
+          it " - should return a notice" do
+            response_body = parser(response.body)
+            expect(response_body[:notice]).to eq("Profile picture NOT changed!")
+          end
+
           it " - should return a correct user" do
-            expect(responsed_user <= serialize(@requested_user)).to be true
+            expect(returned_user <= serialize(@requested_user)).to be true
           end
   
           it " - should return a user without profile picture" do
-            expect(responsed_user[:profile_picture]).to eq({})
+            expect(returned_user[:profile_picture]).to eq({})
           end
         end
       end
@@ -679,7 +675,7 @@ RSpec.describe UsersController, type: :controller do
           put :pictures_update, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }
         end
         
-        it_behaves_like "unauthorized redirection examples"
+        it_behaves_like "unauthorized examples HTML"
 
         it " - shouldn't return a user" do
           expect(assigns(:user)).to eq(nil)
@@ -690,12 +686,12 @@ RSpec.describe UsersController, type: :controller do
         before(:each) do
           put :pictures_update, format: :json, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }
         end
-        let(:responsed_user) { parser(response.body)[:user]}
+        let(:returned_user) { parser(response.body)[:user]}
         
-        it_behaves_like "unauthorized JSON status"
+        it_behaves_like "unauthorized examples JSON"
         
         it " - shouldn't return a user" do
-          expect(responsed_user).to be nil
+          expect(returned_user).to be nil
         end
       end
     end
@@ -708,13 +704,10 @@ RSpec.describe UsersController, type: :controller do
       before(:each) { get :show_user_works, params: {id: requested_user} }
       
       it_behaves_like "response status", 200
+      it_behaves_like "render template", :show_user_works
 
       it "- should returns user works." do
         expect(assigns(:user_works).count).to eq(5)
-      end
-
-      it "- should render show_user_works template." do  
-        expect(response).to render_template(:show_user_works)
       end
     end
 
@@ -722,7 +715,7 @@ RSpec.describe UsersController, type: :controller do
       before(:each) {get :show_user_works, format: :json, params: {id: requested_user} }
       let(:serialized_works) {parser(response.body)[:works]}
 
-      it_behaves_like "response status 200"
+      it_behaves_like "response status", 200
 
       it "- should returns a user works." do
         expect(serialized_works.count).to eq(5)
