@@ -6,9 +6,9 @@ module SerializersTestHelper
     when "User"
       user_serializer(object)
     when "Account"
-      account serializer
+      account serializer(object)
     when "Work"
-      work_serializer
+      work_serializer(object)
     else
       nil
     end

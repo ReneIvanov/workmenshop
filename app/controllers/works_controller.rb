@@ -7,7 +7,7 @@ class WorksController < ApplicationController
     @works = Work.all
     respond_to do |format|
       format.html { render :index }
-      format.json { render json: { response: { works: show_like_json(@works) }, status: "OK" } }
+      format.json { render json: { works: show_like_json(@works) } }
     end
   end
 

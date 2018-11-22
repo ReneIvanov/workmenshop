@@ -77,3 +77,43 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
+
+#MY METHODS=================================================================================
+
+#compare two arrays which consist from hashes. Hashes in first array has to be subsets of hashes in second array.
+def compare_arrays_of_hashes(first_array, second_array)
+  result = true
+  result = false if (first_array.count != second_array.count)
+
+    first_array.each do |first|
+      i = false
+      second_array.each do |second|
+        i = true if first <= second
+      end 
+      result = false if i==false 
+    end
+  return result 
+end
+
+#serialize object or array of the objects(same type of objects)
+def serialize(object)
+  if object.kind_of?(Array)
+    serialized_array = []
+    object.each do |object|
+      serialized_array << SerializersTestHelper.serialize(object)
+    end
+    return serialized_array
+  else
+    SerializersTestHelper.serialize(object)
+  end
+end
+
+def sign_in_admin
+  @admin = create (:user) 
+  @admin_account = create(:account_admin, user_id: @admin.id)
+  sign_in(@admin)
+end
+
+def parser(content)
+  JSON.parse(content).deep_symbolize_keys
+end

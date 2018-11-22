@@ -10,20 +10,6 @@ RSpec.describe UsersController, type: :controller do
     @user_params.merge!(password: created_user.password)
     @user_post_params = { user: @user_params } #Hash with format needed by UserController
   end
-
-  def serialize(object)
-    SerializersTestHelper.serialize(object)
-  end
-
-  def sign_in_admin
-    @admin = create (:user) 
-    @admin_account = create(:account_admin, user_id: @admin.id)
-    sign_in(@admin)
-  end
-
-  def parser(content)
-    JSON.parse(content).deep_symbolize_keys
-  end
   
   describe "- GET #index" do
     before(:each) {create_list :user, 5}
