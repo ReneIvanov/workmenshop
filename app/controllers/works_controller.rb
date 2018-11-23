@@ -1,5 +1,5 @@
 class WorksController < ApplicationController
-  before_action :set_work, only: [:show, :edit, :update, :destroy]
+  before_action :set_work, only: [:show, :update, :destroy]
 
   # GET /works
   # GET /works.json
@@ -41,24 +41,35 @@ class WorksController < ApplicationController
     end
   end
 
-  # GET /works/1/edit
+  # GET /works/:id/edit
   # edition of separate work
   def edit
-    respond_to do |format|
-      format.html { render :edit }
-      format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
+    if user_signed_in? && policy(Work.find(params[:id])).can_be_edited_by(current_user)
+      set_work
+    
+      respond_to do |format|
+        format.html { render :edit }
+        format.json { render json: { work: show_like_json(@work) } }
+      end
+    else
+      unauthorized
     end
   end
 
   # GET /works/1/edit
   # edition of new work and to set a existing works in user profile
   def registration_edit
-    @work = Work.new
-    @works = Work.all
-    @existed_works_id = current_user.work_ids
-    respond_to do |format|
-      format.html { render :registration_edit }
-      format.json { render json: { response: {all_works: show_like_json(@works), existed_work_ids: @existed_works_id}, status: "OK" } }
+    if user_signed_in?
+      @work = Work.new
+      @works = Work.all
+      @existed_works_id = current_user.work_ids
+
+      respond_to do |format|
+        format.html { render :registration_edit }
+        format.json { render json: { all_works: show_like_json(@works), existed_work_ids: @existed_works_id } }
+      end
+    else
+      unauthorized
     end
   end
 

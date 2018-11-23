@@ -206,6 +206,8 @@ RSpec.describe UsersController, type: :controller do
 
         it "- shouldn't returns a user." do
           response_body = parser(response.body)
+
+          expect(response_body.keys).to eq([:notice])
         end
       end
     end

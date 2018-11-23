@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     end   
   end
 
-  # GET /users/1/edit
+  # GET /users/:id/edit
   def edit
     if user_signed_in? && policy(current_user).can_edit(User.find(params[:id]))
       set_user
