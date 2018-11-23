@@ -73,4 +73,6 @@ gem 'aws-sdk-s3', require: false
 gem 'pry-rails'
 gem 'rails-controller-testing'
 
+gem 'collection_operator', git: 'https://github.com/ReneIvanov/collection_operator'
+
 ruby '2.5.1'

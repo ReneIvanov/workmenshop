@@ -1,16 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe WorksController, type: :controller do
-  #def set_user_keys
-  #  return [:id, :username, :email, :address, :telephone, :account, :works, :profile_picture]
-  #end
-
-  #def request_user_params(created_user)
-  #  @user_params = serialize(created_user)
-  #  @user_params.merge!(password: created_user.password)
-  #  @user_post_params = { user: @user_params } #Hash with format needed by UserController
-  #end
-
   describe "- GET #index" do
     before(:each) { @works_in_database = create_list(:work, 5) }
 
@@ -39,91 +29,61 @@ RSpec.describe WorksController, type: :controller do
     end 
   end
 
-  #describe "- GET #show" do
-  #  before(:each) {@showed_user = create :user}
-#
-  #  context " - admin signed in" do
-  #    before(:each) {sign_in_admin}
-#
-  #    context " - HTML format" do
-  #      before(:each) { get :show, params: { id: @showed_user.id } }
-#
-  #      it_behaves_like "response status", 200
-  #      it_behaves_like "render template", :show
-  #
-  #      it "- should returns a user." do
-  #        @serialized_returned_user = serialize(assigns(:user))
-  #        @serialized_showed_user = serialize(User.find(@showed_user.id))
-  #        expect(@serialized_returned_user).to eql(@serialized_showed_user)
-  #      end
-  #    end
-#
-  #    context " - JSON format" do
-  #      before(:each) {get :show, params: { id: @showed_user.id }, format: :json}
-#
-  #      it_behaves_like "response status", 200
-#
-  #      it "- should returns a user." do
-  #        user_keys = set_user_keys
-  #        
-  #        response_body = parser(response.body)
-  #        expect(response_body[:user].count).to eq(1)
-  #        expect(response_body.keys).to eq([:user])
-  #        expect(response_body[:user].first.keys).to eq(user_keys) 
-  #      end
-  #    end
-  #  end
-#
-  #  context " - without signed in user" do
-  #    context " - HTML format" do
-  #      before(:each) { get :show, params: { id: @showed_user.id } }
-#
-  #      it_behaves_like "unauthorized examples HTML"  
-  #
-  #      it "- shouldn't returns a user." do
-  #        expect(assigns(:user)).to eq(nil)
-  #      end
-  #    end
-#
-  #    context " - JSON format" do
-  #      before(:each) {get :show, params: { id: @showed_user.id }, format: :json}
-#
-  #      it_behaves_like "unauthorized examples JSON" 
-#
-  #      it "- shouldn't returns a user." do
-  #        response_body = parser(response.body)
-  #      end
-  #    end
-  #  end
-  #end
-#
-  #describe "- GET #new" do 
-  #  context " - HTML format" do
-  #    before(:each) { get :new }
-  #    
-  #    it_behaves_like "response status", 200
-  #    it_behaves_like "render template", :new
-#
-  #    it "- should returns a new user." do
-  #      expect(assigns(:user).id).to eq(nil)
-  #    end
-  #  end
-#
-  #  context " - JSON format" do
-  #    before(:each) {get :new, format: :json}
-#
-  #    it_behaves_like "response status", 200
-#
-  #    it "- should returns a new user." do
-  #      user_keys = set_user_keys
-  #      
-  #      response_body = parser(response.body)
-  #      expect(response_body[:user].count).to eq(1)
-  #      expect(response_body.keys).to eq([:user])
-  #      expect(response_body[:user].first.keys).to eq(user_keys) 
-  #    end
-  #  end
-  #end
+  describe "- GET #show" do
+    before(:each) {@requested_work = create :work}
+
+    context " - HTML format" do
+      before(:each) { get :show, params: { id: @requested_work.id } }
+
+      it_behaves_like "response status", 200
+      it_behaves_like "render template", :show
+  
+      it "- should returns a work." do
+        serialized_returned_work = serialize(assigns(:work))
+        serialized_requested_work = serialize(@requested_work)
+
+        expect(serialized_returned_work <= serialized_requested_work).to be true
+      end
+    end
+
+    context " - JSON format" do
+      before(:each) {get :show, params: { id: @requested_work.id }, format: :json}
+
+      it_behaves_like "response status", 200
+
+      it "- should returns a work." do
+        serialized_returned_work = parser(response.body)[:work].first
+        serialized_requested_work = serialize(@requested_work)
+        
+        expect(serialized_returned_work <= serialized_requested_work).to be true
+      end
+    end
+  end
+
+  describe "- GET #new" do 
+    context " - HTML format" do
+      before(:each) { get :new }
+      
+      it_behaves_like "response status", 200
+      it_behaves_like "render template", :new
+
+      it "- should returns a new work." do
+        expect(assigns(:work).id).to eq(nil)
+      end
+    end
+
+    context " - JSON format" do
+      before(:each) {get :new, format: :json}
+
+      it_behaves_like "response status", 200
+
+      it "- should returns a new work." do
+        serialized_returned_work = parser(response.body)[:work].first
+        
+        expect(serialized_returned_work[:id]).to be nil 
+      end
+    end
+  end
 #
   #describe "- GET #edit" do
   #  before(:each) {@edited_user = create :user}

@@ -16,7 +16,7 @@ class WorksController < ApplicationController
   def show
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
+      format.json { render json: { work: show_like_json(@work) } }
     end
   end
 
@@ -26,7 +26,7 @@ class WorksController < ApplicationController
     @work = Work.new
     respond_to do |format|
       format.html { render :new }
-      format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
+      format.json { render json: { work: show_like_json(@work) } }
     end
   end
 
