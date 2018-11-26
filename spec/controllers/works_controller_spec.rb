@@ -85,6 +85,73 @@ RSpec.describe WorksController, type: :controller do
     end
   end
 
+  describe "- GET #registration_new" do 
+    before(:each) do
+      @user = create(:user)
+      create_list(:work, 4)
+    end
+ 
+    context " - user signed in" do
+      before(:each) { sign_in(@user) }
+
+      context " - HTML format" do
+        before(:each) { get :registration_new }
+        
+        it_behaves_like "response status", 200
+        it_behaves_like "render template", :registration_new
+  
+        it "- should returns a new work." do
+          expect(assigns(:work).id).to eq(nil)
+        end
+
+        it "- should returns all works." do
+          serialized_returned_works = serialize(assigns[:works])
+          serialized_works = serialize(Work.all)
+
+          expect(compare_arrays_of_hashes(serialized_returned_works, serialized_works)).to be true
+        end
+      end
+  
+      context " - JSON format" do
+        before(:each) {get :registration_new, format: :json}
+  
+        it_behaves_like "response status", 200
+
+        it "- should returns all works." do
+          response_body = parser(response.body)
+          serialized_all_works = serialize(Work.all)
+
+          expect(compare_arrays_of_hashes(response_body[:works], serialized_all_works)).to be true
+        end
+      end
+    end
+
+    context " - without signed in user" do
+      context " - HTML format" do
+        before(:each) { get :registration_new }
+ 
+        it_behaves_like "unauthorized examples HTML"  
+  
+        it "- shouldn't returns a work nor works" do
+          expect(assigns(:work)).to eq(nil)
+          expect(assigns(:works)).to eq(nil)
+        end
+      end
+ 
+      context " - JSON format" do
+        before(:each) {get :registration_new, format: :json}
+ 
+        it_behaves_like "unauthorized examples JSON" 
+ 
+        it "- shouldn't returns a works" do
+          response_body = parser(response.body)
+
+          expect(response_body.keys).to eq([:notice])
+        end
+      end
+    end
+  end
+
   describe "- GET #edit" do
     before(:each) {@requested_work = create :work}
  

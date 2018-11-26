@@ -33,11 +33,15 @@ class WorksController < ApplicationController
   # GET /registration_new_work
   # creation of new work and to set a existing works durring user registration
   def registration_new
-    @work = Work.new
-    @works = Work.all
-    respond_to do |format|
-      format.html { render :registration_new }
-      format.json { render json: { response: { works: show_like_json(@works) }, status: "OK" } }
+    if user_signed_in?
+      @work = Work.new
+      @works = Work.all
+      respond_to do |format|
+        format.html { render :registration_new }
+        format.json { render json: { works: show_like_json(@works) } }
+      end
+    else
+      unauthorized
     end
   end
 
