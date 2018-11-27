@@ -20,5 +20,9 @@ FactoryBot.define do
         create_list(:work, evaluator.works_count, users: [user])
       end
     end
+
+    trait :with_workmen_account do
+      association :account, factory: :account_workmen
+    end
   end
 end

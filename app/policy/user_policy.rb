@@ -32,18 +32,26 @@ class UserPolicy < ApplicationPolicy
   end
 
   def can_see(observed_user)
-    policy(@user_obj).is_admin || @user_obj.id == observed_user.id
+    is_admin || @user_obj.id == observed_user.id
   end
 
   def can_edit(edited_user)
-    policy(@user_obj).is_admin || @user_obj.id == edited_user.id
+    is_admin || @user_obj.id == edited_user.id
   end
 
   def can_destroy(destroyed_user)
-    policy(@user_obj).is_admin || @user_obj.id == destroyed_user.id
+    is_admin || @user_obj.id == destroyed_user.id
   end
 
   def can_update_profile_picture(edited_user)
-    policy(@user_obj).is_admin || @user_obj.id == edited_user.id
+    is_admin || @user_obj.id == edited_user.id
+  end
+
+  def can_create_work
+    is_admin || is_workmen
+  end
+
+  def can_update_works
+    is_admin || is_workmen
   end
 end

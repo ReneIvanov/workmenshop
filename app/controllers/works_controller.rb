@@ -1,5 +1,5 @@
 class WorksController < ApplicationController
-  before_action :set_work, only: [:show, :update, :destroy]
+  before_action :set_work, only: [:show, :update, :destroy, :show_work_users]
 
   # GET /works
   # GET /works.json
@@ -81,59 +81,62 @@ class WorksController < ApplicationController
   # POST /works.json
   # creation of separate new work
   def create
-    @work = Work.new(work_params) 
+    if user_signed_in? && policy(current_user).can_create_work
+      @work = Work.new(work_params)
 
-    respond_to do |format|
-      if @work.save
-        WorkJob.perform_later(current_user.email) #send email about new work has been created
-        format.html { redirect_to root_path, notice: 'Work was successfully created.' }
-        format.json { render json: { response: { work: show_like_json(@work) }, status: "Created" } }
-      else
-        format.html { render :new }
-        format.json { render json: { response: { work: show_like_json(@work) }, status: "Unprocessable Entity" } }
+      respond_to do |format|
+        if @work.save
+          WorkJob.perform_later(current_user.email) #send email about new work has been created
+          format.html { redirect_to root_path, notice: "Work was successfully created." }
+          format.json { render status: 201, json: { work: show_like_json(@work), notice: "Work was successfully created."  } }
+        else
+          format.html { render :new; flash[:notice] = "Work was not created."  }
+          format.json { render status: 422, json: { work: show_like_json(@work), notice: "Work was not created." } }
+        end
       end
+    else
+      unauthorized
     end
   end
 
   # POST /registration_create_work
   # creation of new work and to set a existing works durring user registration
   def registration_create
-    current_user.update_existed_works(params[:existed_works_id])
-
-    if !work_params[:title].empty?  #if there is a new work with params
-      @work = Work.new(work_params)
-      @work.add_user(current_user)  #calls model method
-    end
-    
-    respond_to do |format|
-      if defined? @work
-        if @work.save   
-          WorkJob.perform_later(current_user.email) #send email about new work has been created
-          format.html { redirect_to root_path, notice: 'Work was successfully created.' }
-          format.json { render json: { response: { work: show_like_json(@work) }, status: "Created" } }
-        else
-          format.html { render :new }
-          format.json { render json: { response: { work: show_like_json(@work) }, status: "Unprocessable Entity" } }
-        end
-      else
-        format.html { redirect_to root_path, notice: 'Works was successfully setted - new work has not been created.' }
-        format.json { render json: { response: "There is no new work.", status: "OK" } }
+    if user_signed_in? && policy(current_user).can_create_work
+      current_user.update_existed_works(params[:existed_works_id])
+  
+      if !work_params[:title].empty?  #if there is a new work with params
+        @work = Work.new(work_params)
+        @work.add_user(current_user)  #calls model method
       end
-    end 
+      
+      respond_to do |format|
+        if ((defined? @work) && @work.save)
+          WorkJob.perform_later(current_user.email) #send email about new work has been created
+          format.html { redirect_to root_path, notice: "Works have been set and new work has been created." }
+          format.json { render status: 201, json: { work: show_like_json(@work), notice: "Works have been set and new work has been created." } }
+        else
+          format.html { redirect_to root_path, notice: "Works have been set but new work has not been created." }
+          format.json { render status: 201, json: { notice: "Works have been set but new work has not been created." } }
+        end
+      end  
+    else
+      unauthorized
+    end
   end
 
   # PATCH/PUT /works/1
   # PATCH/PUT /works/1.json
   def update
-    if policy(@work).can_be_edited_by(current_user)
+    if user_signed_in? && policy(@work).can_be_edited_by(current_user)
       respond_to do |format|
         if @work.update(work_params)         
           WorkJob.perform_later(current_user.email) #send email about new work has been created
-          format.html { redirect_to @work, notice: 'Work was successfully updated.' }
-          format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
+          format.html { redirect_to @work, notice: "Work was successfully updated." }
+          format.json { render status: 200, json: { work: show_like_json(@work), notice: "Work was successfully updated." } }
         else
-          format.html { render :edit }
-          format.json { render json: { response: { work: show_like_json(@work) }, status: "Unprocessable Entity" } }
+          format.html { render :edit; flash[:notice] = "Work was not updated." }
+          format.json { render status: 422, json: { work: show_like_json(@work), notice: "Work was not updated." } }
         end
       end
     else
@@ -144,38 +147,37 @@ class WorksController < ApplicationController
   # POST /registration_update_work
   # updating of new work and to set a existing works durring user registration
   def registration_update
-    current_user.update_existed_works(params[:existed_works_id])
-    
-    if !work_params[:title].empty?  #if there is a new work with params
-      @work = Work.new(work_params)
-      @work.add_user(current_user)  #calls model method
-    end
-    
-    respond_to do |format|
-      if defined? @work
-        if @work.save
-          WorkJob.perform_later(current_user.email) #send email about new work has been created
-          format.html { redirect_to root_path, notice: 'Work was successfully created.' }
-          format.json { render json: { response: { work: show_like_json(@work) }, status: "OK" } }
-        else
-          format.html { render :new }
-          format.json { render json: { response: { work: show_like_json(@work) }, status: "Unprocessable Entity" } }
-        end
-      else
-        format.html { redirect_to root_path, notice: 'Works was successfully setted - new work has not been created.' }
-        format.json { render json: { response: "There is no new work.", status: "OK" } }
+    if user_signed_in? && policy(current_user).can_update_works
+      current_user.update_existed_works(params[:existed_works_id])
+      
+      if !work_params[:title].empty?  #if there is a new work with params
+        @work = Work.new(work_params)
+        @work.add_user(current_user)  #calls model method
       end
+      
+      respond_to do |format|
+        if ((defined? @work) && @work.save)
+          WorkJob.perform_later(current_user.email) #send email about new work has been created
+          format.html { redirect_to root_path, notice: "Works have been set and new work has been created." }
+          format.json { render status: 201, json: { work: show_like_json(@work), notice: "Works have been set and new work has been created." } }
+        else
+          format.html { redirect_to root_path, notice: "Works have been set but new work has not been created." }
+          format.json { render status: 201, json: { notice: "Works have been set but new work has not been created." } }
+        end
+      end
+    else
+      unauthorized
     end
   end
 
   # DELETE /works/1
   # DELETE /works/1.json
   def destroy
-    if policy(@work).can_be_destroyed_by(current_user)
+    if user_signed_in? && policy(@work).can_be_destroyed_by(current_user)
       @work.destroy
       respond_to do |format|
-        format.html { redirect_to works_url, notice: 'Work was successfully destroyed.' }
-        format.json { render json: { response: "Work has been destroyed.", status: "No Content" } }
+        format.html { redirect_to 'work#index', notice: "Work has been destroyed." }
+        format.json { render status: 204, json: { notice: "Work has been destroyed." } }
       end
     else
       unauthorized
@@ -184,8 +186,12 @@ class WorksController < ApplicationController
   
   #GET /works/:id/works
   def show_work_users
-    set_work
     @work_users = @work.work_users
+
+    respond_to do |format|
+      format.html { render :show_work_users }
+      format.json { render json: { users: UserSerializer.new(@work_users).as_json } }
+    end
   end
 
   private

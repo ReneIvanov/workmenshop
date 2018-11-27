@@ -1,270 +1,382 @@
-example_id                                                 | status  | run_time        |
----------------------------------------------------------- | ------- | --------------- |
-./spec/controllers/accounts_controller_spec.rb[1:1:1]      | pending | 0.06115 seconds |
-./spec/controllers/accounts_controller_spec.rb[1:2:1]      | pending | 0.07975 seconds |
-./spec/controllers/accounts_controller_spec.rb[1:3:1]      | failed  | 0.0818 seconds  |
-./spec/controllers/accounts_controller_spec.rb[1:4:1]      | pending | 0.0406 seconds  |
-./spec/controllers/accounts_controller_spec.rb[1:5:1:1]    | pending | 0.09023 seconds |
-./spec/controllers/accounts_controller_spec.rb[1:5:1:2]    | pending | 0.0717 seconds  |
-./spec/controllers/accounts_controller_spec.rb[1:5:2:1]    | pending | 0.07735 seconds |
-./spec/controllers/accounts_controller_spec.rb[1:6:1:1]    | pending | 0.07498 seconds |
-./spec/controllers/accounts_controller_spec.rb[1:6:1:2]    | pending | 0.07731 seconds |
-./spec/controllers/accounts_controller_spec.rb[1:6:2:1]    | pending | 0.06739 seconds |
-./spec/controllers/accounts_controller_spec.rb[1:7:1]      | pending | 0.07287 seconds |
-./spec/controllers/accounts_controller_spec.rb[1:7:2]      | pending | 0.07247 seconds |
-./spec/controllers/loged_admin_controller_spec.rb[1:1:1]   | failed  | 0.05959 seconds |
-./spec/controllers/loged_user_controller_spec.rb[1:1:1]    | failed  | 0.07864 seconds |
-./spec/controllers/shop_controller_spec.rb[1:1:1]          | passed  | 0.09084 seconds |
-./spec/controllers/shop_controller_spec.rb[1:1:2]          | passed  | 0.08792 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:1:1:1:1]   | passed  | 0.12975 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:1:1:2:1]   | passed  | 0.12193 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:1:1:3]     | passed  | 0.1206 seconds  |
-./spec/controllers/users_controller_spec.rb[1:1:1:2:1:1]   | passed  | 0.12903 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:1:2:2]     | passed  | 0.14042 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:2:1:1:1:1] | passed  | 0.08204 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:2:1:1:2:1] | passed  | 0.08337 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:2:1:1:3:1] | passed  | 0.12052 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:2:1:2]     | passed  | 0.08418 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:2:2:1:1]   | passed  | 0.10415 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:2:2:1:2]   | passed  | 0.11338 seconds |
-./spec/controllers/users_controller_spec.rb[1:1:2:2:2]     | passed  | 0.08462 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:1:1:1:1]   | passed  | 0.06999 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:1:1:2:1]   | passed  | 0.08141 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:1:1:3]     | passed  | 0.07853 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:1:2:1:1]   | passed  | 0.068 seconds   |
-./spec/controllers/users_controller_spec.rb[1:2:1:2:2]     | passed  | 0.06914 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:2:1:1:1:1] | passed  | 0.04833 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:2:1:1:2:1] | passed  | 0.05211 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:2:1:1:3:1] | passed  | 0.04919 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:2:1:2]     | passed  | 0.0744 seconds  |
-./spec/controllers/users_controller_spec.rb[1:2:2:2:1:1]   | passed  | 0.04902 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:2:2:1:2]   | passed  | 0.04873 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:2:2:2]     | passed  | 0.04973 seconds |
-./spec/controllers/users_controller_spec.rb[1:3:1:1:1]     | passed  | 0.0438 seconds  |
-./spec/controllers/users_controller_spec.rb[1:3:1:2:1]     | passed  | 0.04485 seconds |
-./spec/controllers/users_controller_spec.rb[1:3:1:3]       | passed  | 0.0419 seconds  |
-./spec/controllers/users_controller_spec.rb[1:3:2:1:1]     | passed  | 0.04329 seconds |
-./spec/controllers/users_controller_spec.rb[1:3:2:2]       | passed  | 0.04777 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:1:1:1:1]   | passed  | 0.06186 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:1:1:2:1]   | passed  | 0.10108 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:1:1:3]     | passed  | 0.06512 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:1:2:1:1]   | passed  | 0.07311 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:1:2:2]     | passed  | 0.22526 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:2:1:1:1:1] | passed  | 0.06267 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:2:1:1:2:1] | passed  | 0.07808 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:2:1:1:3:1] | passed  | 0.04721 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:2:1:2]     | passed  | 0.05113 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:2:2:1:1]   | passed  | 0.0475 seconds  |
-./spec/controllers/users_controller_spec.rb[1:4:2:2:1:2]   | passed  | 0.04678 seconds |
-./spec/controllers/users_controller_spec.rb[1:4:2:2:2]     | passed  | 0.06564 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:1:1:1:1]   | passed  | 0.07969 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:1:1:2:1]   | passed  | 0.05032 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:1:1:3:1]   | passed  | 0.05232 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:1:1:4]     | passed  | 0.05327 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:1:1:5]     | passed  | 0.05563 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:1:2:1:1]   | passed  | 0.05155 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:1:2:2]     | passed  | 0.05583 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:1:2:3]     | passed  | 0.0757 seconds  |
-./spec/controllers/users_controller_spec.rb[1:5:2:1:1:1]   | passed  | 0.07682 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:2:1:2:1]   | passed  | 0.04834 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:2:1:3:1]   | passed  | 0.05905 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:2:1:4]     | passed  | 0.05547 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:2:2:1:1]   | passed  | 0.04703 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:2:2:2]     | passed  | 0.04692 seconds |
-./spec/controllers/users_controller_spec.rb[1:5:2:2:3]     | passed  | 0.04645 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:1:1:1:1] | passed  | 0.07682 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:1:1:2:1] | passed  | 0.08137 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:1:1:3]   | passed  | 0.08055 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:1:1:4]   | passed  | 0.08593 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:1:1:5]   | passed  | 0.13093 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:1:2:1:1] | passed  | 0.09418 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:1:2:2]   | passed  | 0.07903 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:1:2:3]   | passed  | 0.08894 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:1:2:4]   | passed  | 0.10819 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:2:1:1:1] | passed  | 0.10719 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:2:1:2:1] | passed  | 0.06968 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:2:1:3:1] | passed  | 0.0827 seconds  |
-./spec/controllers/users_controller_spec.rb[1:6:1:2:1:4]   | passed  | 0.07354 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:2:1:5]   | passed  | 0.07662 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:2:2:1:1] | passed  | 0.07506 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:2:2:2]   | passed  | 0.08778 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:2:2:3]   | passed  | 0.12249 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:1:2:2:4]   | passed  | 0.11164 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:2:1:1:1:1] | passed  | 0.05368 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:2:1:1:2:1] | passed  | 0.05353 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:2:1:1:3:1] | passed  | 0.0562 seconds  |
-./spec/controllers/users_controller_spec.rb[1:6:2:1:2]     | passed  | 0.05577 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:2:1:3]     | passed  | 0.08326 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:2:2:1:1]   | passed  | 0.05599 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:2:2:1:2]   | passed  | 0.05678 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:2:2:2]     | passed  | 0.09739 seconds |
-./spec/controllers/users_controller_spec.rb[1:6:2:2:3]     | passed  | 0.06099 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:1:1:1:1]   | passed  | 0.07152 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:1:1:2:1]   | passed  | 0.06896 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:1:1:3:1]   | passed  | 0.08177 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:1:1:4]     | passed  | 0.07264 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:1:2:1:1]   | passed  | 0.08902 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:1:2:2]     | passed  | 0.0947 seconds  |
-./spec/controllers/users_controller_spec.rb[1:7:1:2:3]     | passed  | 0.07071 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:2:1:1:1:1] | passed  | 0.07457 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:2:1:1:2:1] | passed  | 0.07716 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:2:1:1:3:1] | passed  | 0.04907 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:2:1:2]     | passed  | 0.05129 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:2:2:1:1]   | passed  | 0.04901 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:2:2:1:2]   | passed  | 0.05557 seconds |
-./spec/controllers/users_controller_spec.rb[1:7:2:2:2]     | passed  | 0.0878 seconds  |
-./spec/controllers/users_controller_spec.rb[1:8:1:1:1]     | passed  | 0.05743 seconds |
-./spec/controllers/users_controller_spec.rb[1:8:1:2:1]     | passed  | 0.05981 seconds |
-./spec/controllers/users_controller_spec.rb[1:8:1:3]       | passed  | 0.06848 seconds |
-./spec/controllers/users_controller_spec.rb[1:8:2:1:1]     | passed  | 0.06315 seconds |
-./spec/controllers/users_controller_spec.rb[1:8:2:2]       | passed  | 0.10142 seconds |
-./spec/controllers/users_controller_spec.rb[1:8:2:3]       | passed  | 0.06632 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:1:1:1:1] | passed  | 0.06032 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:1:1:2:1] | passed  | 0.05858 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:1:1:3:1] | passed  | 0.103 seconds   |
-./spec/controllers/users_controller_spec.rb[1:9:1:1:1:4]   | passed  | 0.06539 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:1:1:5]   | passed  | 0.06199 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:1:2:1:1] | passed  | 0.0607 seconds  |
-./spec/controllers/users_controller_spec.rb[1:9:1:1:2:2]   | passed  | 0.08488 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:1:2:3]   | passed  | 0.08991 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:1:2:4]   | passed  | 0.06125 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:2:1:1:1] | passed  | 0.05862 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:2:1:2:1] | passed  | 0.06616 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:2:1:3:1] | passed  | 0.05354 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:2:1:4]   | passed  | 0.05771 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:2:1:5]   | passed  | 0.05377 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:2:2:1:1] | passed  | 0.05381 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:2:2:2]   | passed  | 0.05109 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:2:2:3]   | passed  | 0.05524 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:1:2:2:4]   | passed  | 0.05221 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:2:1:1:1:1] | passed  | 0.07151 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:2:1:1:2:1] | passed  | 0.05942 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:2:1:1:3:1] | passed  | 0.06463 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:2:1:2]     | passed  | 0.06555 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:2:2:1:1]   | passed  | 0.04885 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:2:2:1:2]   | passed  | 0.08149 seconds |
-./spec/controllers/users_controller_spec.rb[1:9:2:2:2]     | passed  | 0.05015 seconds |
-./spec/controllers/users_controller_spec.rb[1:10:1:1:1]    | passed  | 0.08743 seconds |
-./spec/controllers/users_controller_spec.rb[1:10:1:2:1]    | passed  | 0.10831 seconds |
-./spec/controllers/users_controller_spec.rb[1:10:1:3]      | passed  | 0.09788 seconds |
-./spec/controllers/users_controller_spec.rb[1:10:2:1:1]    | passed  | 0.08334 seconds |
-./spec/controllers/users_controller_spec.rb[1:10:2:2]      | passed  | 0.10501 seconds |
-./spec/controllers/works_controller_spec.rb[1:1:1:1:1]     | passed  | 0.09631 seconds |
-./spec/controllers/works_controller_spec.rb[1:1:1:2:1]     | passed  | 0.06639 seconds |
-./spec/controllers/works_controller_spec.rb[1:1:1:3]       | passed  | 0.16552 seconds |
-./spec/controllers/works_controller_spec.rb[1:1:2:1:1]     | passed  | 0.04943 seconds |
-./spec/controllers/works_controller_spec.rb[1:1:2:2]       | passed  | 0.0523 seconds  |
-./spec/controllers/works_controller_spec.rb[1:2:1:1:1]     | passed  | 0.04394 seconds |
-./spec/controllers/works_controller_spec.rb[1:2:1:2:1]     | passed  | 0.04471 seconds |
-./spec/controllers/works_controller_spec.rb[1:2:1:3]       | passed  | 0.04449 seconds |
-./spec/controllers/works_controller_spec.rb[1:2:2:1:1]     | passed  | 0.05711 seconds |
-./spec/controllers/works_controller_spec.rb[1:2:2:2]       | passed  | 0.07419 seconds |
-./spec/controllers/works_controller_spec.rb[1:3:1:1:1]     | passed  | 0.06064 seconds |
-./spec/controllers/works_controller_spec.rb[1:3:1:2:1]     | passed  | 0.05941 seconds |
-./spec/controllers/works_controller_spec.rb[1:3:1:3]       | passed  | 0.0412 seconds  |
-./spec/controllers/works_controller_spec.rb[1:3:2:1:1]     | passed  | 0.03746 seconds |
-./spec/controllers/works_controller_spec.rb[1:3:2:2]       | passed  | 0.05083 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:1:1:1:1]   | passed  | 0.06603 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:1:1:2:1]   | passed  | 0.08573 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:1:1:3]     | passed  | 0.08158 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:1:1:4]     | passed  | 0.06573 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:1:2:1:1]   | passed  | 0.06255 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:1:2:2]     | passed  | 0.06371 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:2:1:1:1:1] | passed  | 0.05657 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:2:1:1:2:1] | passed  | 0.05841 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:2:1:1:3:1] | passed  | 0.05812 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:2:1:2]     | passed  | 0.0822 seconds  |
-./spec/controllers/works_controller_spec.rb[1:4:2:2:1:1]   | passed  | 0.0575 seconds  |
-./spec/controllers/works_controller_spec.rb[1:4:2:2:1:2]   | passed  | 0.06114 seconds |
-./spec/controllers/works_controller_spec.rb[1:4:2:2:2]     | passed  | 0.05682 seconds |
-./spec/controllers/works_controller_spec.rb[1:5:1:1:1:1]   | passed  | 0.05828 seconds |
-./spec/controllers/works_controller_spec.rb[1:5:1:1:2:1]   | passed  | 0.05906 seconds |
-./spec/controllers/works_controller_spec.rb[1:5:1:1:3]     | passed  | 0.05962 seconds |
-./spec/controllers/works_controller_spec.rb[1:5:1:2:1:1]   | passed  | 0.0654 seconds  |
-./spec/controllers/works_controller_spec.rb[1:5:1:2:2]     | passed  | 0.06572 seconds |
-./spec/controllers/works_controller_spec.rb[1:5:2:1:1:1:1] | passed  | 0.05134 seconds |
-./spec/controllers/works_controller_spec.rb[1:5:2:1:1:2:1] | passed  | 0.06423 seconds |
-./spec/controllers/works_controller_spec.rb[1:5:2:1:1:3:1] | passed  | 0.04016 seconds |
-./spec/controllers/works_controller_spec.rb[1:5:2:1:2]     | passed  | 0.05467 seconds |
-./spec/controllers/works_controller_spec.rb[1:5:2:2:1:1]   | passed  | 0.0397 seconds  |
-./spec/controllers/works_controller_spec.rb[1:5:2:2:1:2]   | passed  | 0.04932 seconds |
-./spec/controllers/works_controller_spec.rb[1:5:2:2:2]     | passed  | 0.04136 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:1:1:1:1]   | passed  | 0.06873 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:1:1:2:1]   | passed  | 0.06881 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:1:1:3]     | passed  | 0.13541 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:1:1:4]     | passed  | 0.08546 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:1:1:5]     | passed  | 0.0935 seconds  |
-./spec/controllers/works_controller_spec.rb[1:6:1:2:1:1]   | passed  | 0.06792 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:1:2:2]     | passed  | 0.07032 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:1:2:3]     | passed  | 0.12593 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:2:1:1:1:1] | passed  | 0.06547 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:2:1:1:2:1] | passed  | 0.06596 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:2:1:1:3:1] | passed  | 0.07212 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:2:1:2]     | passed  | 0.06568 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:2:2:1:1]   | passed  | 0.09862 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:2:2:1:2]   | passed  | 0.10336 seconds |
-./spec/controllers/works_controller_spec.rb[1:6:2:2:2]     | passed  | 0.11381 seconds |
-./spec/helpers/accounts_helper_spec.rb[1:1]                | unknown |                 |
-./spec/helpers/loged_admin_helper_spec.rb[1:1]             | unknown |                 |
-./spec/helpers/logged_user_helper_spec.rb[1:1]             | unknown |                 |
-./spec/helpers/shop_helper_spec.rb[1:1]                    | unknown |                 |
-./spec/helpers/works_helper_spec.rb[1:1]                   | unknown |                 |
-./spec/jobs/example_job_spec.rb[1:1]                       | unknown |                 |
-./spec/mailers/work_spec.rb[1:1:1]                         | unknown |                 |
-./spec/mailers/work_spec.rb[1:1:2]                         | unknown |                 |
-./spec/models/account_spec.rb[1:1:1:1]                     | passed  | 0.01256 seconds |
-./spec/models/account_spec.rb[1:1:1:2]                     | passed  | 0.01289 seconds |
-./spec/models/account_spec.rb[1:1:2:1]                     | passed  | 0.01096 seconds |
-./spec/models/account_spec.rb[1:1:3:1]                     | passed  | 0.01191 seconds |
-./spec/models/account_spec.rb[1:2:1:1]                     | passed  | 0.0223 seconds  |
-./spec/models/account_spec.rb[1:2:1:2]                     | passed  | 0.19888 seconds |
-./spec/models/account_spec.rb[1:3:1]                       | passed  | 0.01188 seconds |
-./spec/models/user_spec.rb[1:1:1:1]                        | passed  | 0.01029 seconds |
-./spec/models/user_spec.rb[1:1:1:2]                        | passed  | 0.01185 seconds |
-./spec/models/user_spec.rb[1:1:2:1]                        | passed  | 0.00965 seconds |
-./spec/models/user_spec.rb[1:1:3:1]                        | passed  | 0.0175 seconds  |
-./spec/models/user_spec.rb[1:1:3:2]                        | passed  | 0.01625 seconds |
-./spec/models/user_spec.rb[1:1:3:3]                        | passed  | 0.01861 seconds |
-./spec/models/user_spec.rb[1:2:1:1]                        | passed  | 0.01064 seconds |
-./spec/models/user_spec.rb[1:2:1:2]                        | passed  | 0.01703 seconds |
-./spec/models/user_spec.rb[1:2:2:1]                        | passed  | 0.0125 seconds  |
-./spec/models/user_spec.rb[1:2:2:2]                        | passed  | 0.01393 seconds |
-./spec/models/user_spec.rb[1:3:1]                          | passed  | 0.02289 seconds |
-./spec/models/user_spec.rb[1:3:2]                          | passed  | 0.03349 seconds |
-./spec/models/work_spec.rb[1:1:1:1]                        | passed  | 0.00434 seconds |
-./spec/models/work_spec.rb[1:1:1:2]                        | passed  | 0.00504 seconds |
-./spec/models/work_spec.rb[1:1:2:1]                        | passed  | 0.00425 seconds |
-./spec/models/work_spec.rb[1:1:3:1]                        | passed  | 0.00742 seconds |
-./spec/models/work_spec.rb[1:2:1:1]                        | passed  | 0.00484 seconds |
-./spec/models/work_spec.rb[1:2:1:2]                        | passed  | 0.02577 seconds |
-./spec/models/work_spec.rb[1:3:1]                          | passed  | 0.03177 seconds |
-./spec/models/work_spec.rb[1:3:2]                          | passed  | 0.05557 seconds |
-./spec/requests/accounts_spec.rb[1:1:1]                    | unknown |                 |
-./spec/requests/works_spec.rb[1:1:1]                       | unknown |                 |
-./spec/routing/accounts_routing_spec.rb[1:1:1]             | unknown |                 |
-./spec/routing/accounts_routing_spec.rb[1:1:2]             | unknown |                 |
-./spec/routing/accounts_routing_spec.rb[1:1:3]             | unknown |                 |
-./spec/routing/accounts_routing_spec.rb[1:1:4]             | unknown |                 |
-./spec/routing/accounts_routing_spec.rb[1:1:5]             | unknown |                 |
-./spec/routing/accounts_routing_spec.rb[1:1:6]             | unknown |                 |
-./spec/routing/accounts_routing_spec.rb[1:1:7]             | unknown |                 |
-./spec/routing/accounts_routing_spec.rb[1:1:8]             | unknown |                 |
-./spec/routing/works_routing_spec.rb[1:1:1]                | unknown |                 |
-./spec/routing/works_routing_spec.rb[1:1:2]                | unknown |                 |
-./spec/routing/works_routing_spec.rb[1:1:3]                | unknown |                 |
-./spec/routing/works_routing_spec.rb[1:1:4]                | unknown |                 |
-./spec/routing/works_routing_spec.rb[1:1:5]                | unknown |                 |
-./spec/routing/works_routing_spec.rb[1:1:6]                | unknown |                 |
-./spec/routing/works_routing_spec.rb[1:1:7]                | unknown |                 |
-./spec/routing/works_routing_spec.rb[1:1:8]                | unknown |                 |
-./spec/views/accounts/edit.html.erb_spec.rb[1:1]           | unknown |                 |
-./spec/views/accounts/index.html.erb_spec.rb[1:1]          | unknown |                 |
-./spec/views/accounts/new.html.erb_spec.rb[1:1]            | unknown |                 |
-./spec/views/accounts/show.html.erb_spec.rb[1:1]           | unknown |                 |
-./spec/views/loged_admin/wellcome.html.erb_spec.rb[1:1]    | unknown |                 |
-./spec/views/logged_user/wellcome.html.erb_spec.rb[1:1]    | unknown |                 |
-./spec/views/shop/index.html.erb_spec.rb[1:1]              | unknown |                 |
-./spec/views/works/edit.html.erb_spec.rb[1:1]              | unknown |                 |
-./spec/views/works/index.html.erb_spec.rb[1:1]             | unknown |                 |
-./spec/views/works/new.html.erb_spec.rb[1:1]               | unknown |                 |
-./spec/views/works/show.html.erb_spec.rb[1:1]              | unknown |                 |
+example_id                                                  | status  | run_time        |
+----------------------------------------------------------- | ------- | --------------- |
+./spec/controllers/accounts_controller_spec.rb[1:1:1]       | pending | 0.06115 seconds |
+./spec/controllers/accounts_controller_spec.rb[1:2:1]       | pending | 0.07975 seconds |
+./spec/controllers/accounts_controller_spec.rb[1:3:1]       | failed  | 0.0818 seconds  |
+./spec/controllers/accounts_controller_spec.rb[1:4:1]       | pending | 0.0406 seconds  |
+./spec/controllers/accounts_controller_spec.rb[1:5:1:1]     | pending | 0.09023 seconds |
+./spec/controllers/accounts_controller_spec.rb[1:5:1:2]     | pending | 0.0717 seconds  |
+./spec/controllers/accounts_controller_spec.rb[1:5:2:1]     | pending | 0.07735 seconds |
+./spec/controllers/accounts_controller_spec.rb[1:6:1:1]     | pending | 0.07498 seconds |
+./spec/controllers/accounts_controller_spec.rb[1:6:1:2]     | pending | 0.07731 seconds |
+./spec/controllers/accounts_controller_spec.rb[1:6:2:1]     | pending | 0.06739 seconds |
+./spec/controllers/accounts_controller_spec.rb[1:7:1]       | pending | 0.07287 seconds |
+./spec/controllers/accounts_controller_spec.rb[1:7:2]       | pending | 0.07247 seconds |
+./spec/controllers/loged_admin_controller_spec.rb[1:1:1]    | failed  | 0.05959 seconds |
+./spec/controllers/loged_user_controller_spec.rb[1:1:1]     | failed  | 0.07864 seconds |
+./spec/controllers/shop_controller_spec.rb[1:1:1]           | passed  | 0.09084 seconds |
+./spec/controllers/shop_controller_spec.rb[1:1:2]           | passed  | 0.08792 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:1:1:1:1]    | passed  | 0.12975 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:1:1:2:1]    | passed  | 0.12193 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:1:1:3]      | passed  | 0.1206 seconds  |
+./spec/controllers/users_controller_spec.rb[1:1:1:2:1:1]    | passed  | 0.12903 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:1:2:2]      | passed  | 0.14042 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:2:1:1:1:1]  | passed  | 0.08204 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:2:1:1:2:1]  | passed  | 0.08337 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:2:1:1:3:1]  | passed  | 0.12052 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:2:1:2]      | passed  | 0.08418 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:2:2:1:1]    | passed  | 0.10415 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:2:2:1:2]    | passed  | 0.11338 seconds |
+./spec/controllers/users_controller_spec.rb[1:1:2:2:2]      | passed  | 0.08462 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:1:1:1:1]    | passed  | 0.06999 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:1:1:2:1]    | passed  | 0.08141 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:1:1:3]      | passed  | 0.07853 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:1:2:1:1]    | passed  | 0.068 seconds   |
+./spec/controllers/users_controller_spec.rb[1:2:1:2:2]      | passed  | 0.06914 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:2:1:1:1:1]  | passed  | 0.04833 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:2:1:1:2:1]  | passed  | 0.05211 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:2:1:1:3:1]  | passed  | 0.04919 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:2:1:2]      | passed  | 0.0744 seconds  |
+./spec/controllers/users_controller_spec.rb[1:2:2:2:1:1]    | passed  | 0.04902 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:2:2:1:2]    | passed  | 0.04873 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:2:2:2]      | passed  | 0.04973 seconds |
+./spec/controllers/users_controller_spec.rb[1:3:1:1:1]      | passed  | 0.0438 seconds  |
+./spec/controllers/users_controller_spec.rb[1:3:1:2:1]      | passed  | 0.04485 seconds |
+./spec/controllers/users_controller_spec.rb[1:3:1:3]        | passed  | 0.0419 seconds  |
+./spec/controllers/users_controller_spec.rb[1:3:2:1:1]      | passed  | 0.04329 seconds |
+./spec/controllers/users_controller_spec.rb[1:3:2:2]        | passed  | 0.04777 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:1:1:1:1]    | passed  | 0.06186 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:1:1:2:1]    | passed  | 0.10108 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:1:1:3]      | passed  | 0.06512 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:1:2:1:1]    | passed  | 0.07311 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:1:2:2]      | passed  | 0.22526 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:2:1:1:1:1]  | passed  | 0.06267 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:2:1:1:2:1]  | passed  | 0.07808 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:2:1:1:3:1]  | passed  | 0.04721 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:2:1:2]      | passed  | 0.05113 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:2:2:1:1]    | passed  | 0.0475 seconds  |
+./spec/controllers/users_controller_spec.rb[1:4:2:2:1:2]    | passed  | 0.04678 seconds |
+./spec/controllers/users_controller_spec.rb[1:4:2:2:2]      | passed  | 0.06564 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:1:1:1:1]    | passed  | 0.07969 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:1:1:2:1]    | passed  | 0.05032 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:1:1:3:1]    | passed  | 0.05232 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:1:1:4]      | passed  | 0.05327 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:1:1:5]      | passed  | 0.05563 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:1:2:1:1]    | passed  | 0.05155 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:1:2:2]      | passed  | 0.05583 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:1:2:3]      | passed  | 0.0757 seconds  |
+./spec/controllers/users_controller_spec.rb[1:5:2:1:1:1]    | passed  | 0.07682 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:2:1:2:1]    | passed  | 0.04834 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:2:1:3:1]    | passed  | 0.05905 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:2:1:4]      | passed  | 0.05547 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:2:2:1:1]    | passed  | 0.04703 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:2:2:2]      | passed  | 0.04692 seconds |
+./spec/controllers/users_controller_spec.rb[1:5:2:2:3]      | passed  | 0.04645 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:1:1:1:1]  | passed  | 0.07682 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:1:1:2:1]  | passed  | 0.08137 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:1:1:3]    | passed  | 0.08055 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:1:1:4]    | passed  | 0.08593 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:1:1:5]    | passed  | 0.13093 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:1:2:1:1]  | passed  | 0.09418 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:1:2:2]    | passed  | 0.07903 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:1:2:3]    | passed  | 0.08894 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:1:2:4]    | passed  | 0.10819 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:2:1:1:1]  | passed  | 0.10719 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:2:1:2:1]  | passed  | 0.06968 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:2:1:3:1]  | passed  | 0.0827 seconds  |
+./spec/controllers/users_controller_spec.rb[1:6:1:2:1:4]    | passed  | 0.07354 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:2:1:5]    | passed  | 0.07662 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:2:2:1:1]  | passed  | 0.07506 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:2:2:2]    | passed  | 0.08778 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:2:2:3]    | passed  | 0.12249 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:1:2:2:4]    | passed  | 0.11164 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:2:1:1:1:1]  | passed  | 0.05368 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:2:1:1:2:1]  | passed  | 0.05353 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:2:1:1:3:1]  | passed  | 0.0562 seconds  |
+./spec/controllers/users_controller_spec.rb[1:6:2:1:2]      | passed  | 0.05577 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:2:1:3]      | passed  | 0.08326 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:2:2:1:1]    | passed  | 0.05599 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:2:2:1:2]    | passed  | 0.05678 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:2:2:2]      | passed  | 0.09739 seconds |
+./spec/controllers/users_controller_spec.rb[1:6:2:2:3]      | passed  | 0.06099 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:1:1:1:1]    | passed  | 0.07152 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:1:1:2:1]    | passed  | 0.06896 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:1:1:3:1]    | passed  | 0.08177 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:1:1:4]      | passed  | 0.07264 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:1:2:1:1]    | passed  | 0.08902 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:1:2:2]      | passed  | 0.0947 seconds  |
+./spec/controllers/users_controller_spec.rb[1:7:1:2:3]      | passed  | 0.07071 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:2:1:1:1:1]  | passed  | 0.07457 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:2:1:1:2:1]  | passed  | 0.07716 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:2:1:1:3:1]  | passed  | 0.04907 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:2:1:2]      | passed  | 0.05129 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:2:2:1:1]    | passed  | 0.04901 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:2:2:1:2]    | passed  | 0.05557 seconds |
+./spec/controllers/users_controller_spec.rb[1:7:2:2:2]      | passed  | 0.0878 seconds  |
+./spec/controllers/users_controller_spec.rb[1:8:1:1:1]      | passed  | 0.05743 seconds |
+./spec/controllers/users_controller_spec.rb[1:8:1:2:1]      | passed  | 0.05981 seconds |
+./spec/controllers/users_controller_spec.rb[1:8:1:3]        | passed  | 0.06848 seconds |
+./spec/controllers/users_controller_spec.rb[1:8:2:1:1]      | passed  | 0.06315 seconds |
+./spec/controllers/users_controller_spec.rb[1:8:2:2]        | passed  | 0.10142 seconds |
+./spec/controllers/users_controller_spec.rb[1:8:2:3]        | passed  | 0.06632 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:1:1:1:1]  | passed  | 0.06032 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:1:1:2:1]  | passed  | 0.05858 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:1:1:3:1]  | passed  | 0.103 seconds   |
+./spec/controllers/users_controller_spec.rb[1:9:1:1:1:4]    | passed  | 0.06539 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:1:1:5]    | passed  | 0.06199 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:1:2:1:1]  | passed  | 0.0607 seconds  |
+./spec/controllers/users_controller_spec.rb[1:9:1:1:2:2]    | passed  | 0.08488 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:1:2:3]    | passed  | 0.08991 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:1:2:4]    | passed  | 0.06125 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:2:1:1:1]  | passed  | 0.05862 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:2:1:2:1]  | passed  | 0.06616 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:2:1:3:1]  | passed  | 0.05354 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:2:1:4]    | passed  | 0.05771 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:2:1:5]    | passed  | 0.05377 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:2:2:1:1]  | passed  | 0.05381 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:2:2:2]    | passed  | 0.05109 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:2:2:3]    | passed  | 0.05524 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:1:2:2:4]    | passed  | 0.05221 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:2:1:1:1:1]  | passed  | 0.07151 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:2:1:1:2:1]  | passed  | 0.05942 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:2:1:1:3:1]  | passed  | 0.06463 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:2:1:2]      | passed  | 0.06555 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:2:2:1:1]    | passed  | 0.04885 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:2:2:1:2]    | passed  | 0.08149 seconds |
+./spec/controllers/users_controller_spec.rb[1:9:2:2:2]      | passed  | 0.05015 seconds |
+./spec/controllers/users_controller_spec.rb[1:10:1:1:1]     | passed  | 0.08743 seconds |
+./spec/controllers/users_controller_spec.rb[1:10:1:2:1]     | passed  | 0.10831 seconds |
+./spec/controllers/users_controller_spec.rb[1:10:1:3]       | passed  | 0.09788 seconds |
+./spec/controllers/users_controller_spec.rb[1:10:2:1:1]     | passed  | 0.08334 seconds |
+./spec/controllers/users_controller_spec.rb[1:10:2:2]       | passed  | 0.10501 seconds |
+./spec/controllers/works_controller_spec.rb[1:1:1:1:1]      | passed  | 0.06475 seconds |
+./spec/controllers/works_controller_spec.rb[1:1:1:2:1]      | passed  | 0.06935 seconds |
+./spec/controllers/works_controller_spec.rb[1:1:1:3]        | passed  | 0.07119 seconds |
+./spec/controllers/works_controller_spec.rb[1:1:2:1:1]      | passed  | 0.06697 seconds |
+./spec/controllers/works_controller_spec.rb[1:1:2:2]        | passed  | 0.06459 seconds |
+./spec/controllers/works_controller_spec.rb[1:2:1:1:1]      | passed  | 0.04616 seconds |
+./spec/controllers/works_controller_spec.rb[1:2:1:2:1]      | passed  | 0.04404 seconds |
+./spec/controllers/works_controller_spec.rb[1:2:1:3]        | passed  | 0.15892 seconds |
+./spec/controllers/works_controller_spec.rb[1:2:2:1:1]      | passed  | 0.04323 seconds |
+./spec/controllers/works_controller_spec.rb[1:2:2:2]        | passed  | 0.04586 seconds |
+./spec/controllers/works_controller_spec.rb[1:3:1:1:1]      | passed  | 0.04665 seconds |
+./spec/controllers/works_controller_spec.rb[1:3:1:2:1]      | passed  | 0.04863 seconds |
+./spec/controllers/works_controller_spec.rb[1:3:1:3]        | passed  | 0.07265 seconds |
+./spec/controllers/works_controller_spec.rb[1:3:2:1:1]      | passed  | 0.05062 seconds |
+./spec/controllers/works_controller_spec.rb[1:3:2:2]        | passed  | 0.04699 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:1:1:1:1]    | passed  | 0.07698 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:1:1:2:1]    | passed  | 0.06902 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:1:1:3]      | passed  | 0.07639 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:1:1:4]      | passed  | 0.0726 seconds  |
+./spec/controllers/works_controller_spec.rb[1:4:1:2:1:1]    | passed  | 0.07758 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:1:2:2]      | passed  | 0.08179 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:2:1:1:1:1]  | passed  | 0.08263 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:2:1:1:2:1]  | passed  | 0.08383 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:2:1:1:3:1]  | passed  | 0.0687 seconds  |
+./spec/controllers/works_controller_spec.rb[1:4:2:1:2]      | passed  | 0.07129 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:2:2:1:1]    | passed  | 0.06678 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:2:2:1:2]    | passed  | 0.08413 seconds |
+./spec/controllers/works_controller_spec.rb[1:4:2:2:2]      | passed  | 0.07781 seconds |
+./spec/controllers/works_controller_spec.rb[1:5:1:1:1:1]    | passed  | 0.06186 seconds |
+./spec/controllers/works_controller_spec.rb[1:5:1:1:2:1]    | passed  | 0.08382 seconds |
+./spec/controllers/works_controller_spec.rb[1:5:1:1:3]      | passed  | 0.08703 seconds |
+./spec/controllers/works_controller_spec.rb[1:5:1:2:1:1]    | passed  | 0.06304 seconds |
+./spec/controllers/works_controller_spec.rb[1:5:1:2:2]      | passed  | 0.063 seconds   |
+./spec/controllers/works_controller_spec.rb[1:5:2:1:1:1:1]  | passed  | 0.0629 seconds  |
+./spec/controllers/works_controller_spec.rb[1:5:2:1:1:2:1]  | passed  | 0.0616 seconds  |
+./spec/controllers/works_controller_spec.rb[1:5:2:1:1:3:1]  | passed  | 0.0664 seconds  |
+./spec/controllers/works_controller_spec.rb[1:5:2:1:2]      | passed  | 0.04542 seconds |
+./spec/controllers/works_controller_spec.rb[1:5:2:2:1:1]    | passed  | 0.05871 seconds |
+./spec/controllers/works_controller_spec.rb[1:5:2:2:1:2]    | passed  | 0.07561 seconds |
+./spec/controllers/works_controller_spec.rb[1:5:2:2:2]      | passed  | 0.04487 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:1:1:1:1]    | passed  | 0.08105 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:1:1:2:1]    | passed  | 0.07837 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:1:1:3]      | passed  | 0.07529 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:1:1:4]      | passed  | 0.12383 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:1:1:5]      | passed  | 0.07782 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:1:2:1:1]    | passed  | 0.07931 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:1:2:2]      | passed  | 0.07857 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:1:2:3]      | passed  | 0.08473 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:2:1:1:1:1]  | passed  | 0.08126 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:2:1:1:2:1]  | passed  | 0.10264 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:2:1:1:3:1]  | passed  | 0.09451 seconds |
+./spec/controllers/works_controller_spec.rb[1:6:2:1:2]      | passed  | 0.0724 seconds  |
+./spec/controllers/works_controller_spec.rb[1:6:2:2:1:1]    | passed  | 0.1094 seconds  |
+./spec/controllers/works_controller_spec.rb[1:6:2:2:1:2]    | passed  | 0.084 seconds   |
+./spec/controllers/works_controller_spec.rb[1:6:2:2:2]      | passed  | 0.07691 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:1:1:1:1]  | passed  | 0.09026 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:1:1:2:1]  | passed  | 0.07193 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:1:1:3:1]  | passed  | 0.11788 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:1:1:4]    | passed  | 0.07716 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:1:1:5]    | passed  | 0.08879 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:1:2:1:1]  | passed  | 0.0822 seconds  |
+./spec/controllers/works_controller_spec.rb[1:7:1:1:2:2]    | passed  | 0.075 seconds   |
+./spec/controllers/works_controller_spec.rb[1:7:1:1:2:3]    | passed  | 0.07754 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:2:1:1:1]  | passed  | 0.09756 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:2:1:2:1]  | passed  | 0.07642 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:2:1:3:1]  | passed  | 0.07397 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:2:1:4]    | passed  | 0.07511 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:2:2:1:1]  | passed  | 0.06987 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:2:2:2]    | passed  | 0.07515 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:1:2:2:3]    | passed  | 0.07022 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:2:1:1:1:1]  | passed  | 0.06682 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:2:1:1:2:1]  | passed  | 0.06952 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:2:1:1:3:1]  | passed  | 0.1031 seconds  |
+./spec/controllers/works_controller_spec.rb[1:7:2:1:2]      | passed  | 0.06955 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:2:2:1:1]    | passed  | 0.07428 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:2:2:1:2]    | passed  | 0.08928 seconds |
+./spec/controllers/works_controller_spec.rb[1:7:2:2:2]      | passed  | 0.06589 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:1:1]      | passed  | 0.1113 seconds  |
+./spec/controllers/works_controller_spec.rb[1:8:1:2:1]      | passed  | 0.13124 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:3:1:1:1]  | passed  | 0.10075 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:3:1:2:1]  | passed  | 0.10387 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:3:1:3:1]  | passed  | 0.10106 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:3:1:4]    | passed  | 0.10723 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:3:1:5]    | passed  | 0.15564 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:3:2:1:1]  | passed  | 0.1049 seconds  |
+./spec/controllers/works_controller_spec.rb[1:8:1:3:2:2]    | passed  | 0.13062 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:3:2:3]    | passed  | 0.10241 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:4:1:1:1]  | passed  | 0.09475 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:4:1:2:1]  | passed  | 0.10076 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:4:1:3:1]  | passed  | 0.09367 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:4:2:1:1]  | passed  | 0.10946 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:1:4:2:2]    | passed  | 0.09583 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:2:1:1:1:1]  | passed  | 0.09992 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:2:1:1:2:1]  | passed  | 0.09001 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:2:1:1:3:1]  | passed  | 0.09123 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:2:1:2]      | passed  | 0.08359 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:2:2:1:1]    | passed  | 0.08815 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:2:2:1:2]    | passed  | 0.10964 seconds |
+./spec/controllers/works_controller_spec.rb[1:8:2:2:2]      | passed  | 0.08668 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:1:1:1:1]  | passed  | 0.10231 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:1:1:2:1]  | passed  | 0.09867 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:1:1:3]    | passed  | 0.08906 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:1:1:4]    | passed  | 0.07018 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:1:1:5]    | passed  | 0.07629 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:1:2:1:1]  | passed  | 0.1085 seconds  |
+./spec/controllers/works_controller_spec.rb[1:9:1:1:2:2]    | passed  | 0.07082 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:1:2:3]    | passed  | 0.07491 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:1:2:4]    | passed  | 0.07391 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:2:1:1:1]  | passed  | 0.09485 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:2:1:2:1]  | passed  | 0.09371 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:2:1:3:1]  | passed  | 0.1208 seconds  |
+./spec/controllers/works_controller_spec.rb[1:9:1:2:1:4]    | passed  | 0.07021 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:2:1:5]    | passed  | 0.07627 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:2:2:1:1]  | passed  | 0.083 seconds   |
+./spec/controllers/works_controller_spec.rb[1:9:1:2:2:2]    | passed  | 0.08627 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:2:2:3]    | passed  | 0.06966 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:1:2:2:4]    | passed  | 0.10144 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:2:1:1:1:1]  | passed  | 0.05261 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:2:1:1:2:1]  | passed  | 0.05648 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:2:1:1:3:1]  | passed  | 0.0545 seconds  |
+./spec/controllers/works_controller_spec.rb[1:9:2:1:2]      | passed  | 0.06876 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:2:1:3]      | passed  | 0.06081 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:2:2:1:1]    | passed  | 0.05985 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:2:2:1:2]    | passed  | 0.06448 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:2:2:2]      | passed  | 0.05626 seconds |
+./spec/controllers/works_controller_spec.rb[1:9:2:2:3]      | passed  | 0.06413 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:1:1]     | passed  | 0.15152 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:2:1]     | passed  | 0.13217 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:3:1:1:1] | passed  | 0.09469 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:3:1:2:1] | passed  | 0.10269 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:3:1:3:1] | passed  | 0.11275 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:3:1:4]   | passed  | 0.09109 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:3:1:5]   | passed  | 0.14352 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:3:2:1:1] | passed  | 0.10327 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:3:2:2]   | passed  | 0.0951 seconds  |
+./spec/controllers/works_controller_spec.rb[1:10:1:3:2:3]   | passed  | 0.10364 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:4:1:1:1] | passed  | 0.0914 seconds  |
+./spec/controllers/works_controller_spec.rb[1:10:1:4:1:2:1] | passed  | 0.08642 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:4:1:3:1] | passed  | 0.09208 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:4:2:1:1] | passed  | 0.09617 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:1:4:2:2]   | passed  | 0.1053 seconds  |
+./spec/controllers/works_controller_spec.rb[1:10:2:1:1:1:1] | passed  | 0.11174 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:2:1:1:2:1] | passed  | 0.10076 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:2:1:1:3:1] | passed  | 0.09792 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:2:1:2]     | passed  | 0.08351 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:2:2:1:1]   | passed  | 0.10117 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:2:2:1:2]   | passed  | 0.08864 seconds |
+./spec/controllers/works_controller_spec.rb[1:10:2:2:2]     | passed  | 0.09043 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:1:1:1:1]   | passed  | 0.107 seconds   |
+./spec/controllers/works_controller_spec.rb[1:11:1:1:2:1]   | passed  | 0.07285 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:1:1:3:1]   | passed  | 0.07024 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:1:1:4]     | passed  | 0.07276 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:1:2:1:1]   | passed  | 0.10454 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:1:2:2]     | passed  | 0.08097 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:1:2:3]     | passed  | 0.07184 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:2:1:1:1:1] | passed  | 0.06037 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:2:1:1:2:1] | passed  | 0.05288 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:2:1:1:3:1] | passed  | 0.05292 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:2:1:2]     | passed  | 0.06285 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:2:2:1:1]   | passed  | 0.07062 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:2:2:1:2]   | passed  | 0.07678 seconds |
+./spec/controllers/works_controller_spec.rb[1:11:2:2:2]     | passed  | 0.06154 seconds |
+./spec/controllers/works_controller_spec.rb[1:12:1:1:1]     | passed  | 0.10299 seconds |
+./spec/controllers/works_controller_spec.rb[1:12:1:2:1]     | passed  | 0.10469 seconds |
+./spec/controllers/works_controller_spec.rb[1:12:1:3]       | passed  | 0.10153 seconds |
+./spec/controllers/works_controller_spec.rb[1:12:2:1:1]     | passed  | 0.13484 seconds |
+./spec/controllers/works_controller_spec.rb[1:12:2:2]       | passed  | 0.18929 seconds |
+./spec/helpers/accounts_helper_spec.rb[1:1]                 | unknown |                 |
+./spec/helpers/loged_admin_helper_spec.rb[1:1]              | unknown |                 |
+./spec/helpers/logged_user_helper_spec.rb[1:1]              | unknown |                 |
+./spec/helpers/shop_helper_spec.rb[1:1]                     | unknown |                 |
+./spec/helpers/works_helper_spec.rb[1:1]                    | unknown |                 |
+./spec/jobs/example_job_spec.rb[1:1]                        | unknown |                 |
+./spec/mailers/work_spec.rb[1:1:1]                          | unknown |                 |
+./spec/mailers/work_spec.rb[1:1:2]                          | unknown |                 |
+./spec/models/account_spec.rb[1:1:1:1]                      | passed  | 0.01256 seconds |
+./spec/models/account_spec.rb[1:1:1:2]                      | passed  | 0.01289 seconds |
+./spec/models/account_spec.rb[1:1:2:1]                      | passed  | 0.01096 seconds |
+./spec/models/account_spec.rb[1:1:3:1]                      | passed  | 0.01191 seconds |
+./spec/models/account_spec.rb[1:2:1:1]                      | passed  | 0.0223 seconds  |
+./spec/models/account_spec.rb[1:2:1:2]                      | passed  | 0.19888 seconds |
+./spec/models/account_spec.rb[1:3:1]                        | passed  | 0.01188 seconds |
+./spec/models/user_spec.rb[1:1:1:1]                         | passed  | 0.01029 seconds |
+./spec/models/user_spec.rb[1:1:1:2]                         | passed  | 0.01185 seconds |
+./spec/models/user_spec.rb[1:1:2:1]                         | passed  | 0.00965 seconds |
+./spec/models/user_spec.rb[1:1:3:1]                         | passed  | 0.0175 seconds  |
+./spec/models/user_spec.rb[1:1:3:2]                         | passed  | 0.01625 seconds |
+./spec/models/user_spec.rb[1:1:3:3]                         | passed  | 0.01861 seconds |
+./spec/models/user_spec.rb[1:2:1:1]                         | passed  | 0.01064 seconds |
+./spec/models/user_spec.rb[1:2:1:2]                         | passed  | 0.01703 seconds |
+./spec/models/user_spec.rb[1:2:2:1]                         | passed  | 0.0125 seconds  |
+./spec/models/user_spec.rb[1:2:2:2]                         | passed  | 0.01393 seconds |
+./spec/models/user_spec.rb[1:3:1]                           | passed  | 0.02289 seconds |
+./spec/models/user_spec.rb[1:3:2]                           | passed  | 0.03349 seconds |
+./spec/models/work_spec.rb[1:1:1:1]                         | passed  | 0.00434 seconds |
+./spec/models/work_spec.rb[1:1:1:2]                         | passed  | 0.00504 seconds |
+./spec/models/work_spec.rb[1:1:2:1]                         | passed  | 0.00425 seconds |
+./spec/models/work_spec.rb[1:1:3:1]                         | passed  | 0.00742 seconds |
+./spec/models/work_spec.rb[1:2:1:1]                         | passed  | 0.00484 seconds |
+./spec/models/work_spec.rb[1:2:1:2]                         | passed  | 0.02577 seconds |
+./spec/models/work_spec.rb[1:3:1]                           | passed  | 0.03177 seconds |
+./spec/models/work_spec.rb[1:3:2]                           | passed  | 0.05557 seconds |
+./spec/requests/accounts_spec.rb[1:1:1]                     | unknown |                 |
+./spec/requests/works_spec.rb[1:1:1]                        | unknown |                 |
+./spec/routing/accounts_routing_spec.rb[1:1:1]              | unknown |                 |
+./spec/routing/accounts_routing_spec.rb[1:1:2]              | unknown |                 |
+./spec/routing/accounts_routing_spec.rb[1:1:3]              | unknown |                 |
+./spec/routing/accounts_routing_spec.rb[1:1:4]              | unknown |                 |
+./spec/routing/accounts_routing_spec.rb[1:1:5]              | unknown |                 |
+./spec/routing/accounts_routing_spec.rb[1:1:6]              | unknown |                 |
+./spec/routing/accounts_routing_spec.rb[1:1:7]              | unknown |                 |
+./spec/routing/accounts_routing_spec.rb[1:1:8]              | unknown |                 |
+./spec/routing/works_routing_spec.rb[1:1:1]                 | unknown |                 |
+./spec/routing/works_routing_spec.rb[1:1:2]                 | unknown |                 |
+./spec/routing/works_routing_spec.rb[1:1:3]                 | unknown |                 |
+./spec/routing/works_routing_spec.rb[1:1:4]                 | unknown |                 |
+./spec/routing/works_routing_spec.rb[1:1:5]                 | unknown |                 |
+./spec/routing/works_routing_spec.rb[1:1:6]                 | unknown |                 |
+./spec/routing/works_routing_spec.rb[1:1:7]                 | unknown |                 |
+./spec/routing/works_routing_spec.rb[1:1:8]                 | unknown |                 |
+./spec/views/accounts/edit.html.erb_spec.rb[1:1]            | unknown |                 |
+./spec/views/accounts/index.html.erb_spec.rb[1:1]           | unknown |                 |
+./spec/views/accounts/new.html.erb_spec.rb[1:1]             | unknown |                 |
+./spec/views/accounts/show.html.erb_spec.rb[1:1]            | unknown |                 |
+./spec/views/loged_admin/wellcome.html.erb_spec.rb[1:1]     | unknown |                 |
+./spec/views/logged_user/wellcome.html.erb_spec.rb[1:1]     | unknown |                 |
+./spec/views/shop/index.html.erb_spec.rb[1:1]               | unknown |                 |
+./spec/views/works/edit.html.erb_spec.rb[1:1]               | unknown |                 |
+./spec/views/works/index.html.erb_spec.rb[1:1]              | unknown |                 |
+./spec/views/works/new.html.erb_spec.rb[1:1]                | unknown |                 |
+./spec/views/works/show.html.erb_spec.rb[1:1]               | unknown |                 |
