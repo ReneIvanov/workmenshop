@@ -6,7 +6,7 @@ module SerializersTestHelper
     when "User"
       user_serializer(object)
     when "Account"
-      account serializer(object)
+      account_serializer(object)
     when "Work"
       work_serializer(object)
     else

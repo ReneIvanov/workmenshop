@@ -2,15 +2,15 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    if user_signed_in? && policy(current_user).is_admin
+    #if user_signed_in? && policy(current_user).is_admin
       @accounts = Account.all
       respond_to do |format|
         format.html { render :index }
-        format.json { render json: { response: { accounts: show_like_json(@accounts) }, status: "OK" } }
+        format.json { render json: { accounts: show_like_json(@accounts) } }
       end
-    else
-      unauthorized
-    end
+    #else
+    #  unauthorized
+    #end
   end
 
   # GET /accounts/1

@@ -3,15 +3,17 @@ require 'rails_helper'
 RSpec.describe WorksController, type: :controller do
   describe "- GET #index" do
     before(:each) { @works_in_database = create_list(:work, 5) }
+    let(:serialized_works_in_database){ serialize(@works_in_database) }
 
     context " - HTML format" do
       before(:each) {get :index}
+      let(:serialized_returned_works){ serialize(assigns(:works)) }
 
       it_behaves_like "response status", 200
       it_behaves_like "render template", :index
 
       it "- should returns a list of works." do
-        expect(assigns(:works)).to eq(@works_in_database)
+        expect(compare_arrays_of_hashes(serialized_returned_works, serialized_works_in_database)).to be true
       end
     end
 
@@ -55,7 +57,8 @@ RSpec.describe WorksController, type: :controller do
         serialized_returned_work = parser(response.body)[:work].first
         serialized_requested_work = serialize(@requested_work)
         
-        expect(serialized_returned_work <= serialized_requested_work).to be true
+        #expect(serialized_returned_work <= serialized_requested_work).to be true
+        expect(serialized_returned_work).to match(serialized_requested_work)
       end
     end
   end
