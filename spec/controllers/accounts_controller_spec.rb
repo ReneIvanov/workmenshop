@@ -146,7 +146,7 @@ RSpec.describe AccountsController, type: :controller do
 #
   #describe " - POST #create" do 
   #  before(:each) do
-  #    @user = create(:user, :with_workmen_account)
+  #    @user = create(:user, :with_xxxxxxxxxxxxxxxxxxxxxxxxxxxx)
   #    @work_attributes = attributes_for(:work)
   #    @work = build(:work, @work_attributes)
   #  end

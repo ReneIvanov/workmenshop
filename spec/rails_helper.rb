@@ -70,7 +70,7 @@ RSpec.configure do |config|
 
   #configuration of a DatabaseCleaner
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :deletion
   end
 
   config.before(:each) do |example|

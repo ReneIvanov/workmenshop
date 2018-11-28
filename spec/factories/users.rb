@@ -22,7 +22,9 @@ FactoryBot.define do
     end
 
     trait :with_workmen_account do
-      association :account, factory: :account_workmen
+      after(:create) do |user|
+        create(:workmen_account_for_user, user_id: user.id)
+      end
     end
   end
 end
