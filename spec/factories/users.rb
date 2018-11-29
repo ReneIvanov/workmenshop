@@ -21,9 +21,21 @@ FactoryBot.define do
       end
     end
 
+     trait :with_customer_account do
+      after(:create) do |user|
+        create(:customer_account_for_user, user_id: user.id)
+      end
+    end
+
     trait :with_workmen_account do
       after(:create) do |user|
         create(:workmen_account_for_user, user_id: user.id)
+      end
+    end
+
+    trait :with_admin_account do
+      after(:create) do |user|
+        create(:admin_account_for_user, user_id: user.id)
       end
     end
   end
