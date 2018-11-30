@@ -57,7 +57,6 @@ RSpec.describe WorksController, type: :controller do
         serialized_returned_work = parser(response.body)[:work].first
         serialized_requested_work = serialize(@requested_work)
         
-        #expect(serialized_returned_work <= serialized_requested_work).to be true
         expect(serialized_returned_work).to match(serialized_requested_work)
       end
     end

@@ -20,7 +20,7 @@ class AccountsController < ApplicationController
       @account = set_account
       respond_to do |format|
         format.html { render :show }
-        format.json { render json: { response: { account: show_like_json(@account) }, status: "OK" } }
+        format.json { render json: { account: show_like_json(@account) } }
       end
     else
       unauthorized
@@ -29,14 +29,10 @@ class AccountsController < ApplicationController
 
   # GET /accounts/new
   def new
-    if user_signed_in?
-      @account = Account.new
-      respond_to do |format|
-        format.html { render :new }
-        format.json { render json: { response: { account: show_like_json(@account) }, status: "OK" } }
-      end
-    else
-      unauthorized
+    @account = Account.new
+    respond_to do |format|
+      format.html { render :new }
+      format.json { render json: { account: show_like_json(@account) } }
     end
   end
 
@@ -46,7 +42,7 @@ class AccountsController < ApplicationController
       @account = set_account
       respond_to do |format|
         format.html { render :edit }
-        format.json { render json: { response: { account: show_like_json(@account) }, status: "OK" } }
+        format.json { render json: { account: show_like_json(@account) } }
       end
     else
       unauthorized
@@ -56,23 +52,23 @@ class AccountsController < ApplicationController
   # POST /accounts
   # POST /accounts.json
   def create
-    @current_account = current_user.account if current_user.account
-
     if user_signed_in? 
+      @current_account = current_user.account if current_user.account
       @account = Account.new(account_params)
       @account.user_id = current_user.id    
+      
       respond_to do |format|
         if @account.save
           @current_account.delete if @current_account
-          if @account.workmen?
-            format.html { redirect_to registration_new_work_path, notice: 'Please continue with specifing your services.' }
+          if
+            format.html { redirect_to registration_new_work_path, notice: "Please continue with specifing your services." }
           else
-            format.html { redirect_to root_path, notice: 'Your account has been succefully created.' }
+            format.html { redirect_to root_path, notice: "Your account was succefully created." }
           end
-          format.json { render json: { response: { account: show_like_json(@account) }, status: "Created" } }
+          format.json { render status: 201, json: { account: show_like_json(@account), notice: "Your account was succefully created." } }
         else
-          format.html { render :new }
-          format.json { render json: { response: { account: show_like_json(@account) }, status: "Unprocessable Entity" } }
+          format.html { render :new; flash[:notice] = "Account was not created." }
+          format.json { render status: 422, json: { account: show_like_json(@account), notice: "Account was not created." } }
         end
       end
     else
@@ -87,11 +83,11 @@ class AccountsController < ApplicationController
       @account = set_account    
       respond_to do |format|
         if @account.update(account_params)
-          format.html { redirect_to registration_edit_work_path, notice: 'Please continue.' }
-          format.json { render json: { response: { account: show_like_json(@account) }, status: "OK" } }
+          format.html { redirect_to registration_edit_work_path, notice: "Account was successfully updated." }
+          format.json { render status: 200, json: { account: show_like_json(@account), notice: "Account was successfully updated." } }
         else
-          format.html { render :edit }
-          format.json { render json: { response: {account: show_like_json(@account) }, status: "Unprocessable Entity" } }
+          format.html { render :edit; flash[:notice] = "Account was not updated." }
+          format.json { render status: 422, json: { account: show_like_json(@account), notice: "Account was not updated." } }
         end
       end
     else
@@ -106,8 +102,8 @@ class AccountsController < ApplicationController
       @account = set_account
       @account.destroy
       respond_to do |format|
-        format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
-        format.json { render json: { response: "Account has been destroyed.", status: "No Content" } }
+        format.html { redirect_to root_url, notice: 'Account was destroyed.' }
+        format.json { render status: 204, json: {notice: "Account was destroyed." } }
       end
     else
       unauthorized
