@@ -2,14 +2,39 @@ require 'rails_helper'
 
 RSpec.describe LogedAdminController, type: :controller do
   describe "GET #welcome" do
-    before do
-      @user = create :user #add user into database
+    context " - admin signed in" do
+      before(:each) {sign_in_admin}
+
+      context " - HTML format" do
+        before(:each) { get :wellcome }
+
+        it_behaves_like "response status", 200
+        it_behaves_like "render template", :wellcome
+      end
+
+      context " - JSON format" do
+        before(:each) { get :wellcome, format: :json }
+
+        it_behaves_like "response status", 200
+
+        it " - should have empty body" do
+          expect(parser(response.body)).to match({})
+        end
+      end
     end
 
-    it " - response should be successfull and equal 200." do
-      get :wellcome, session: {user_name: @user.user_name, admin: true}
-      expect(response).to be_successful
-      expect(response.status).to eq(200)
+    context " - without signed in user" do
+      context " - HTML format" do
+        before(:each) { get :wellcome }
+ 
+        it_behaves_like "unauthorized examples HTML"  
+      end
+ 
+      context " - JSON format" do
+        before(:each) {get :wellcome, format: :json}
+ 
+        it_behaves_like "unauthorized examples JSON" 
+      end
     end
   end
 end
