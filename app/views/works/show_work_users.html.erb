@@ -1,5 +1,19 @@
-<h2> Work "<%= @work.title %>" offer: </h2>
+<h3> Work "<%= @work.title %>" offer: </h3>
+<br>
 
-<% @work_users.each do |user| %>
-  user name: <%= user.username %>,  address: <%= user.address %> </br>
-<% end %>
+<table class="elements_list">
+  <tr> 
+    <td> <u> <strong> User name: </strong> </u> </td>
+    <td> <u> <strong> Email: </strong> </u> </td>
+    <td> <u> <strong> Address: </strong> </u> </td>
+  <tr>
+
+  <% @work_users.each do |user| %>
+    <tr>
+      <td> <%= user.username %> </td>
+      <td> <%= user.email %> </td>
+      <td> <%= user.address %> </td>
+      <td> <%= link_to 'more info...', {controller: "users", action: "show", id: user.id} %> </td>
+    </tr>
+  <% end %>
+</table>

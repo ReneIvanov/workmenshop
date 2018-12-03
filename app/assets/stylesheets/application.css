@@ -1,18 +1,3 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
 
  /*zarovnanie stránky na stred obrazovky*/
 #main, #header, #top_menubar, #page_content, #footer
@@ -28,7 +13,7 @@
   padding: 0;
 }
 
-/* body - nastavenie fontu, farby písma a pozadia*/
+/* body - setting of fonts, colors, backgrounds, ...*/
 body
 { 
   font: normal 80% Arial, Helvetica, sans-serif;
@@ -38,13 +23,21 @@ body
   font-size: 17px;
 }
 
-/*nastavenie odkazov*/
-a
+/*set of links*/
+a:link
 { 
   text-decoration: none;
+  color: white;
+  font-style: oblique;
+  font-size: 14px;
 }
 
-/*nastavenie odkazov, cez ktoré prechádza myška*/
+a:visited
+{
+  color: white;
+}
+
+/* mouse over link */
 a:hover
 { 
   text-decoration: underline;
@@ -53,6 +46,12 @@ a:hover
 p
 {
     padding-top: 12px;
+}
+
+.elements_list
+{
+  border-collapse: separate;
+  border-spacing: 15px;
 }
 
 /* NASTAVENIA ČASTÍ HEADER ===================================================*/
@@ -118,6 +117,14 @@ p
   overflow: hidden;
   border-style:none;
   background: transparent;
+  vertical-align: text-bottom;
+  padding: 40px 0;
+}
+
+#header_3 a
+{
+  font-size: 18px;
+  font-weight: bold;
 }
 
 /* NASTAVENIA ČASTÍ TOP_MENUBAR ==================================================*/
@@ -148,27 +155,14 @@ p
   font-size: 15px;
 }
 
-/*nastavenie odrážok zoznamu #top_menubar_item pri prechode myškou*/
-#top_menubar_item:menubar li:hover
-{
-  background: red;
-}
-
-/*nastavenie odkazov zoznamu #top_menubar_item*/
+/* mouse over link */
 #top_menubar_item a
-{
-  text-decoration: none;
-  color: #FFF;
-}
-
-/*nastavenie odkazov zoznamu #top_menubar_item pri prechode myškou*/
-#top_menubar_item a:hover
-{
-  text-decoration: none;
-  color: #FFF;
+{ 
+  
 }
 
 /* NASTAVENIA ČASTÍ LEFT_SIDEBAR =============================================*/
+
 #left_sidebar_item
 {
   float: left;
@@ -181,6 +175,15 @@ p
   border-radius: 7px 7px 7px 7px;       /*oblé rohy*/ 
   text-decoration: none;
   font-size: 15px;
+}
+
+#left_sidebar_item a
+{ 
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
 }
 
 /* NASTAVENIA ČASTÍ MAINBAR  =================================================*/
@@ -317,12 +320,13 @@ color: yellow;
   padding-left: 10px;
   overflow: hidden;
 } 
- 
-#page_content
+
+#page_content  /*inside this div are left_sidebar, right_sidebar and mainbar*/ 
 { 
+  display: -webkit-flex; display: -ms-flexbox; display: flex; overflow: hidden;   /*https://www.yudiz.com/3-easiest-ways-to-make-equal-height-blocks-using-css/*/
   width: 800px;
-  height: auto;
   overflow: hidden;
+  height: auto;
   background: transparent;
   border-radius: 0px 0px 7px 7px;       /*oblé rohy*/ 
 }
@@ -333,8 +337,10 @@ color: yellow;
   width: 150px;
   height: auto;
   overflow: hidden;
-  background: red;
+  background: url(transparent.png) repeat;
+  padding-top: 50px;
 }
+
 /*
 #right_sidebar
 { 
@@ -352,9 +358,7 @@ color: yellow;
   float: left;
   overflow: hidden;
   padding: 30px;
-  background: transparent url(transparent.png) repeat;
-  
-  //background: transparent url(../images/transparent_white.png) repeat;
+  background: url(transparent.png) repeat;
 }
 
 

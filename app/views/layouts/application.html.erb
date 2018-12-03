@@ -37,7 +37,7 @@
         <ul id="top_menubar_item">
           <li> <%= link_to 'Introduction', root_path %> </li>
           <li> <%= link_to 'All works', works_path%> </li>
-           <li>  </li>
+          <li>  </li>
           <li>  </li>
           <li>  </li>
           <li>  </li>
@@ -52,10 +52,12 @@
           <%= render "loged_user/left_sidebar" %>  
         <% end %>
 
+        
         <div id="mainbar" 
           <% if user_signed_in? %> style="width: 590px"
           <% end %>   
         >
+
 
           <% if flash[:alert] %>
            <%= flash[:alert] %>
@@ -68,7 +70,8 @@
           <br />
 
           <%= yield %>           
-        </div>  
+        
+        </div>
               
       </div>
             
