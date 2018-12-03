@@ -73,6 +73,10 @@ gem 'aws-sdk-s3', require: false
 gem 'pry-rails'
 gem 'rails-controller-testing'
 
+#my gem to work with collections
 gem 'collection_operator', git: 'https://github.com/ReneIvanov/collection_operator'
+
+#gem to generates random string (or random number) to represent public unique record identifier
+gem 'public_uid'
 
 ruby '2.5.1'

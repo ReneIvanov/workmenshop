@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
   has_one_attached :profile_picture, dependent: true  #connection with ActiveStorage - now is possible to use user.profile_picture
 
+  generate_public_uid column: :id, generator: PublicUid::Generators::NumberSecureRandom.new(1000000..9999999) #from public_uid gem
+
   validates :email, :username, presence: true
   validates :username, :email, uniqueness: true
 
