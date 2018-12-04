@@ -54,6 +54,17 @@ p
   border-spacing: 15px;
 }
 
+.devise_notice {
+  color: #000 !important;
+  border: 2px solid red;
+  padding: 1em;
+  margin-bottom: 2em;
+  background-color: yellow;
+  font: bold smaller sans-serif;
+  height: auto;
+  width: auto;
+}
+
 /* NASTAVENIA ČASTÍ HEADER ===================================================*/
 
 /*nastavenie body hlavičky*/

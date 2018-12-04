@@ -13,7 +13,7 @@
       <td> <%= user.username %> </td>
       <td> <%= user.email %> </td>
       <td> <%= user.address %> </td>
-      <td> <%= link_to 'more info...', {controller: "users", action: "show", id: user.id} %> </td>
+      <% if @is_admin %> <td> <%= link_to 'more info...', {controller: "users", action: "show", id: user.id} %> </td> <% end%>
     </tr>
   <% end %>
 </table>
