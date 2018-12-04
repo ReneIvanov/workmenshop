@@ -44,5 +44,7 @@ module Workmenshop
     config.assets.initialize_on_precompile = false
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.serve_static_assets = true
   end
 end
