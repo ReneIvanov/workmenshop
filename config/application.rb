@@ -45,6 +45,6 @@ module Workmenshop
 
     config.active_job.queue_adapter = :sidekiq
 
-    config.serve_static_assets = true
+    #config.serve_static_assets = true
   end
 end
