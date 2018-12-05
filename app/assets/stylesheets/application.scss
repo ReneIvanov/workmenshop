@@ -54,7 +54,7 @@ p
   border-spacing: 15px;
 }
 
-.devise_notice {
+.devise_error_messages {
   color: #000 !important;
   border: 2px solid red;
   padding: 1em;
@@ -63,6 +63,10 @@ p
   font: bold smaller sans-serif;
   height: auto;
   width: auto;
+}
+
+.notice {
+  color: #ADFF2F;
 }
 
 /* NASTAVENIA ČASTÍ HEADER ===================================================*/

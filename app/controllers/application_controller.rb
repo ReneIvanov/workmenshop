@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   def unauthorized  #response if user is not authorized fo current action
     respond_to do |format|
-      format.html { redirect_to new_user_session_path, status: 302, notice: "You have not rights for this action - please sign in with necessary rights." }
+      format.html { redirect_to :controller => 'devise/sessions', :action => 'new', status: 302, notice: "You have not rights for this action - please sign in with necessary rights." }
       format.json { render status: 401, json: { notice: "You have not rights for this action - please sign in with necessary rights." } }
     end
   end
