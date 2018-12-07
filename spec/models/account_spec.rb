@@ -30,7 +30,6 @@ RSpec.describe Account, type: :model do
 
     context " - invalid creation" do
       before(:each) {@account = create :account_customer}
-      after(:each) {@account.destroy}
 
       it " - customer,workmen nor admin is not checked." do
         expect(@account.valid?).to eq(true)
@@ -44,19 +43,19 @@ RSpec.describe Account, type: :model do
   end
 
   describe " - associations" do
-    before(:each) {@account = create :account_customer}
-    after(:each) {@account.destroy}
+    let!(:account) {create :account_customer}
     
     context " - user" do
       it " - change associated user." do
-        @account.user_id = create(:user).id
-        expect(@account.user).to eq(User.last)
+        new_user = create(:user)
+        account.user = new_user
+        expect(account.user).to eq(User.last)
       end
 
       it " - delete associated account from database when user is deletes form database." do
         expect(Account.last).to be_instance_of(Account)
 
-        @account.user.destroy
+        account.user.destroy
         expect(Account.last).to eq(nil)
       end
     end

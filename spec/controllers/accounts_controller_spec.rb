@@ -36,7 +36,7 @@ RSpec.describe AccountsController, type: :controller do
       before(:each) {sign_in_admin}
 
       context " - HTML format" do
-        before(:each) { get :show, params: { id: @requested_account.id } }
+        before(:each) { get :show, params: { public_uid: @requested_account.public_uid } }
 
         it_behaves_like "response status", 200
         it_behaves_like "render template", :show
@@ -49,7 +49,7 @@ RSpec.describe AccountsController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {get :show, params: { id: @requested_account.id }, format: :json}
+        before(:each) {get :show, params: { public_uid: @requested_account.public_uid }, format: :json}
 
         it_behaves_like "response status", 200
 
@@ -64,7 +64,7 @@ RSpec.describe AccountsController, type: :controller do
 
     context " - without signed in user" do
       context " - HTML format" do
-        before(:each) { get :show, params: { id: @requested_account.id } }
+        before(:each) { get :show, params: { public_uid: @requested_account.public_uid } }
 
         it_behaves_like "unauthorized examples HTML"  
   
@@ -74,7 +74,7 @@ RSpec.describe AccountsController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {get :show, params: { id: @requested_account.id }, format: :json}
+        before(:each) {get :show, params: { public_uid: @requested_account.public_uid }, format: :json}
 
         it_behaves_like "unauthorized examples JSON" 
 
@@ -119,7 +119,7 @@ RSpec.describe AccountsController, type: :controller do
       before(:each) {sign_in_admin}
  
       context " - HTML format" do
-        before(:each) { get :edit, params: { id: @requested_account.id } }
+        before(:each) { get :edit, params: { public_uid: @requested_account.public_uid } }
  
         it_behaves_like "response status", 200
         it_behaves_like "render template", :edit
@@ -133,7 +133,7 @@ RSpec.describe AccountsController, type: :controller do
       end
  
       context " - JSON format" do
-        before(:each) {get :edit, params: { id: @requested_account.id }, format: :json}
+        before(:each) {get :edit, params: { public_uid: @requested_account.public_uid }, format: :json}
  
         it_behaves_like "response status", 200
  
@@ -148,7 +148,7 @@ RSpec.describe AccountsController, type: :controller do
  
     context " - without signed in user" do
       context " - HTML format" do
-        before(:each) { get :edit, params: { id: @requested_account.id } }
+        before(:each) { get :edit, params: { public_uid: @requested_account.public_uid } }
  
         it_behaves_like "unauthorized examples HTML"  
   
@@ -158,7 +158,7 @@ RSpec.describe AccountsController, type: :controller do
       end
  
       context " - JSON format" do
-        before(:each) {get :edit, params: { id: @requested_account.id }, format: :json}
+        before(:each) {get :edit, params: { public_uid: @requested_account.public_uid }, format: :json}
  
         it_behaves_like "unauthorized examples JSON" 
  
@@ -334,7 +334,7 @@ RSpec.describe AccountsController, type: :controller do
 
       context " - modified account is updated in database" do
         context " - HTML format" do
-          before(:each) { put :update, params: { id: @loaded_account.id, account: serialize(@modified_account) } } #update need to have :id in :params
+          before(:each) { put :update, params: { public_uid: @loaded_account.public_uid, account: serialize(@modified_account) } } #update need to have :id in :params
     
           it_behaves_like "response status", 302
           it_behaves_like "notice", "Account was successfully updated."
@@ -362,7 +362,7 @@ RSpec.describe AccountsController, type: :controller do
         end
     
         context " - JSON format" do
-          before(:each) { put :update, format: :json, params: { id: @loaded_account.id, account: serialize(@modified_account) } } #update need to have :id in :params
+          before(:each) { put :update, format: :json, params: { public_uid: @loaded_account.public_uid, account: serialize(@modified_account) } } #update need to have :id in :params
     
           it_behaves_like "response status", 200
 
@@ -397,7 +397,7 @@ RSpec.describe AccountsController, type: :controller do
         before(:each) {@modified_account.workmen = false} #this is reason why account will not be saved into database
        
         context " - HTML format" do
-          before(:each) { put :update, params: { id: @loaded_account.id, account: serialize(@modified_account) } } #update need to have :id in :params
+          before(:each) { put :update, params: { public_uid: @loaded_account.public_uid, account: serialize(@modified_account) } } #update need to have :id in :params
     
           it_behaves_like "response status", 200
           it_behaves_like "render template", :edit
@@ -417,7 +417,7 @@ RSpec.describe AccountsController, type: :controller do
         end
     
         context " - JSON format" do
-          before(:each) { put :update, format: :json, params: { id: @loaded_account.id, account: serialize(@modified_account) } } #update need to have :id in :params
+          before(:each) { put :update, format: :json, params: { public_uid: @loaded_account.public_uid, account: serialize(@modified_account) } } #update need to have :id in :params
     
           it_behaves_like "response status", 422
 
@@ -449,7 +449,7 @@ RSpec.describe AccountsController, type: :controller do
 
     context " - without signed in admin" do
       context " - HTML format" do
-          before(:each) { put :update, params: { id: @loaded_account.id, account: serialize(@modified_account) } } #update need to have :id in :params
+          before(:each) { put :update, params: { public_uid: @loaded_account.public_uid, account: serialize(@modified_account) } } #update need to have :id in :params
 
         it_behaves_like "unauthorized examples HTML"  
   
@@ -465,7 +465,7 @@ RSpec.describe AccountsController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) { put :update, params: { id: @loaded_account.id, account: serialize(@modified_account) }, format: :json } #update need to have :id in :params
+        before(:each) { put :update, params: { public_uid: @loaded_account.public_uid, account: serialize(@modified_account) }, format: :json } #update need to have :id in :params
         it_behaves_like "unauthorized examples JSON" 
 
         it "- shouldn't returns a account." do
@@ -493,7 +493,7 @@ RSpec.describe AccountsController, type: :controller do
       before(:each) {sign_in_admin}
 
       context " - HTML format" do
-        before(:each) {delete :destroy, params: { id: @account.id }}
+        before(:each) {delete :destroy, params: { public_uid: @account.public_uid }}
 
         it_behaves_like "response status", 302
         it_behaves_like "redirect to", :root
@@ -505,7 +505,7 @@ RSpec.describe AccountsController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {delete :destroy, format: :json, params: { id: @account.id }}
+        before(:each) {delete :destroy, format: :json, params: { public_uid: @account.public_uid }}
 
         it_behaves_like "response status", 204
 
@@ -522,7 +522,7 @@ RSpec.describe AccountsController, type: :controller do
 
     context " - without signed in user" do
       context " - HTML format" do
-        before(:each) {delete :destroy, params: { id: @account.id }}
+        before(:each) {delete :destroy, params: { public_uid: @account.public_uid }}
 
         it_behaves_like "unauthorized examples HTML"
 
@@ -532,7 +532,7 @@ RSpec.describe AccountsController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {delete :destroy, format: :json, params: { id: @account.id }}
+        before(:each) {delete :destroy, format: :json, params: { public_uid: @account.public_uid }}
 
         it_behaves_like "unauthorized examples JSON"
 

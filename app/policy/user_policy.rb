@@ -32,19 +32,19 @@ class UserPolicy < ApplicationPolicy
   end
 
   def can_see(observed_user)
-    is_admin || @user_obj.id == observed_user.id
+    is_admin || @user_obj == observed_user
   end
 
   def can_edit(edited_user)
-    is_admin || @user_obj.id == edited_user.id
+    is_admin || @user_obj == edited_user
   end
 
   def can_destroy(destroyed_user)
-    is_admin || @user_obj.id == destroyed_user.id
+    is_admin || @user_obj == destroyed_user
   end
 
   def can_update_profile_picture(edited_user)
-    is_admin || @user_obj.id == edited_user.id
+    is_admin || @user_obj == edited_user
   end
 
   def can_create_work

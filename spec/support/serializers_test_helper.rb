@@ -16,7 +16,7 @@ module SerializersTestHelper
 
   def user_serializer(user)
     user_hash = {}
-    user_hash.merge!(id: user.id)
+    user_hash.merge!(public_uid: user.public_uid)
     user_hash.merge!(username: user.username)
     user_hash.merge!(email: user.email)
     user_hash.merge!(address: user.address)
@@ -35,7 +35,7 @@ module SerializersTestHelper
 
   def account_serializer(account)
     account_hash = {}
-    account_hash.merge!(id: account.id)
+    account_hash.merge!(public_uid: account.public_uid)
     account_hash.merge!(customer: account.customer)
     account_hash.merge!(workmen: account.workmen)
     account_hash.merge!(admin: account.admin)
@@ -45,7 +45,7 @@ module SerializersTestHelper
 
   def work_serializer(work)
     work_hash = {}
-    work_hash.merge!(id: work.id)
+    work_hash.merge!(public_uid: work.public_uid)
     work_hash.merge!(title: work.title)
     return work_hash
   end

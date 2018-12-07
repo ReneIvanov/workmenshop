@@ -7,7 +7,7 @@ RSpec.describe WorkSerializer do
     serialized_works = Array.new
     
     works.each do |work|
-      serialized_works << { id: work.id,
+      serialized_works << { public_uid: work.public_uid,
                             title: work.title
                           }
     end 
@@ -17,7 +17,7 @@ RSpec.describe WorkSerializer do
   
   #return a array with one serialized work
   def serialize_one_work(work)
-    [{ id: work.id,
+    [{ public_uid: work.public_uid,
       title: work.title
     }]
   end

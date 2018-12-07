@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    if user_signed_in? && policy(current_user).can_see(User.find(params[:id]))
+    if user_signed_in? && policy(current_user).can_see(User.find_param(params[:id]))
       set_user 
       respond_to do |format|
         format.html { render :show }
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
 
   # GET /users/:id/edit
   def edit
-    if user_signed_in? && policy(current_user).can_edit(User.find(params[:id]))
+    if user_signed_in? && policy(current_user).can_edit(User.find_param(params[:id]))
       set_user
       respond_to do |format|
         format.html { render :edit }
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    if user_signed_in? && policy(current_user).can_edit(User.find(params[:id]))
+    if user_signed_in? && policy(current_user).can_edit(User.find_param(params[:id]))
       set_user
       respond_to do |format|
         if @user.update(user_params)
@@ -86,7 +86,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    if user_signed_in? && policy(current_user).can_destroy(User.find(params[:id]))
+    if user_signed_in? && policy(current_user).can_destroy(User.find_param(params[:id]))
       set_user
       @user.destroy
       respond_to do |format|
@@ -109,7 +109,7 @@ class UsersController < ApplicationController
   
   # PATCH /users/:id/pictures
   def pictures_update
-    if user_signed_in? && policy(current_user).can_update_profile_picture(User.find(params[:id])) 
+    if user_signed_in? && policy(current_user).can_update_profile_picture(User.find_param(params[:id])) 
       set_user
       if params[:user] != nil && params[:user][:profile_picture] != nil
         @user.profile_picture.attach(params[:user][:profile_picture])
@@ -144,11 +144,11 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:username, :address, :email, :telephone, :password, :profile_picture, photos: [])
+    params.require(:user).permit(:public_uid, :username, :address, :email, :telephone, :password, :profile_picture, photos: [])
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_param(params[:id])
   end
 
   def show_like_json(users)

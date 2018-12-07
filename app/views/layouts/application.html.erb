@@ -57,14 +57,18 @@
           <% if user_signed_in? %> style="width: 590px"
           <% end %>   
         >
-
-          <% if flash[:alert] %>
-            <div class="notice"> <%= flash[:alert] %> </div>
-          <% end %>
           
-          <% if flash[:notice] %>
-            <div class="notice"> <%= flash[:notice] %> </div>
+          <!-- this part of code render all flashes in format according his mane and this name styling in application.scss -->
+          <% flash.each do |name, msg| -%>
+            <%= content_tag :div, msg, class: name %>
+          <% end -%>
+          
+
+          <% if session[:message_unauthorized] %>
+               <%= content_tag :div, session[:message_unauthorized], class: "message_unauthorized" %>
+               <% session[:message_unauthorized] = nil %>
           <% end %>
+
 
           <br />
 

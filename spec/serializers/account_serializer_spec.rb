@@ -7,7 +7,7 @@ RSpec.describe AccountSerializer do
     serialized_accounts = Array.new
     
     accounts.each do |account|
-      serialized_accounts << { id: account.id,
+      serialized_accounts << { public_uid: account.public_uid,
                                customer: account.customer,
                                workmen: account.workmen,
                                admin: account.admin,
@@ -20,7 +20,7 @@ RSpec.describe AccountSerializer do
   
   #return a array with one serialized account
   def serialize_one_account(account)
-    [{ id: account.id,
+    [{ public_uid: account.public_uid,
        customer: account.customer,
        workmen: account.workmen,
        admin: account.admin,

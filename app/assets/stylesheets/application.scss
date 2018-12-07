@@ -65,8 +65,18 @@ p
   width: auto;
 }
 
+//flash[:notice] styling
 .notice {
   color: #ADFF2F;
+}
+
+//flash[:alert] styling
+.alert {
+  color: red;
+}
+
+.message_unauthorized {
+  color: red;
 }
 
 /* NASTAVENIA ČASTÍ HEADER ===================================================*/

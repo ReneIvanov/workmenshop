@@ -2,12 +2,13 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   def set_user_keys
-    return [:id, :username, :email, :address, :telephone, :account, :works, :profile_picture]
+    return [:public_uid, :username, :email, :address, :telephone, :account, :works, :profile_picture]
   end
 
   def request_user_params(created_user)
     @user_params = serialize(created_user)
     @user_params.merge!(password: created_user.password)
+    @user_params.delete(:public_uid)
     @user_post_params = { user: @user_params } #Hash with format needed by UserController
   end
   
@@ -74,7 +75,7 @@ RSpec.describe UsersController, type: :controller do
       before(:each) {sign_in_admin}
 
       context " - HTML format" do
-        before(:each) { get :show, params: { id: @showed_user.id } }
+        before(:each) { get :show, params: { id: @showed_user.public_uid } }
 
         it_behaves_like "response status", 200
         it_behaves_like "render template", :show
@@ -87,7 +88,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {get :show, params: { id: @showed_user.id }, format: :json}
+        before(:each) {get :show, params: { id: @showed_user.public_uid }, format: :json}
 
         it_behaves_like "response status", 200
 
@@ -104,7 +105,7 @@ RSpec.describe UsersController, type: :controller do
 
     context " - without signed in user" do
       context " - HTML format" do
-        before(:each) { get :show, params: { id: @showed_user.id } }
+        before(:each) { get :show, params: { id: @showed_user.public_uid } }
 
         it_behaves_like "unauthorized examples HTML"  
   
@@ -114,7 +115,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {get :show, params: { id: @showed_user.id }, format: :json}
+        before(:each) {get :show, params: { id: @showed_user.public_uid }, format: :json}
 
         it_behaves_like "unauthorized examples JSON" 
 
@@ -160,7 +161,7 @@ RSpec.describe UsersController, type: :controller do
       before(:each) {sign_in_admin}
 
       context " - HTML format" do
-        before(:each) { get :edit, params: { id: @edited_user.id } }
+        before(:each) { get :edit, params: { id: @edited_user.public_uid } }
 
         it_behaves_like "response status", 200
         it_behaves_like "render template", :edit
@@ -173,7 +174,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {get :edit, params: { id: @edited_user.id }, format: :json}
+        before(:each) {get :edit, params: { id: @edited_user.public_uid }, format: :json}
 
         it_behaves_like "response status", 200
 
@@ -190,7 +191,7 @@ RSpec.describe UsersController, type: :controller do
 
     context " - without signed in user" do
       context " - HTML format" do
-        before(:each) { get :edit, params: { id: @edited_user.id } }
+        before(:each) { get :edit, params: { id: @edited_user.public_uid } }
 
         it_behaves_like "unauthorized examples HTML"  
   
@@ -200,7 +201,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {get :edit, params: { id: @edited_user.id }, format: :json}
+        before(:each) {get :edit, params: { id: @edited_user.public_uid }, format: :json}
 
         it_behaves_like "unauthorized examples JSON" 
 
@@ -227,12 +228,13 @@ RSpec.describe UsersController, type: :controller do
         it " - should returns a new created user." do
           @serialized_returned_user = serialize(assigns(:user))
           @serialized_created_user = serialize(@created_user)
-          @serialized_created_user[:id] = @serialized_returned_user[:id] #set id for created user like returned user have (to pass comparation)
+          @serialized_created_user[:public_uid] = @serialized_returned_user[:public_uid] #set id for created user like returned user have (to pass comparation)
+          
           expect(@serialized_returned_user).to eq(@serialized_created_user)
         end
   
         it " - created user should be saved into database" do
-          @created_user.id = assigns(:user).id
+          @created_user.public_uid = assigns(:user).public_uid
           @serialized_created_user = serialize(@created_user)
           @serialized_saved_user = serialize(User.find(assigns(:user).id))
           expect(@serialized_saved_user).to eq(@serialized_created_user)
@@ -253,7 +255,7 @@ RSpec.describe UsersController, type: :controller do
           response_body = parser(response.body)
           returned_user = response_body[:user].first
           serialized_created_user = serialize(@created_user)
-          serialized_created_user[:id] = returned_user[:id]
+          serialized_created_user[:public_uid] = returned_user[:public_uid]
   
           expect(response_body[:user].count).to eq(1)
           expect(response_body.keys).to eq([:user, :notice]) 
@@ -300,7 +302,7 @@ RSpec.describe UsersController, type: :controller do
   
           expect(response_body[:user].count).to eq(1)
           expect(response_body.keys).to eq([:user, :notice]) 
-          expect(returned_user). to eq(serialized_created_user)
+          expect(returned_user).to eq(serialized_created_user)
         end
       end
     end 
@@ -312,6 +314,7 @@ RSpec.describe UsersController, type: :controller do
       @loaded_user = User.find(@created_user.id) #load user from database
       @modified_user = build :user
       @modified_user.id = @loaded_user.id #this user is modified user with same id like user in database
+      @modified_user.public_uid = @loaded_user.public_uid #this user is modified user with same public_uid like user in database
     end
 
     context " - admin signed in" do
@@ -319,19 +322,20 @@ RSpec.describe UsersController, type: :controller do
 
       context " - modified user is updated in database" do
         context " - HTML format" do
-          before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
+          before(:each) { put :update, params: { id: @loaded_user.public_uid, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
     
           it_behaves_like "response status", 302
           it_behaves_like "notice", "User was successfully updated."
 
           it " - should redirect to :show" do
-            expect(response).to redirect_to("/users/#{@loaded_user.id}")
+            expect(response).to redirect_to("/users/#{@loaded_user.public_uid}")
           end
     
           it " - should returns a updated user." do
-            @serialized_returned_user = serialize(assigns(:user))
-            @serialized_modified_user = serialize(@modified_user)
-            expect(@serialized_returned_user).to eq(@serialized_modified_user)
+            serialized_returned_user = serialize(assigns(:user))
+            serialized_modified_user = serialize(@modified_user)
+            
+            expect(serialized_returned_user).to eq(serialized_modified_user)
           end
     
           it " - user should be updated in database" do
@@ -344,7 +348,7 @@ RSpec.describe UsersController, type: :controller do
         end
     
         context " - JSON format" do
-          before(:each) { put :update, format: :json, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
+          before(:each) { put :update, format: :json, params: { id: @loaded_user.public_uid, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
     
           it_behaves_like "response status", 200
 
@@ -356,7 +360,7 @@ RSpec.describe UsersController, type: :controller do
             response_body = parser(response.body)
             returned_user = response_body[:user].first
             serialized_modified_user = serialize(@modified_user)
-            serialized_modified_user[:id] = returned_user[:id]
+            serialized_modified_user[:public_uid] = returned_user[:public_uid]
     
             expect(response_body[:user].count).to eq(1)
             expect(response_body.keys).to eq([:user, :notice]) 
@@ -377,7 +381,7 @@ RSpec.describe UsersController, type: :controller do
         before(:each) {@modified_user.email = ""} #this is reason why user will not be saved into database
        
         context " - HTML format" do
-          before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
+          before(:each) { put :update, params: { id: @loaded_user.public_uid, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
     
           it_behaves_like "response status", 200
           it_behaves_like "render template", :edit
@@ -397,7 +401,7 @@ RSpec.describe UsersController, type: :controller do
         end
     
         context " - JSON format" do
-          before(:each) { put :update, format: :json, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
+          before(:each) { put :update, format: :json, params: { id: @loaded_user.public_uid, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
     
           it_behaves_like "response status", 422
 
@@ -428,7 +432,7 @@ RSpec.describe UsersController, type: :controller do
 
     context " - without signed in user" do
       context " - HTML format" do
-          before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
+          before(:each) { put :update, params: { id: @loaded_user.public_uid, user: request_user_params(@modified_user)[:user] } } #update need to have :id in :params
 
         it_behaves_like "unauthorized examples HTML"  
   
@@ -444,7 +448,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) { put :update, params: { id: @loaded_user.id, user: request_user_params(@modified_user)[:user] }, format: :json } #update need to have :id in :params
+        before(:each) { put :update, params: { id: @loaded_user.public_uid, user: request_user_params(@modified_user)[:user] }, format: :json } #update need to have :id in :params
         it_behaves_like "unauthorized examples JSON" 
 
         it "- shouldn't returns a user." do
@@ -473,7 +477,7 @@ RSpec.describe UsersController, type: :controller do
       before(:each) {sign_in_admin}
 
       context " - HTML format" do
-        before(:each) {delete :destroy, params: { id: @user.id }}
+        before(:each) {delete :destroy, params: { id: @user.public_uid }}
 
         it_behaves_like "response status", 302
         it_behaves_like "redirect to", :root
@@ -485,7 +489,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {delete :destroy, format: :json, params: { id: @user.id }}
+        before(:each) {delete :destroy, format: :json, params: { id: @user.public_uid }}
 
         it_behaves_like "response status", 204
 
@@ -502,7 +506,7 @@ RSpec.describe UsersController, type: :controller do
 
     context " - without signed in user" do
       context " - HTML format" do
-        before(:each) {delete :destroy, params: { id: @user.id }}
+        before(:each) {delete :destroy, params: { id: @user.public_uid }}
 
         it_behaves_like "unauthorized examples HTML"
 
@@ -512,7 +516,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {delete :destroy, format: :json, params: { id: @user.id }}
+        before(:each) {delete :destroy, format: :json, params: { id: @user.public_uid }}
 
         it_behaves_like "unauthorized examples JSON"
 
@@ -530,7 +534,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context " - HTML format" do
-      before(:each) { get :pictures_show, params: {id: @requested_user.id} }
+      before(:each) { get :pictures_show, params: {id: @requested_user.public_uid} }
       let(:serialized_returned_user) {serialize(assigns(:user))}
       let(:serialized_requested_user) {serialize(@requested_user)}
 
@@ -544,7 +548,7 @@ RSpec.describe UsersController, type: :controller do
      end
 
     context " - JSON format" do
-      before(:each) { get :pictures_show, format: :json, params: {id: @requested_user.id} }
+      before(:each) { get :pictures_show, format: :json, params: {id: @requested_user.public_uid} }
 
       let(:serialized_returned_user) {parser(response.body)[:user].first}
       let(:serialized_requested_user) {serialize(@requested_user)}
@@ -571,7 +575,7 @@ RSpec.describe UsersController, type: :controller do
       context " - profile picture updated" do
         context " - HTML format" do
           before(:each) do
-            put :pictures_update, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }
+            put :pictures_update, params: { id: @requested_user.public_uid, user: { profile_picture: profile_picture } }
           end
           
           it_behaves_like "response status", 200
@@ -592,7 +596,7 @@ RSpec.describe UsersController, type: :controller do
 
         context " - JSON format" do
           before(:each) do
-            put :pictures_update, format: :json, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }          
+            put :pictures_update, format: :json, params: { id: @requested_user.public_uid, user: { profile_picture: profile_picture } }          
           end
           let(:serialized_returned_user) {parser(response.body)[:user].first}
           let(:serialized_requested_user) {serialize(@requested_user)}
@@ -617,7 +621,7 @@ RSpec.describe UsersController, type: :controller do
       context " - profile picture not updated" do
         context " - HTML format" do
           before(:each) do
-            put :pictures_update, params: { id: @requested_user.id}
+            put :pictures_update, params: { id: @requested_user.public_uid}
           end
           
           it_behaves_like "response status", 200
@@ -635,7 +639,7 @@ RSpec.describe UsersController, type: :controller do
 
         context " - JSON format" do
           before(:each) do
-            put :pictures_update, format: :json, params: { id: @requested_user.id }
+            put :pictures_update, format: :json, params: { id: @requested_user.public_uid }
           end
           let(:returned_user) { parser(response.body)[:user].first}
           
@@ -660,7 +664,7 @@ RSpec.describe UsersController, type: :controller do
     context " - user not signed in" do
       context " - HTML format" do
         before(:each) do
-          put :pictures_update, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }
+          put :pictures_update, params: { id: @requested_user.public_uid, user: { profile_picture: profile_picture } }
         end
         
         it_behaves_like "unauthorized examples HTML"
@@ -672,7 +676,7 @@ RSpec.describe UsersController, type: :controller do
 
       context " - JSON format" do
         before(:each) do
-          put :pictures_update, format: :json, params: { id: @requested_user.id, user: { profile_picture: profile_picture } }
+          put :pictures_update, format: :json, params: { id: @requested_user.public_uid, user: { profile_picture: profile_picture } }
         end
         let(:returned_user) { parser(response.body)[:user]}
         

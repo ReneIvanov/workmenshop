@@ -7,7 +7,7 @@ RSpec.describe UserSerializer do
     serialized_users = Array.new
     
     users.each do |user|
-      serialized_users << { id: user.id,
+      serialized_users << { public_uid: user.public_uid,
                             username: user.username,
                             email: user.email,
                             address: user.address,
@@ -23,7 +23,7 @@ RSpec.describe UserSerializer do
   
   #return a array with one serialized user
   def serialize_one_user(user)
-    [{ id: user.id,
+    [{ public_uid: user.public_uid,
       username: user.username,
       email: user.email,
       address: user.address,

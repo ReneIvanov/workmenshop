@@ -13,7 +13,7 @@ class AccountSerializer
 
   def account_as_json(account)
     account_hash = {}
-    account_hash.merge!(id: account.id)
+    account_hash.merge!(public_uid: account.public_uid)
     account_hash.merge!(customer: account.customer)
     account_hash.merge!(workmen: account.workmen)
     account_hash.merge!(admin: account.admin)

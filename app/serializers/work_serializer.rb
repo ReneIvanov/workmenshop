@@ -13,7 +13,7 @@ class WorkSerializer
 
   def work_as_json(work)
     work_hash = {}
-    work_hash.merge!(id: work.id)
+    work_hash.merge!(public_uid: work.public_uid)
     work_hash.merge!(title: work.title)
     return work_hash
   end

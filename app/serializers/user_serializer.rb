@@ -13,7 +13,7 @@ class UserSerializer
 
   def user_as_json(user)
     user_hash = {} 
-    user_hash.merge!(id: user.id)
+    user_hash.merge!(public_uid: user.public_uid)
     user_hash.merge!(username: user.username)
     user_hash.merge!(email: user.email)
     user_hash.merge!(address: user.address)

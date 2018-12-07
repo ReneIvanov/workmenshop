@@ -4,12 +4,12 @@
   <tbody>
     <% @works.each do |work| %>
       <tr>
-        <% if @is_admin %> <td><%= work.id %> </td> <% end %>
+        <% if @is_admin %> <td><%= work.public_uid %> </td> <% end %>
                            <td><%= work.title %></td>
                            <td><%= link_to 'Show', work %></td>
         <% if @is_admin %> <td><%= link_to 'Edit', edit_work_path(work) %></td> <% end %>
         <% if @is_admin %> <td><%= link_to 'Destroy', work, method: :delete, data: { confirm: 'Are you sure?' } %></td> <% end %>
-                           <td><%= link_to 'Show work users', work_users_path(work.id) %></td>
+                           <td><%= link_to 'Show work users', work_users_path(work) %></td>
       </tr>
     <% end %>
   </tbody>
