@@ -48,7 +48,7 @@ class WorksController < ApplicationController
   # GET /works/:id/edit
   # edition of separate work
   def edit
-    if user_signed_in? && policy(Work.find_param(params[:public_uid])).can_be_edited_by(current_user)
+    if user_signed_in? && policy(Work.find_param(params[:id])).can_be_edited_by(current_user)
       set_work
     
       respond_to do |format|
@@ -198,12 +198,12 @@ class WorksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_work
-    @work = Work.find_param(params[:public_uid])
+    @work = Work.find_param(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def work_params
-    params.require(:work).permit(:public_uid, :title, :existed_works_id)
+    params.require(:work).permit(:title, :existed_works_id)
   end
 
   def show_like_json(works)

@@ -25,6 +25,6 @@ class Work < ApplicationRecord
 
   #return all users of work
   def work_users
-    Rails.cache.fetch("#{cache_key}/all_users") { puts 'Creating a cache'; self.users }   
+    Rails.cache.fetch("#{cache_key}/all_users") { self.users }   
   end
 end

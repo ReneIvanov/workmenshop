@@ -35,7 +35,7 @@ RSpec.describe WorksController, type: :controller do
     before(:each) {@requested_work = create :work}
 
     context " - HTML format" do
-      before(:each) { get :show, params: { id: @requested_work.id } }
+      before(:each) { get :show, params: { id: @requested_work.public_uid } }
 
       it_behaves_like "response status", 200
       it_behaves_like "render template", :show
@@ -49,7 +49,7 @@ RSpec.describe WorksController, type: :controller do
     end
 
     context " - JSON format" do
-      before(:each) {get :show, params: { id: @requested_work.id }, format: :json}
+      before(:each) {get :show, params: { id: @requested_work.public_uid }, format: :json}
 
       it_behaves_like "response status", 200
 
@@ -70,7 +70,7 @@ RSpec.describe WorksController, type: :controller do
       it_behaves_like "render template", :new
 
       it "- should returns a new work." do
-        expect(assigns(:work).id).to eq(nil)
+        expect(assigns(:work).public_uid).to eq(nil)
       end
     end
 
@@ -103,7 +103,7 @@ RSpec.describe WorksController, type: :controller do
         it_behaves_like "render template", :registration_new
   
         it "- should returns a new work." do
-          expect(assigns(:work).id).to eq(nil)
+          expect(assigns(:work).public_uid).to eq(nil)
         end
 
         it "- should returns all works." do
@@ -161,7 +161,7 @@ RSpec.describe WorksController, type: :controller do
       before(:each) {sign_in_admin}
  
       context " - HTML format" do
-        before(:each) { get :edit, params: { id: @requested_work.id } }
+        before(:each) { get :edit, params: { id: @requested_work.public_uid } }
  
         it_behaves_like "response status", 200
         it_behaves_like "render template", :edit
@@ -175,7 +175,7 @@ RSpec.describe WorksController, type: :controller do
       end
  
       context " - JSON format" do
-        before(:each) {get :edit, params: { id: @requested_work.id }, format: :json}
+        before(:each) {get :edit, params: { id: @requested_work.public_uid }, format: :json}
  
         it_behaves_like "response status", 200
  
@@ -190,7 +190,7 @@ RSpec.describe WorksController, type: :controller do
  
     context " - without signed in user" do
       context " - HTML format" do
-        before(:each) { get :edit, params: { id: @requested_work.id } }
+        before(:each) { get :edit, params: { id: @requested_work.public_uid } }
  
         it_behaves_like "unauthorized examples HTML"  
   
@@ -200,7 +200,7 @@ RSpec.describe WorksController, type: :controller do
       end
  
       context " - JSON format" do
-        before(:each) {get :edit, params: { id: @requested_work.id }, format: :json}
+        before(:each) {get :edit, params: { id: @requested_work.public_uid }, format: :json}
  
         it_behaves_like "unauthorized examples JSON" 
  
@@ -312,14 +312,14 @@ RSpec.describe WorksController, type: :controller do
           it " - should returns a new created work." do
             serialized_returned_work = serialize(assigns(:work))
             serialized_work = serialize(@work)
-            serialized_work[:id] = serialized_returned_work[:id]
+            serialized_work[:public_uid] = serialized_returned_work[:public_uid]
 
             expect(serialized_returned_work).to eq(serialized_work)
           end
 
           it " - created work should be saved into database" do
             serialized_work = serialize(@work)
-            serialized_work[:id] = assigns(:work).id
+            serialized_work[:public_uid] = assigns(:work).public_uid
             serialized_saved_work = serialize(Work.find(assigns(:work).id))
 
             expect(serialized_saved_work).to eq(serialized_work)
@@ -340,6 +340,7 @@ RSpec.describe WorksController, type: :controller do
             serialized_returned_work = parser(response.body)[:work].first
             serialized_work = serialize(@work)
             serialized_work[:id] = serialized_returned_work[:id]
+            serialized_work[:public_uid] = serialized_returned_work[:public_uid]
     
             expect(serialized_returned_work <= serialized_work). to be true
           end
@@ -459,14 +460,14 @@ RSpec.describe WorksController, type: :controller do
           it " - should returns a new created work." do
             serialized_returned_work = serialize(assigns(:work))
             serialized_work = serialize(@work)
-            serialized_work[:id] = serialized_returned_work[:id]
+            serialized_work[:public_uid] = serialized_returned_work[:public_uid]
 
             expect(serialized_returned_work).to eq(serialized_work)
           end
 
           it " - created work should be saved into database" do
             serialized_work = serialize(@work)
-            serialized_work[:id] = assigns(:work).id
+            serialized_work[:public_uid] = assigns(:work).public_uid
             serialized_saved_work = serialize(Work.find(assigns(:work).id))
 
             expect(serialized_saved_work).to eq(serialized_work)
@@ -487,6 +488,7 @@ RSpec.describe WorksController, type: :controller do
             serialized_returned_work = parser(response.body)[:work].first
             serialized_work = serialize(@work)
             serialized_work[:id] = serialized_returned_work[:id]
+            serialized_work[:public_uid] = serialized_returned_work[:public_uid]
     
             expect(serialized_returned_work <= serialized_work). to be true
           end
@@ -551,6 +553,7 @@ RSpec.describe WorksController, type: :controller do
       @loaded_work = Work.find(@created_work.id) #load work from database
       @modified_work = build :work
       @modified_work.id = @loaded_work.id #this work is modified work with same id like work in database
+      @modified_work.public_uid = @loaded_work.public_uid #this work is modified work with same public_uid like work in database
     end
 
     context " - admin signed in" do
@@ -558,13 +561,13 @@ RSpec.describe WorksController, type: :controller do
 
       context " - modified work is updated in database" do
         context " - HTML format" do
-          before(:each) { put :update, params: { id: @loaded_work.id, work: serialize(@modified_work) } } #update need to have :id in :params
+          before(:each) { put :update, params: { id: @loaded_work.public_uid, work: serialize(@modified_work) } } #update need to have :id in :params
     
           it_behaves_like "response status", 302
           it_behaves_like "notice", "Work was successfully updated."
 
           it " - should redirect to :show" do
-            expect(response).to redirect_to("/works/#{@loaded_work.id}")
+            expect(response).to redirect_to("/works/#{@loaded_work.public_uid}")
           end
     
           it " - should returns a updated work." do
@@ -583,7 +586,7 @@ RSpec.describe WorksController, type: :controller do
         end
     
         context " - JSON format" do
-          before(:each) { put :update, format: :json, params: { id: @loaded_work.id, work: serialize(@modified_work) } } #update need to have :id in :params
+          before(:each) { put :update, format: :json, params: { id: @loaded_work.public_uid, work: serialize(@modified_work) } } #update need to have :id in :params
     
           it_behaves_like "response status", 200
 
@@ -595,7 +598,6 @@ RSpec.describe WorksController, type: :controller do
             response_body = parser(response.body)
             returned_work = response_body[:work].first
             serialized_modified_work = serialize(@modified_work)
-            serialized_modified_work[:id] = returned_work[:id]
     
             expect(response_body[:work].count).to eq(1)
             expect(response_body.keys).to eq([:work, :notice]) 
@@ -616,7 +618,7 @@ RSpec.describe WorksController, type: :controller do
         before(:each) {@modified_work.title = ""} #this is reason why work will not be saved into database
        
         context " - HTML format" do
-          before(:each) { put :update, params: { id: @loaded_work.id, work: serialize(@modified_work) } } #update need to have :id in :params
+          before(:each) { put :update, params: { id: @loaded_work.public_uid, work: serialize(@modified_work) } } #update need to have :id in :params
     
           it_behaves_like "response status", 200
           it_behaves_like "render template", :edit
@@ -636,7 +638,7 @@ RSpec.describe WorksController, type: :controller do
         end
     
         context " - JSON format" do
-          before(:each) { put :update, format: :json, params: { id: @loaded_work.id, work: serialize(@modified_work) } } #update need to have :id in :params
+          before(:each) { put :update, format: :json, params: { id: @loaded_work.public_uid, work: serialize(@modified_work) } } #update need to have :id in :params
     
           it_behaves_like "response status", 422
 
@@ -667,7 +669,7 @@ RSpec.describe WorksController, type: :controller do
 
     context " - without signed in admin" do
       context " - HTML format" do
-          before(:each) { put :update, params: { id: @loaded_work.id, work: serialize(@modified_work) } } #update need to have :id in :params
+          before(:each) { put :update, params: { id: @loaded_work.public_uid, work: serialize(@modified_work) } } #update need to have :id in :params
 
         it_behaves_like "unauthorized examples HTML"  
   
@@ -683,7 +685,7 @@ RSpec.describe WorksController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) { put :update, params: { id: @loaded_work.id, work: serialize(@modified_work) }, format: :json } #update need to have :id in :params
+        before(:each) { put :update, params: { id: @loaded_work.public_uid, work: serialize(@modified_work) }, format: :json } #update need to have :id in :params
         it_behaves_like "unauthorized examples JSON" 
 
         it "- shouldn't returns a work." do
@@ -745,14 +747,14 @@ RSpec.describe WorksController, type: :controller do
           it " - should returns a new created work." do
             serialized_returned_work = serialize(assigns(:work))
             serialized_work = serialize(@work)
-            serialized_work[:id] = serialized_returned_work[:id]
+            serialized_work[:public_uid] = serialized_returned_work[:public_uid]
 
             expect(serialized_returned_work).to eq(serialized_work)
           end
 
           it " - created work should be saved into database" do
             serialized_work = serialize(@work)
-            serialized_work[:id] = assigns(:work).id
+            serialized_work[:public_uid] = assigns(:work).public_uid
             serialized_saved_work = serialize(Work.find(assigns(:work).id))
 
             expect(serialized_saved_work).to eq(serialized_work)
@@ -773,6 +775,7 @@ RSpec.describe WorksController, type: :controller do
             serialized_returned_work = parser(response.body)[:work].first
             serialized_work = serialize(@work)
             serialized_work[:id] = serialized_returned_work[:id]
+            serialized_work[:public_uid] = serialized_returned_work[:public_uid]
     
             expect(serialized_returned_work <= serialized_work). to be true
           end
@@ -838,7 +841,7 @@ RSpec.describe WorksController, type: :controller do
       before(:each) {sign_in_admin}
 
       context " - HTML format" do
-        before(:each) {delete :destroy, params: { id: @work.id }}
+        before(:each) {delete :destroy, params: { id: @work.public_uid }}
 
         it_behaves_like "response status", 302
         it_behaves_like "redirect to", 'work#index'
@@ -850,7 +853,7 @@ RSpec.describe WorksController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {delete :destroy, format: :json, params: { id: @work.id }}
+        before(:each) {delete :destroy, format: :json, params: { id: @work.public_uid }}
 
         it_behaves_like "response status", 204
 
@@ -867,7 +870,7 @@ RSpec.describe WorksController, type: :controller do
 
     context " - without signed in user" do
       context " - HTML format" do
-        before(:each) {delete :destroy, params: { id: @work.id }}
+        before(:each) {delete :destroy, params: { id: @work.public_uid }}
 
         it_behaves_like "unauthorized examples HTML"
 
@@ -877,7 +880,7 @@ RSpec.describe WorksController, type: :controller do
       end
 
       context " - JSON format" do
-        before(:each) {delete :destroy, format: :json, params: { id: @work.id }}
+        before(:each) {delete :destroy, format: :json, params: { id: @work.public_uid }}
 
         it_behaves_like "unauthorized examples JSON"
 

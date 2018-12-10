@@ -16,7 +16,7 @@ class AccountsController < ApplicationController
   # GET /accounts/1
   # GET /accounts/1.json
   def show
-    if user_signed_in? && policy(Account.find_param(params[:public_uid])).can_be_seen_by(current_user)
+    if user_signed_in? && policy(Account.find_param(params[:id])).can_be_seen_by(current_user)
       @account = set_account
       respond_to do |format|
         format.html { render :show }
@@ -38,7 +38,7 @@ class AccountsController < ApplicationController
 
   # GET /accounts/1/edit
   def edit
-    if user_signed_in? && policy(Account.find_param(params[:public_uid])).can_be_seen_by(current_user)
+    if user_signed_in? && policy(Account.find_param(params[:id])).can_be_seen_by(current_user)
       @account = set_account
       respond_to do |format|
         format.html { render :edit }
@@ -79,7 +79,7 @@ class AccountsController < ApplicationController
   # PATCH/PUT /accounts/1
   # PATCH/PUT /accounts/1.json
   def update
-    if user_signed_in? && policy(Account.find_param(params[:public_uid])).can_be_seen_by(current_user)
+    if user_signed_in? && policy(Account.find_param(params[:id])).can_be_seen_by(current_user)
       @account = set_account    
       respond_to do |format|
         if @account.update(account_params)
@@ -98,7 +98,7 @@ class AccountsController < ApplicationController
   # DELETE /accounts/1
   # DELETE /accounts/1.json
   def destroy
-    if user_signed_in? && policy(Account.find_param(params[:public_uid])).can_be_seen_by(current_user)
+    if user_signed_in? && policy(Account.find_param(params[:id])).can_be_seen_by(current_user)
       @account = set_account
       @account.destroy
       respond_to do |format|
@@ -114,12 +114,12 @@ class AccountsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_account
-    @account = Account.find_param(params[:public_uid])
+    @account = Account.find_param(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def account_params
-    params.require(:account).permit(:public_uid, :workmen, :customer, :admin)
+    params.require(:account).permit(:workmen, :customer, :admin)
   end
 
   def show_like_json(accounts)
