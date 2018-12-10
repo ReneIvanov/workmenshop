@@ -52,6 +52,10 @@ p
 {
   border-collapse: separate;
   border-spacing: 15px;
+  td
+  {
+    vertical-align: top;
+  }
 }
 
 .devise_error_messages {
@@ -84,14 +88,13 @@ p
 /*nastavenie body hlavičky*/
 .title
 {
-  color:azure;
+  
   font-size: 40px;
   text-shadow: -2px -2px 2px black;
 }
 
 .logg
 {
-  color:azure;
   font-size: 17px;
   text-shadow: -1px -1px 1px black;
 }
@@ -219,7 +222,6 @@ p
     font-size: 22px;
     font-weight: bold;
     text-decoration: underline;
-    text-shadow: -3px -3px 3px whitesmoke;
 }
 
 /*formátovanie tabuľky s otváracími hodinami*/

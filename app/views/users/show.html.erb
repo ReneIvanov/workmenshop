@@ -1,56 +1,54 @@
-<h1> app/views/users/show.html.erb </h1>
+<h3> <%= @user.username %> </h3>
 
-<% if false %>
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
+<table class="elements_list">
+  <tr> <td>Public uid: </td> <td><%= @user.public_uid %></td> </tr>
 
-<p>
-  <strong>Address:</strong>
-  <%= @user.address %>
-</p>
+  <tr> <td>Username: </td> <td><%= @user.username %></td> </tr>
 
-<p>
-  <strong>Workmen:</strong>
-  <%= @user.workmen %>
-</p>
+  <tr> <td>Email: </td> <td><%= @user.email %></td> </tr>
 
-<p>
-  <strong>Customer:</strong>
-  <%= @user.customer %>
-</p>
+  <tr> <td>Address: </td> <td><%= @user.address %></td> </tr>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+  <tr> <td>Telephone: </td> <td><%= @user.telephone %></td> </tr>
 
-<p>
-  <strong>Telephone:</strong>
-  <%= @user.telephone %>
-</p>
+  <tr>
+    <td>Profile picture: </td>
+    <td>
+      <% if @user.profile_picture.attached? %>
+        <%= image_tag @user.profile_picture %>
+      <% else %>
+        No profile picture.
+      <% end %>  
+    </td>
+  </tr>
 
-<p>
-  <strong>Profile picture:</strong>
-  <% begin %>
-    <%= image_tag @user.profile_picture %>
-  <% rescue %>
-    No picture.
-  <% end %>
-</p>
+  <tr>
+    <td>Account: </td>
+    <td>
+      <% if @user.account.customer %>
+           customer <br>
+      <% end %>
+      
+      <% if @user.account.workmen %>
+           workmen <br>
+      <% end %>
 
-<p>
-  <Strong> Photos: </Strong>
-  <% @user.photos.each do |photo| %>
-       <%= image_tag photo %> <br />       
-     <% end %>
-</p>
+      <% if @user.account.admin %>
+           admin
+      <% end %>
+    </td>
+  </tr>
 
-<br /><br />
+  <tr>
+    <td> Works: </td>
+    <td>
+      <% @user.works.each do |work| %>
+        <%= work.title %> <br>
+      <% end %>
+    </td>
+  </tr>
 
-<%= link_to 'Edit', edit_user_path(@user) %>
-
+</table>
 
 
-<% end %>
+

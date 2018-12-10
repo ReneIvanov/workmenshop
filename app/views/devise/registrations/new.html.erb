@@ -8,27 +8,27 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :username %>
+    <%= f.label :username %> <br>
     <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
   </div> <br />
 
   <div class="field">
-    <%= f.label :email %>
+    <%= f.label :email %> <br>
     <%= f.email_field :email, autocomplete: "email" %>
   </div> <br />
 
   <div class="field">
-    <%= f.label :address %>
+    <%= f.label :address %> <br>
     <%= f.text_field :address, autocomplete: "address" %>
   </div> <br />
 
   <div class="field">
-    <%= f.label :telephone %>
+    <%= f.label :telephone %> <br>
     <%= f.text_field :telephone, autocomplete: "telephone" %>
   </div> <br />
 
   <div class="field">
-    <%= f.label :password %>
+    <%= f.label :password %> <br>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
@@ -36,7 +36,7 @@
   </div> <br />
 
   <div class="field">
-    <%= f.label :password_confirmation %>
+    <%= f.label :password_confirmation %> <br>
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div> <br />
 
