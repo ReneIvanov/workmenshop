@@ -41,10 +41,10 @@ module Workmenshop
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    config.assets.initialize_on_precompile = false  #1
+    config.assets.initialize_on_precompile = true  #1
 
     config.active_job.queue_adapter = :sidekiq
 
-    config.serve_static_assets = false  #2
+    config.serve_static_assets = true  #2
   end
 end
