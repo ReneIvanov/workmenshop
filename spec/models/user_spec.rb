@@ -100,6 +100,7 @@ RSpec.describe User, type: :model do
 
       works_array = create_list(:work, 5)
       user.works << works_array
+      
       expect(user.user_works).to eq(works_array)
     end
   end

@@ -30,6 +30,9 @@ class User < ApplicationRecord
 
   #return all works of user
   def user_works
-    Rails.cache.fetch("#{cache_key}/all_works") { self.works }   
+    work_ids = Rails.cache.fetch("#{cache_key}/all_work_ids") { self.works.pluck(:id) }
+    Work.where(id: work_ids)
+
+    #Rails.cache.fetch("#{cache_key}/all_work_idssssss") { self.works }
   end
 end
