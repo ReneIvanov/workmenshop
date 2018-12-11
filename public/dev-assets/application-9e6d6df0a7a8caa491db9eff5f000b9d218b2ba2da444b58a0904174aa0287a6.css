@@ -1,0 +1,409 @@
+@charset "UTF-8";
+/*zarovnanie stránky na stred obrazovky*/
+/* line 4, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#main, #header, #top_menubar, #page_content, #footer {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*nastavi všetky vnútorné a vonkajšie okraje na zaciatku na nulu*/
+/* line 11, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* body - setting of fonts, colors, backgrounds, ...*/
+/* line 18, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+body {
+  font: normal 80% Arial, Helvetica, sans-serif;
+  background: transparent url(background.jpg) repeat;
+  background-size: auto;
+  color: white;
+  font-size: 17px;
+}
+
+/*set of links*/
+/* line 28, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+a:link {
+  text-decoration: none;
+  color: white;
+  font-style: oblique;
+  font-size: 14px;
+}
+
+/* line 36, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+a:visited {
+  color: white;
+}
+
+/* mouse over link */
+/* line 42, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+a:hover {
+  text-decoration: underline;
+}
+
+/* line 47, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+p {
+  padding-top: 12px;
+}
+
+/* line 52, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.elements_list {
+  border-collapse: separate;
+  border-spacing: 15px;
+  background-color: red;
+}
+/* line 57, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.elements_list td {
+  vertical-align: top;
+}
+
+/* line 63, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.devise_error_messages {
+  color: #000 !important;
+  border: 2px solid red;
+  padding: 1em;
+  margin-bottom: 2em;
+  background-color: yellow;
+  font: bold smaller sans-serif;
+  height: auto;
+  width: auto;
+}
+
+/* line 75, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.notice {
+  color: #ADFF2F;
+}
+
+/* line 80, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.alert {
+  color: red;
+}
+
+/* line 84, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.message_unauthorized {
+  color: red;
+}
+
+/* NASTAVENIA ČASTÍ HEADER ===================================================*/
+/*nastavenie body hlavičky*/
+/* line 91, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.title {
+  font-size: 40px;
+  text-shadow: -2px -2px 2px black;
+}
+
+/* line 98, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.logg {
+  font-size: 17px;
+  text-shadow: -1px -1px 1px black;
+}
+
+/*nastavenie jednotlivých divov v hlavičke*/
+/* line 105, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#header_0 {
+  width: auto;
+  overflow: hidden;
+  float: left;
+  height: 90px;
+  border-style: none;
+  padding-top: 0px;
+  padding-left: 0px;
+  background: transparent;
+  background-color: transparent;
+}
+
+/* line 118, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#header_1 {
+  width: auto;
+  overflow: hidden;
+  float: left;
+  height: 90px;
+  border-style: none;
+  padding-top: 0px;
+  padding-left: 0px;
+  background: transparent;
+  background-color: transparent;
+}
+
+/* line 131, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#header_2 {
+  text-align: right;
+  width: auto;
+  float: left;
+  height: 90px;
+  overflow: hidden;
+  border-style: none;
+  background: transparent;
+}
+
+/* line 142, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#header_3 {
+  width: auto;
+  float: right;
+  height: 90px;
+  overflow: hidden;
+  border-style: none;
+  background: transparent;
+  vertical-align: text-bottom;
+  padding: 40px 0;
+}
+
+/* line 154, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#header_3 a {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* NASTAVENIA ČASTÍ TOP_MENUBAR ==================================================*/
+/*nastavenie zoznamu #top_menubar*/
+/* line 163, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#top_menubar {
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+  font-style: normal;
+  font-size: 100%;
+}
+
+/*nastavenie odrážok zoznamu #polozky_top_menubar*/
+/* line 173, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#top_menubar_item li {
+  display: inline;
+  /* menu sa zobrazí do 1 riadku */
+  float: left;
+  text-align: center;
+  font: bold 120% Arial, Helvetica, sans-serif;
+  margin: 5px 15px 5px 15px;
+  padding: 6px 20px 6px 20px;
+  background: transparent;
+  text-shadow: 0px -1px 0px #000;
+  /*tiene textu*/
+  border-radius: 7px 7px 7px 7px;
+  /*oblé rohy*/
+  text-decoration: none;
+  font-size: 15px;
+}
+
+/* mouse over link */
+/* NASTAVENIA ČASTÍ LEFT_SIDEBAR =============================================*/
+/* line 196, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#left_sidebar_item {
+  float: left;
+  text-align: left;
+  font: bold 120% Arial, Helvetica, sans-serif;
+  margin: 5px 15px 5px 15px;
+  padding: 6px 20px 6px 20px;
+  background: transparent;
+  text-shadow: 0px -1px 0px #000;
+  /*tiene textu*/
+  border-radius: 7px 7px 7px 7px;
+  /*oblé rohy*/
+  text-decoration: none;
+  font-size: 15px;
+}
+
+/* line 210, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#left_sidebar_item a {
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+}
+
+/* NASTAVENIA ČASTÍ MAINBAR  =================================================*/
+/* nadpisy jednotlivých mainbarov */
+/* line 222, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.nadpis_mainbar {
+  font-size: 22px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/*formátovanie tabuľky s otváracími hodinami*/
+/* line 230, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#tabulka_otvaracie_hodiny {
+  margin: 0px;
+  padding: 5px;
+  border-style: solid;
+  border-width: 2px;
+  font-size: 19px;
+}
+
+/*formátovanie každej bunky tabuľky s otváracími hodinami*/
+/* line 240, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#tabulka_otvaracie_hodiny td {
+  width: 230px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 10px;
+  text-align: center;
+}
+
+/*div obsahujúci obrázok domu*/
+/* line 250, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#obrazok_dom {
+  float: right;
+  padding-left: 15px;
+}
+
+/*div , ktorého obsah sa vycentruje na stred*/
+/* line 257, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.obrazok_center {
+  text-align: center;
+}
+
+/*div , ktorého obsah sa vycentruje v pravo*/
+/* line 263, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.obrazok_pravo {
+  text-align: center;
+  float: right;
+}
+
+/*div celej galerie*/
+/* line 270, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#cela_galeria {
+  width: auto;
+  height: auto;
+  text-align: center;
+  float: top;
+}
+
+/*div malych obrazkov vo foto galerii*/
+/* line 279, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.obrazok_galeria {
+  width: 150px;
+  height: 150px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
+  border: none;
+}
+
+/*div malych obrazkov vo foto galerii*/
+/* line 290, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.obrazok_galeria_2 {
+  width: 150px;
+  height: 113px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
+  border: none;
+}
+
+/*div malych obrazkov kosov*/
+/* line 301, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.obrazok_kose {
+  width: 185px;
+  height: 134px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
+  border: none;
+}
+
+/*div malych obrazkov kosov*/
+/* line 312, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.obrazok_kose_2 {
+  width: 133px;
+  height: 182px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
+  border: none;
+}
+
+/*nastavenie triedy "odkaz"*/
+/* line 323, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+.odkaz {
+  color: yellow;
+}
+
+/* NASTAVENIA JEDNOTLIVÝCH DIVov =============================================*/
+/* line 330, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#main {
+  background: transparent;
+  border-style: none;
+}
+
+/* line 336, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#header {
+  height: 90px;
+  width: 800px;
+  overflow: hidden;
+}
+
+/* line 343, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#top_menubar {
+  width: 790px;
+  height: 40px;
+  background: #333366;
+  border-radius: 7px 7px 0px 0px;
+  /*oblé rohy*/
+  padding-left: 10px;
+  overflow: hidden;
+}
+
+/* line 353, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#page_content {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  /*https://www.yudiz.com/3-easiest-ways-to-make-equal-height-blocks-using-css/*/
+  width: 800px;
+  overflow: hidden;
+  height: auto;
+  background: transparent;
+  border-radius: 0px 0px 7px 7px;
+  /*oblé rohy*/
+}
+
+/* line 363, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#left_sidebar {
+  float: left;
+  width: 150px;
+  height: auto;
+  overflow: hidden;
+  background: url(transparent.png) repeat;
+  padding-top: 50px;
+}
+
+/*
+#right_sidebar
+{ 
+  float: right;
+  width: 0px;
+  height: auto;
+  overflow: hidden;
+  background: transparent;
+}
+*/
+/* line 383, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#mainbar {
+  width: 740px;
+  height: auto;
+  float: left;
+  overflow: hidden;
+  padding: 30px;
+  background: url(transparent.png) repeat;
+}
+
+/* line 394, /home/ezo/projects/workmenshop/app/assets/stylesheets/application.scss */
+#footer {
+  width: 800px;
+  height: 17px;
+  overflow: hidden;
+  margin-top: 18px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+  border-radius: 4px 4px 4px 4px;
+  /*oblé rohy*/
+  background: transparent url(transparent.png) repeat;
+  text-align: center;
+}
