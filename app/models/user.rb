@@ -4,9 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
-
+  
   has_one :account, dependent: :delete
-  has_and_belongs_to_many :works, dependent: :delete, touch: true
+  has_many :users_works, dependent: :delete_all
+  has_many :works, through: :users_works
 
   has_one_attached :profile_picture, dependent: true  #connection with ActiveStorage - now is possible to use user.profile_picture
   
@@ -25,14 +26,14 @@ class User < ApplicationRecord
 
   #update table users_works for current_user
   def update_existed_works(existed_works_id) 
-    self.work_ids = existed_works_id
+    #self.work_ids = existed_works_id
+    self.works = Work.where(id: existed_works_id)
+    self.touch #update user's attribute "updated_at" (because cashing)
   end
 
   #return all works of user
   def user_works
-    work_ids = Rails.cache.fetch("#{cache_key}/all_work_ids") { self.works.pluck(:id) }
+    work_ids = Rails.cache.fetch("#{cache_key_with_version}/all_work_ids") { self.works.pluck(:id) } #here is used "cache_key_with_version" method, so the resulting cache_key will be something like "users/1/all_work_ids" but "cache_key_with_version" generates a string based on the model's `id` and `updated_at` attributes. This is a common convention and has the benefit of invalidating the cache whenever the product is updated.
     Work.where(id: work_ids)
-
-    #Rails.cache.fetch("#{cache_key}/all_work_idssssss") { self.works }
   end
 end

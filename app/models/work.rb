@@ -1,6 +1,7 @@
 class Work < ApplicationRecord
-  has_and_belongs_to_many :users, dependent: :delete, touch: true
-
+  has_many :users_works, dependent: :delete_all
+  has_many :users, through: :users_works
+  
   validates :title, presence: true, uniqueness: true
 
   generate_public_uid generator: PublicUid::Generators::NumberSecureRandom.new(1000000..9999999) #from public_uid gem
@@ -25,6 +26,7 @@ class Work < ApplicationRecord
 
   #return all users of work
   def work_users
-    Rails.cache.fetch("#{cache_key}/all_users") { self.users }   
+    user_ids = Rails.cache.fetch("#{cache_key_with_version}/all_user_ids") { self.users.pluck(:id) }
+    User.where(id: user_ids)   
   end
 end

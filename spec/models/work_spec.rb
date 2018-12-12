@@ -71,6 +71,7 @@ RSpec.describe Work, type: :model do
 
       users_array = create_list(:user, 5)
       work.users << users_array
+
       expect(work.work_users).to eq(users_array)
     end
   end
