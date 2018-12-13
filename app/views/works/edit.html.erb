@@ -3,7 +3,7 @@
 
 <%= form_with(model: @work, local: true, url: work_path) do |form| %>
   <% if @work.errors.any? %>
-    <div id="error_explanation">
+    <div class="error_explanation">
       <h2><%= pluralize(@work.errors.count, "error") %> prohibited this work from being saved:</h2>
 
       <ul>
@@ -15,14 +15,11 @@
   <% end %>
 
   <div class="field">
-    If you haven't found your service, please create new one:<br />
+    Please change the work title:<br />
     <%= form.text_field :title %>
-  </div>
+  </div> <br>
 
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
-
-<%= link_to 'Show', @work %> |
-<%= link_to 'Back', works_path %>

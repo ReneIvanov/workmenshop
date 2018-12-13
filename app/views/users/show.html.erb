@@ -23,13 +23,20 @@
   </tr>
 
   <tr>
-    <td>Account: </td>
+    <td>
+      Account: <br>
+      <% if @user.account %>
+        <%= link_to "(edit account)", edit_account_path(@user.account) %>
+      <% else %>
+        <%= link_to "(create account)", new_account_path %>
+      <% end %>
+    </td>
     <td>
       <% if @user.account && @user.account.customer %>
            customer <br>
       <% end %>
       
-      <% if @user.account && @user.account.workmen %>@user.account 
+      <% if @user.account && @user.account.workmen %>
            workmen <br>
       <% end %>
 

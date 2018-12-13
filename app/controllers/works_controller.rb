@@ -176,7 +176,7 @@ class WorksController < ApplicationController
     if user_signed_in? && policy(@work).can_be_destroyed_by(current_user)
       @work.destroy
       respond_to do |format|
-        format.html { redirect_to 'work#index', notice: "Work has been destroyed." }
+        format.html { redirect_to works_path, notice: "Work has been destroyed." }
         format.json { render status: 204, json: { notice: "Work has been destroyed." } }
       end
     else

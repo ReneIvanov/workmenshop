@@ -1,7 +1,9 @@
 <!-- View for a separate create of new work (e.g. by admin) --> 
-<h1>New Work</h1>
+<h2>Create a new Work</h2>
 
-<%= form_with(model: @work, local: true, url: new_work_path) do |form| %>
+<br>
+
+<%= form_with(model: @work, local: true, url: works_path) do |form| %>
   <% if @work.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@work.errors.count, "error") %> prohibited this work from being saved:</h2>
@@ -14,15 +16,15 @@
     </div>
   <% end %>
 
-<% #if false %>
  <div class="field">
    <%= form.label :title %>
    <%= form.text_field :title %>
  </div>
-<% #end %>
+
+ <br>
 
   <div class="actions">
-    <%= form.submit "Finish"%>
+    <%= form.submit "Create work"%>
   </div>
 <% end %>
 
