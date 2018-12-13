@@ -1,4 +1,6 @@
 <h1>Please check who you are:</h1>
 <br />
 
-<%= render 'form', account: @account %>
+<%= form_with(url: accounts_registration_create_path, local: true) do |f| %>
+  <%= render 'form' %>
+<% end %>

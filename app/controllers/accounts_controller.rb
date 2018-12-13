@@ -28,7 +28,7 @@ class AccountsController < ApplicationController
   end
 
   # GET /accounts/new
-  def new
+  def registration_new
     @account = Account.new
     respond_to do |format|
       format.html { render :new }
@@ -37,7 +37,7 @@ class AccountsController < ApplicationController
   end
 
   # GET /accounts/1/edit
-  def edit
+  def registration_edit
     if user_signed_in? && policy(Account.find_param(params[:id])).can_be_seen_by(current_user)
       @account = set_account
       respond_to do |format|
@@ -51,7 +51,7 @@ class AccountsController < ApplicationController
 
   # POST /accounts
   # POST /accounts.json
-  def create
+  def registration_create
     if user_signed_in? 
       @current_account = current_user.account if current_user.account
       @account = Account.new(account_params)
@@ -60,7 +60,7 @@ class AccountsController < ApplicationController
       respond_to do |format|
         if @account.save
           @current_account.delete if @current_account
-          if
+          if (user_signed_in? && policy(current_user).can_create_work)
             format.html { redirect_to registration_new_work_path, notice: "Please continue with specifing your services." }
           else
             format.html { redirect_to root_path, notice: "Your account was succefully created." }
@@ -78,12 +78,17 @@ class AccountsController < ApplicationController
 
   # PATCH/PUT /accounts/1
   # PATCH/PUT /accounts/1.json
-  def update
+  def registration_update
     if user_signed_in? && policy(Account.find_param(params[:id])).can_be_seen_by(current_user)
       @account = set_account    
       respond_to do |format|
-        if @account.update(account_params)
-          format.html { redirect_to registration_edit_work_path, notice: "Account was successfully updated." }
+        if (@account.update(account_params))
+          current_user.reload
+          if (user_signed_in? && policy(current_user).can_update_works)
+            format.html { redirect_to registration_edit_work_path, notice: "Account was successfully updated." }
+          else
+            format.html { redirect_to root_path, notice: "Your account was succefully updated." }
+          end
           format.json { render status: 200, json: { account: show_like_json(@account), notice: "Account was successfully updated." } }
         else
           format.html { render :edit; flash[:notice] = "Account was not updated." }

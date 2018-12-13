@@ -1,4 +1,4 @@
-<%= form_with(model: @account, local: true) do |f| %>
+<%= form_with(model: @account, url: @route, local: true) do |f| %>
   
   <% if @account.errors.any? %>
     <div id="error_explanation">
@@ -14,12 +14,12 @@
 
   <div class="field">
     I am a workmen and I want to offer my working services: &nbsp
-    <%= f.check_box :workmen%><br />
+    <%= f.check_box :workmen%> <br />
   </div>
 
   <div class="field">
     I am a customer and I find some services: &nbsp
-    <%= f.check_box :customer%><br />
+    <%= f.check_box :customer%> <br />
   </div>
 
 

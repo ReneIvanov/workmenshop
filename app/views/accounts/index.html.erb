@@ -14,7 +14,7 @@
     <% @accounts.each do |account| %>
       <tr>
         <td><%= link_to 'Show', account %></td>
-        <td><%= link_to 'Edit', edit_account_path(account) %></td>
+        <td><%= link_to 'Edit', accounts_registration_edit_path(account) %></td>
         <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -23,6 +23,6 @@
 
 <br>
 
-<%= link_to 'New Account', new_account_path %>
+<%= link_to 'New Account', accounts_registration_new_path %>
 
 <% end %>

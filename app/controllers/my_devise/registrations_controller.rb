@@ -5,7 +5,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   # The path used after sign up. You need to overwrite this method
   # in your own RegistrationsController.
   def after_sign_up_path_for(resource)
-    new_account_path
+    accounts_registration_new_path
   end
 
   # The path used after sign up for inactive accounts. You need to overwrite
@@ -18,9 +18,9 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   # this method in your own RegistrationsController.
   def after_update_path_for(resource)
     if current_user.account
-      edit_account_path(current_user.account)
+      accounts_registration_edit_path(current_user.account)
     else
-      new_account_path
+      accounts_registration_new_path
     end
   end
 end

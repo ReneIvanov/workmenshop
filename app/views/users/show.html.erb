@@ -26,9 +26,9 @@
     <td>
       Account: <br>
       <% if @user.account %>
-        <%= link_to "(edit account)", edit_account_path(@user.account) %>
+        <%= link_to "(edit account)", accounts_registration_edit_path(@user.account) %>
       <% else %>
-        <%= link_to "(create account)", new_account_path %>
+        <%= link_to "(create account)", accounts_registration_new_path %>
       <% end %>
     </td>
     <td>

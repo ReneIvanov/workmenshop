@@ -11,6 +11,13 @@ Rails.application.routes.draw do
   end
 
   resources :accounts
+  controller :accounts do
+    get 'accounts/registration/new' => :registration_new, as: 'accounts_registration_new'
+    post 'accounts/registration/create' => :registration_create, as: 'accounts_registration_create'
+    get 'accounts/:id/registration/edit' => :registration_edit, as: 'accounts_registration_edit'
+    patch 'accounts/:id/registration/update' => :registration_update
+    put 'accounts/:id/registration/update' => :registration_update, as: 'accounts_registration_update'
+  end
   
   #devise_for :users
   devise_for :users, controllers: { registrations: 'my_devise/registrations', confirmations: 'my_devise/confirmations', sessions: 'my_devise/sessions' }

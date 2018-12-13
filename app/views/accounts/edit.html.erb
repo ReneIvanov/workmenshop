@@ -1,6 +1,8 @@
 <h1>Edit account:</h1>
 
-<%= render 'form', account: @account %>
+<%= form_with(url: accounts_registration_update_path, local: true) do |f| %>
+  <%= render 'form' %>
+<% end %>
 
 <%= link_to 'Show', @account %> |
 <%= link_to 'Back', accounts_path %>
