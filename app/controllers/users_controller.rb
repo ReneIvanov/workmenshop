@@ -67,6 +67,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    binding.pry
     if user_signed_in? && policy(current_user).can_edit(User.find_param(params[:id]))
       set_user
       respond_to do |format|

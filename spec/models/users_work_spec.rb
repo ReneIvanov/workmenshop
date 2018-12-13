@@ -49,7 +49,7 @@ RSpec.describe UsersWork, type: :model do
     end
 
     it " - should be associated user with works" do
-      expect(serialize(user.works)).to match(serialize(works))
+      expect(compare_arrays_of_hashes(serialize(user.works), serialize(works))).to be true
     end
 
     it " - work should be properly added" do
@@ -99,7 +99,7 @@ RSpec.describe UsersWork, type: :model do
     end
 
     it " - should be associated work with users" do
-      expect(serialize(work.users)).to match(serialize(users))
+      expect(compare_arrays_of_hashes(serialize(work.users), serialize(users))).to be true
     end
 
     it " - user should be properly added" do

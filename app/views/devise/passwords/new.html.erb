@@ -3,7 +3,7 @@
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   
   <% if devise_error_messages! != "" %>
-    <div class="devise_error_messages"> <%= devise_error_messages! %> </div>
+    <div class="error_messages"> <%= devise_error_messages! %> </div>
   <% end %>
 
   <div class="field">

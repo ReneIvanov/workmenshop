@@ -25,15 +25,15 @@
   <tr>
     <td>Account: </td>
     <td>
-      <% if @user.account.customer %>
+      <% if @user.account && @user.account.customer %>
            customer <br>
       <% end %>
       
-      <% if @user.account.workmen %>
+      <% if @user.account && @user.account.workmen %>@user.account 
            workmen <br>
       <% end %>
 
-      <% if @user.account.admin %>
+      <% if @user.account && @user.account.admin %>
            admin
       <% end %>
     </td>
